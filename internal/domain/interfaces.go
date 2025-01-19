@@ -1,5 +1,4 @@
 // internal/domain/interfaces.go
-
 package domain
 
 import (
@@ -7,16 +6,15 @@ import (
 	"time"
 )
 
-// RzdAPI интерфейс для взаимодействия с RZD API.
+// RzdAPI задаёт методы в стиле старого PHP: возвращаем JSON-строку
 type RzdAPI interface {
-	TrainRoutes(ctx context.Context, params TrainRoutesParams) ([]Trip, error)
-	TrainRoutesReturn(ctx context.Context, params TrainRoutesReturnParams) (TripsReturn, error)
-	TrainCarriages(ctx context.Context, params TrainCarriagesParams) ([]Carriage, error)
-	TrainStationList(ctx context.Context, params TrainStationListParams) ([]Station, error)
-	StationCode(ctx context.Context, params StationCodeParams) ([]Station, error)
+	TrainRoutes(ctx context.Context, params TrainRoutesParams) (string, error)
+	TrainRoutesReturn(ctx context.Context, params TrainRoutesReturnParams) (string, error)
+	TrainCarriages(ctx context.Context, params TrainCarriagesParams) (string, error)
+	TrainStationList(ctx context.Context, params TrainStationListParams) (string, error)
+	StationCode(ctx context.Context, params StationCodeParams) (string, error)
 }
 
-// TrainRoutesParams Используемые параметры для методов
 type TrainRoutesParams struct {
 	Dir        int
 	Tfl        int
@@ -54,10 +52,4 @@ type TrainStationListParams struct {
 type StationCodeParams struct {
 	StationNamePart string
 	CompactMode     string
-}
-
-// TripsReturn представляет маршруты туда-обратно.
-type TripsReturn struct {
-	Forward []Trip
-	Back    []Trip
 }

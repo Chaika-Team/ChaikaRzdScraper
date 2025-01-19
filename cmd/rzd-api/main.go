@@ -1,46 +1,50 @@
-// cmd/rzd-api/main.go
-
 package main
 
 import (
-	"github.com/Chaika-Team/rzd-api/internal/adapters/config"
+	"fmt"
+	"github.com/go-kit/log"
+	"net/http"
 	"os"
 
-	"github.com/go-kit/log"
-	"github.com/go-kit/log/level"
-	"github.com/gorilla/mux"
-
-	"github.com/Chaika-Team/rzd-api/internal/adapters/http"
+	"github.com/Chaika-Team/rzd-api/internal/adapters/api"
+	"github.com/Chaika-Team/rzd-api/internal/config"
 	"github.com/Chaika-Team/rzd-api/internal/infrastructure"
 	"github.com/Chaika-Team/rzd-api/internal/usecases"
+	"github.com/Chaika-Team/rzd-api/pkg/logger"
+
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	// Логгер
-	logger := log.NewLogfmtLogger(os.Stdout)
-	logger = level.NewFilter(logger, level.AllowDebug())
-	logger = log.With(logger, "ts", log.DefaultTimestampUTC, "caller", log.DefaultCaller)
+	// Инициализация логгера
+	logger := logger.NewLogger("info")
+	logger = log.With(logger, "component", "main")
 
 	// Загрузка конфигурации
-	cfgPath := "./config.yaml"
-	cfg := config.GetConfig(logger, cfgPath)
+	cfg := config.GetConfig(logger, "config.yaml")
 
-	// Инфраструктура
-	httpClient := infrastructure.NewGuzzleHttpClient(cfg)
+	// Инициализация клиента API
+	httpClient := infrastructure.NewGuzzleHttpClient(cfg, logger)
 
-	// Сервисы
-	rzdService := usecases.NewRzdService(httpClient)
+	// Инициализация RzdAPI
+	rzdApi := api.NewRzdAPI(httpClient, cfg, logger)
 
-	// HTTP Handlers
+	// Инициализация сервиса
+	rzdService := usecases.NewRzdService(rzdApi)
+
+	// Настройка HTTP Handlers
+	handlers := http.NewHandlers(rzdService, logger)
+
+	// Настройка маршрутов
 	router := mux.NewRouter()
-	httpHandlers := http.NewHandlers(rzdService, logger)
-	httpHandlers.RegisterRoutes(router)
+	handlers.RegisterRoutes(router)
 
-	// Запуск сервера
-	addr := cfg.Listen.BindIP + ":" + cfg.Listen.Port
-	_ = level.Info(logger).Log("message", "Starting server", "address", addr)
-	if err := http.ListenAndServe(addr, router); err != nil {
-		_ = level.Error(logger).Log("message", "Server failed", "err", err)
+	// Запуск HTTP-сервера
+	address := fmt.Sprintf("%s:%s", cfg.HTTP.Host, cfg.HTTP.Port)
+	_ = logger.Log("msg", "Starting server", "address", address)
+
+	if err := http.ListenAndServe(address, router); err != nil {
+		_ = logger.Log("msg", "Failed to start server", "error", err)
 		os.Exit(1)
 	}
 }

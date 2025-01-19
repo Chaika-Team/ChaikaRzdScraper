@@ -5,16 +5,15 @@ package infrastructure
 import (
 	"bytes"
 	"context"
-	"encoding/json"
-	"github.com/Chaika-Team/rzd-api/internal/config"
+	"fmt"
+	"github.com/go-kit/log"
+	"github.com/go-kit/log/level"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 	"time"
 
-	"github.com/go-kit/log"
-	"github.com/go-kit/log/level"
+	"github.com/Chaika-Team/rzd-api/internal/config"
 )
 
 type HttpClient interface {
@@ -24,37 +23,53 @@ type HttpClient interface {
 
 type GuzzleHttpClient struct {
 	client *http.Client
+	cfg    *config.Config
 	logger log.Logger
 }
 
-func NewGuzzleHttpClient(cfg *config.Config) *GuzzleHttpClient {
+func NewGuzzleHttpClient(cfg *config.Config, logger log.Logger) *GuzzleHttpClient {
+	tr := &http.Transport{
+		Proxy: nil,
+	}
+
+	if cfg.API.Proxy != "" {
+		proxyURL, err := url.Parse(cfg.API.Proxy)
+		if err == nil {
+			tr.Proxy = http.ProxyURL(proxyURL)
+		}
+	}
+
+	logger = log.With(logger, "component", "http_client")
+
 	return &GuzzleHttpClient{
 		client: &http.Client{
-			Timeout: time.Duration(cfg.Storage.MaxConnIdleTime),
+			Timeout:   time.Duration(cfg.API.TimeoutSec) * time.Second,
+			Transport: tr,
 		},
+		cfg:    cfg,
+		logger: logger,
 	}
 }
 
 func (c *GuzzleHttpClient) Get(ctx context.Context, urlStr string, params map[string]interface{}) ([]byte, error) {
-	u, err := url.Parse(urlStr)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, urlStr, nil)
 	if err != nil {
 		return nil, err
 	}
-
-	q := u.Query()
-	for key, value := range params {
-		q.Add(key, value.(string)) // Ensure proper type casting for query parameters
+	// Заполняем query
+	q := req.URL.Query()
+	for k, v := range params {
+		q.Add(k, fmt.Sprintf("%v", v))
 	}
-	u.RawQuery = q.Encode()
+	req.URL.RawQuery = q.Encode()
 
-	req, err := http.NewRequestWithContext(ctx, "GET", u.String(), nil)
-	if err != nil {
-		return nil, err
-	}
+	// Заголовки
+	req.Header.Set("User-Agent", c.cfg.API.UserAgent)
+	req.Header.Set("Referer", c.cfg.API.Referer)
+	req.Header.Set("Accept", "application/json")
 
 	resp, err := c.client.Do(req)
 	if err != nil {
-		_ = level.Error(c.logger).Log("method", "Get", "url", urlStr, "err", err)
 		return nil, err
 	}
 	defer func(Body io.ReadCloser) {
@@ -64,31 +79,31 @@ func (c *GuzzleHttpClient) Get(ctx context.Context, urlStr string, params map[st
 		}
 	}(resp.Body)
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		_ = level.Error(c.logger).Log("method", "Get", "url", urlStr, "err", err)
-		return nil, err
-	}
-
-	_ = level.Info(c.logger).Log("method", "Get", "url", urlStr, "status", resp.Status)
-	return body, nil
+	return io.ReadAll(resp.Body)
 }
 
 func (c *GuzzleHttpClient) Post(ctx context.Context, urlStr string, params map[string]interface{}) ([]byte, error) {
-	jsonData, err := json.Marshal(params)
-	if err != nil {
-		return nil, err
+	// form_params в старом PHP => передавал в body form-data?
+	// Но на деле Query.php делал 'form_params' => $params, Guzzle отправлял как x-www-form-urlencoded
+	// Для идентичности можно сделать JSON, но старый код был url-encoded. Повторим url-encoded:
+	formData := url.Values{}
+	for k, v := range params {
+		formData.Add(k, fmt.Sprintf("%v", v))
 	}
+	reqBody := bytes.NewBufferString(formData.Encode())
 
-	req, err := http.NewRequestWithContext(ctx, "POST", urlStr, bytes.NewBuffer(jsonData))
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, urlStr, reqBody)
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Content-Type", "application/json")
+	// Заголовки
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("User-Agent", c.cfg.API.UserAgent)
+	req.Header.Set("Referer", c.cfg.API.Referer)
+	req.Header.Set("Accept", "application/json")
 
 	resp, err := c.client.Do(req)
 	if err != nil {
-		_ = level.Error(c.logger).Log("method", "Post", "url", urlStr, "err", err)
 		return nil, err
 	}
 	defer func(Body io.ReadCloser) {
@@ -98,12 +113,5 @@ func (c *GuzzleHttpClient) Post(ctx context.Context, urlStr string, params map[s
 		}
 	}(resp.Body)
 
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		_ = level.Error(c.logger).Log("method", "Post", "url", urlStr, "err", err)
-		return nil, err
-	}
-
-	_ = level.Info(c.logger).Log("method", "Post", "url", urlStr, "status", resp.Status)
-	return body, nil
+	return io.ReadAll(resp.Body)
 }

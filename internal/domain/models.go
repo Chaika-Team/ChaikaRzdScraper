@@ -1,23 +1,22 @@
 // internal/domain/models.go
-
 package domain
 
 import "time"
 
-// Route представляет маршрут поезда.
+// Набор струтктур, если нужно где-то использовать (необязательно):
 type Route struct {
 	ID                     string
 	CodeName               string
 	StartStationID         string
 	EndStationID           string
 	IntermediateStationIDs []string
-	Length                 float64 // в км
+	Length                 float64
 	TravelTime             time.Duration
-	RouteType              string // Например, пассажирский, экспресс
-	Status                 string // Активен, приостановлен, закрыт
+	RouteType              string
+	Status                 string
 }
 
-// Trip представляет рейс поезда.
+// Trip — пример доменной модели, если вдруг понадобится
 type Trip struct {
 	ID                    string
 	RouteID               string
@@ -27,32 +26,28 @@ type Trip struct {
 	ArrivalTime           time.Time
 	TrainType             string
 	CarriageConfiguration CarriageConfiguration
-	Status                string // Запланирован, отменен, задержан, выполнен
+	Status                string
 }
 
-// Schedule представляет расписание рейса.
 type Schedule struct {
 	DepartureTime time.Time
 	ArrivalTime   time.Time
 }
 
-// CarriageConfiguration представляет конфигурацию вагонов.
 type CarriageConfiguration struct {
 	Type  string
 	Seats int
 }
 
-// Station представляет железнодорожную станцию.
 type Station struct {
 	ID             string
 	Name           string
 	Latitude       float64
 	Longitude      float64
 	Infrastructure string
-	Type           string // Основная, промежуточная, конечная
+	Type           string
 }
 
-// Carriage представляет вагон поезда.
 type Carriage struct {
 	Number        string
 	Type          string
@@ -63,7 +58,6 @@ type Carriage struct {
 	Seats         []Seat
 }
 
-// Seat представляет место в вагоне.
 type Seat struct {
 	Number string
 	Type   string
@@ -72,11 +66,16 @@ type Seat struct {
 	Free   bool
 }
 
-// Profile представляет данные пользователя.
+// Если вдруг потребуется
 type Profile struct {
 	ID       string
 	Username string
 	Email    string
 	FullName string
-	// Другие поля по необходимости
+}
+
+// Для "туда-обратно"
+type TripsReturn struct {
+	Forward interface{} `json:"forward"`
+	Back    interface{} `json:"back"`
 }
