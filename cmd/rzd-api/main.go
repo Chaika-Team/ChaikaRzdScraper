@@ -1,50 +1,60 @@
+// cmd/rzd-grpc-service/main.go
 package main
 
 import (
+	"flag"
 	"fmt"
-	"github.com/go-kit/log"
-	"net/http"
-	"os"
+	"log"
+	"net"
 
-	"github.com/Chaika-Team/rzd-api/internal/adapters/api"
-	"github.com/Chaika-Team/rzd-api/internal/config"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure"
-	"github.com/Chaika-Team/rzd-api/internal/usecases"
-	"github.com/Chaika-Team/rzd-api/pkg/logger"
-
-	"github.com/gorilla/mux"
+	pb "github.com/Chaika-Team/rzd-api/internal/infrastructure/grpc/pb"
+	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
+	"github.com/Chaika-Team/rzd-api/internal/interfaces"
+	"github.com/Chaika-Team/rzd-api/internal/usecase"
+	"github.com/Chaika-Team/rzd-api/pkg/config"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
-	// Инициализация логгера
-	logger := logger.NewLogger("info")
-	logger = log.With(logger, "component", "main")
+	var (
+		port string
+	)
+
+	flag.StringVar(&port, "port", "50051", "The server port")
+	flag.Parse()
 
 	// Загрузка конфигурации
-	cfg := config.GetConfig(logger, "config.yaml")
+	cfg := config.LoadConfig()
 
-	// Инициализация клиента API
-	httpClient := infrastructure.NewGuzzleHttpClient(cfg, logger)
+	// Инициализация RzdClient
+	rzdClient := rzd.NewRzdClient(cfg)
 
-	// Инициализация RzdAPI
-	rzdApi := api.NewRzdAPI(httpClient, cfg, logger)
+	// Инициализация UseCase
+	routeUseCase := usecase.NewRouteUseCase(rzdClient)
+	carriageUseCase := usecase.NewCarriageUseCase(rzdClient)
+	stationUseCase := usecase.NewStationUseCase(rzdClient)
 
-	// Инициализация сервиса
-	rzdService := usecases.NewRzdService(rzdApi)
+	// Создание экземпляра gRPC-сервиса
+	rzdServiceServer := interfaces.NewRZDServiceServer(routeUseCase, carriageUseCase, stationUseCase)
 
-	// Настройка HTTP Handlers
-	handlers := http.NewHandlers(rzdService, logger)
+	// Создание слушателя
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
+	if err != nil {
+		log.Fatalf("Failed to listen on port %s: %v", port, err)
+	}
 
-	// Настройка маршрутов
-	router := mux.NewRouter()
-	handlers.RegisterRoutes(router)
+	// Создание gRPC-сервера
+	grpcServer := grpc.NewServer()
 
-	// Запуск HTTP-сервера
-	address := fmt.Sprintf("%s:%s", cfg.HTTP.Host, cfg.HTTP.Port)
-	_ = logger.Log("msg", "Starting server", "address", address)
+	// Регистрация сервиса
+	pb.RegisterRZDServiceServer(grpcServer, rzdServiceServer)
 
-	if err := http.ListenAndServe(address, router); err != nil {
-		_ = logger.Log("msg", "Failed to start server", "error", err)
-		os.Exit(1)
+	// Включение reflection для удобства тестирования
+	reflection.Register(grpcServer)
+
+	log.Printf("RZD gRPC service is running on port %s...", port)
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatalf("Failed to serve gRPC server: %v", err)
 	}
 }

@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package rzd;
+
+option go_package = "github.com/Chaika-Team/rzd-api/internal/infrastructure/grpc/pb;rzd";
+
+service RZDService {
+  rpc GetTrainRoutes (GetTrainRoutesRequest) returns (GetTrainRoutesResponse);
+  rpc GetTrainRoutesReturn (GetTrainRoutesReturnRequest) returns (GetTrainRoutesReturnResponse);
+  rpc GetTrainCarriages (GetTrainCarriagesRequest) returns (GetTrainCarriagesResponse);
+  rpc GetTrainStationList (GetTrainStationListRequest) returns (GetTrainStationListResponse);
+  rpc GetStationCode (GetStationCodeRequest) returns (GetStationCodeResponse);
+}
+
+// Запросы и ответы
+
+message GetTrainRoutesRequest {
+  string code0 = 1;
+  string code1 = 2;
+  int32 dir = 3;        // 0 - только в одну сторону, 1 - туда-обратно
+  int32 tfl = 4;        // Тип поезда (3 - поезда и электрички, 2 - электрички, 1 - поезда)
+  int32 checkSeats = 5; // 1 - только с билетами, 0 - все поезда
+  string dt0 = 6;       // Дата отправления (d.m.Y)
+  int32 md = 7;         // Маршруты с пересадками (1 - с пересадками, 0 - только прямые рейсы)
+}
+
+message Car {
+  string carType = 1;     // Тип вагона
+  string carNumber = 2;   // Номер вагона
+  int32 freeSeats = 3;    // Количество свободных мест
+  float tariff = 4;       // Тариф
+}
+
+message TrainRoute {
+  string route0 = 1;
+  string route1 = 2;
+  string date0 = 3;
+  string time0 = 4;
+  string number = 5;
+  string from = 6;
+  string where = 7;
+  string date = 8;
+  string fromCode = 9;
+  string whereCode = 10;
+  string time1 = 11;
+  string timeInWay = 12;
+  string brand = 13;
+  string carrier = 14;
+  repeated Car cars = 15;
+}
+
+message GetTrainRoutesResponse {
+  repeated TrainRoute routes = 1;
+}
+
+message GetTrainRoutesReturnRequest {
+  string code0 = 1;
+  string code1 = 2;
+  int32 dir = 3;         // 0 - только в одну сторону, 1 - туда-обратно
+  int32 tfl = 4;         // Тип поезда
+  int32 checkSeats = 5;  // Проверка наличия свободных мест
+  string dt0 = 6;        // Дата отправления
+  string dt1 = 7;        // Дата возврата
+}
+
+message GetTrainRoutesReturnResponse {
+  repeated TrainRoute forward = 1;
+  repeated TrainRoute back = 2;
+}
+
+message GetTrainCarriagesRequest {
+  string code0 = 1;
+  string code1 = 2;
+  string tnum0 = 3;  // Номер поезда
+  string time0 = 4;  // Время отправления
+  string dt0 = 5;    // Дата отправления
+  int32 dir = 6;     // Направление
+}
+
+message Seat {
+  repeated string places = 1;
+  float tariff = 2;
+  string type = 3;
+  int32 free = 4;
+  string label = 5;
+}
+
+message Carriage {
+  string cnumber = 1;
+  string type = 2;
+  string typeLoc = 3;
+  string clsType = 4;
+  float tariff = 5;
+  repeated Seat seats = 6;
+}
+
+message TrainCarriagesResponse {
+  repeated Carriage cars = 1;
+  repeated string functionBlocks = 2;
+  repeated string schemes = 3;
+  repeated string companies = 4;
+}
+
+message GetTrainCarriagesResponse {
+  TrainCarriagesResponse response = 1;
+}
+
+message GetTrainStationListRequest {
+  string trainNumber = 1;
+  string depDate = 2;
+}
+
+message TrainInfo {
+  string number = 1;
+  // Добавьте другие поля по необходимости
+}
+
+message Route {
+  string station = 1;
+  string arrival_time = 2;
+  string departure_time = 3;
+  // Добавьте другие поля по необходимости
+}
+
+message TrainStationListResponse {
+  TrainInfo train = 1;
+  repeated Route routes = 2;
+}
+
+message GetTrainStationListResponse {
+  TrainStationListResponse response = 1;
+}
+
+message StationCode {
+  string station = 1;
+  string code = 2;
+}
+
+message GetStationCodeRequest {
+  string stationNamePart = 1;
+  string compactMode = 2;
+}
+
+message GetStationCodeResponse {
+  repeated StationCode stations = 1;
+}

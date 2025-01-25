@@ -1,0 +1,14 @@
+run:
+  timeout: 5m
+
+linters-settings:
+  revive:
+    enable-all-rules: false
+    rules:
+      - name: cognitive-complexity
+        severity: warning
+        arguments: [ 10 ] # Ограничивает сложность функции до 10
+
+output:
+  sort-results: true
+  show-stats: true
