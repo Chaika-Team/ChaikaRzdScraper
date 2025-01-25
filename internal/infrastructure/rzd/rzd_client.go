@@ -149,13 +149,13 @@ func (c *RzdClient) GetTrainRoutes(params domain.GetTrainRoutesParams) ([]domain
 	reqURL := fmt.Sprintf("%s?layer_id=%d", c.BaseURL, layerID)
 
 	data := url.Values{}
-	data.Set("code0", params.Code0)
-	data.Set("code1", params.Code1)
-	data.Set("dir", fmt.Sprintf("%d", params.Dir))
-	data.Set("tfl", fmt.Sprintf("%d", params.Tfl))
+	data.Set("code0", params.FromCode)
+	data.Set("code1", params.WhereCode)
+	data.Set("dir", fmt.Sprintf("%d", params.Direction))
+	data.Set("tfl", fmt.Sprintf("%d", params.TrainType))
 	data.Set("checkSeats", fmt.Sprintf("%d", params.CheckSeats))
-	data.Set("dt0", params.Dt0)
-	data.Set("md", fmt.Sprintf("%d", params.Md))
+	data.Set("dt0", params.FromDate)
+	data.Set("md", fmt.Sprintf("%d", params.WithChange))
 
 	req, err := http.NewRequest("POST", reqURL, strings.NewReader(data.Encode()))
 	if err != nil {
@@ -199,13 +199,13 @@ func (c *RzdClient) GetTrainRoutesReturn(params domain.GetTrainRoutesReturnParam
 	reqURL := fmt.Sprintf("%s?layer_id=%d", c.BaseURL, layerID)
 
 	data := url.Values{}
-	data.Set("code0", params.Code0)
-	data.Set("code1", params.Code1)
-	data.Set("dir", fmt.Sprintf("%d", params.Dir))
-	data.Set("tfl", fmt.Sprintf("%d", params.Tfl))
+	data.Set("code0", params.FromCode)
+	data.Set("code1", params.WhereCode)
+	data.Set("dir", fmt.Sprintf("%d", params.Direction))
+	data.Set("tfl", fmt.Sprintf("%d", params.TrainType))
 	data.Set("checkSeats", fmt.Sprintf("%d", params.CheckSeats))
-	data.Set("dt0", params.Dt0)
-	data.Set("dt1", params.Dt1)
+	data.Set("dt0", params.FromDate)
+	data.Set("dt1", params.WhereDate)
 
 	req, err := http.NewRequest("POST", reqURL, strings.NewReader(data.Encode()))
 	if err != nil {
@@ -249,12 +249,12 @@ func (c *RzdClient) GetTrainCarriages(params domain.GetTrainCarriagesParams) (do
 	reqURL := fmt.Sprintf("%s?layer_id=%d", c.BaseURL, layerID)
 
 	data := url.Values{}
-	data.Set("code0", params.Code0)
-	data.Set("code1", params.Code1)
-	data.Set("tnum0", params.Tnum0)
-	data.Set("time0", params.Time0)
-	data.Set("dt0", params.Dt0)
-	data.Set("dir", fmt.Sprintf("%d", params.Dir))
+	data.Set("code0", params.FromCode)
+	data.Set("code1", params.WhereCode)
+	data.Set("tnum0", params.TrainNumber)
+	data.Set("time0", params.FromTime)
+	data.Set("dt0", params.FromDate)
+	data.Set("dir", fmt.Sprintf("%d", params.Direction))
 
 	req, err := http.NewRequest("POST", reqURL, strings.NewReader(data.Encode()))
 	if err != nil {
@@ -306,7 +306,7 @@ func (c *RzdClient) GetTrainStationList(params domain.GetTrainStationListParams)
 
 	data := url.Values{}
 	data.Set("trainNumber", params.TrainNumber)
-	data.Set("depDate", params.DepDate)
+	data.Set("depDate", params.FromDate)
 	data.Set("STRUCTURE_ID", "704")
 
 	req, err := http.NewRequest("GET", reqURL, nil)

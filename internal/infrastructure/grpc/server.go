@@ -26,13 +26,13 @@ func NewRZDServiceServer(routeUC *usecase.RouteUseCase, carriageUC *usecase.Carr
 
 func (s *RZDServiceServer) GetTrainRoutes(ctx context.Context, req *pb.GetTrainRoutesRequest) (*pb.GetTrainRoutesResponse, error) {
 	params := domain.GetTrainRoutesParams{
-		Code0:      req.GetCode0(),
-		Code1:      req.GetCode1(),
-		Dir:        req.GetDir(),
-		Tfl:        req.GetTfl(),
+		FromCode:   req.GetCode0(),
+		WhereCode:  req.GetCode1(),
+		Direction:  req.GetDir(),
+		TrainType:  req.GetTfl(),
 		CheckSeats: req.GetCheckSeats(),
-		Dt0:        req.GetDt0(),
-		Md:         req.GetMd(),
+		FromDate:   req.GetDt0(),
+		WithChange: req.GetMd(),
 	}
 
 	routes, err := s.RouteUseCase.GetTrainRoutes(ctx, params)
@@ -43,19 +43,19 @@ func (s *RZDServiceServer) GetTrainRoutes(ctx context.Context, req *pb.GetTrainR
 	var pbRoutes []*pb.TrainRoute
 	for _, route := range routes {
 		pbRoutes = append(pbRoutes, &pb.TrainRoute{
-			Route0:    route.Route0,
-			Route1:    route.Route1,
-			Date0:     route.DepartureDate,
-			Time0:     route.DepartureTime,
-			Number:    route.Number,
+			Route0:    route.FromShort,
+			Route1:    route.WhereShort,
+			Date0:     route.FromDate,
+			Time0:     route.FromTime,
+			Number:    route.TrainNumber,
 			From:      route.From,
 			Where:     route.Where,
-			Date:      route.ArrivalDate,
+			Date:      route.WhereDate,
 			FromCode:  route.FromCode,
 			WhereCode: route.WhereCode,
-			Time1:     route.ArrivalTime,
+			Time1:     route.WhereTime,
 			TimeInWay: route.TimeInWay,
-			Brand:     route.Brand,
+			Brand:     route.TrainBrand,
 			Carrier:   route.Carrier,
 		})
 	}
@@ -67,13 +67,13 @@ func (s *RZDServiceServer) GetTrainRoutes(ctx context.Context, req *pb.GetTrainR
 
 func (s *RZDServiceServer) GetTrainRoutesReturn(ctx context.Context, req *pb.GetTrainRoutesReturnRequest) (*pb.GetTrainRoutesReturnResponse, error) {
 	params := domain.GetTrainRoutesReturnParams{
-		Code0:      req.GetCode0(),
-		Code1:      req.GetCode1(),
-		Dir:        req.GetDir(),
-		Tfl:        req.GetTfl(),
+		FromCode:   req.GetCode0(),
+		WhereCode:  req.GetCode1(),
+		Direction:  req.GetDir(),
+		TrainType:  req.GetTfl(),
 		CheckSeats: req.GetCheckSeats(),
-		Dt0:        req.GetDt0(),
-		Dt1:        req.GetDt1(),
+		FromDate:   req.GetDt0(),
+		WhereDate:  req.GetDt1(),
 	}
 
 	forward, back, err := s.RouteUseCase.GetTrainRoutesReturn(ctx, params)
@@ -84,19 +84,19 @@ func (s *RZDServiceServer) GetTrainRoutesReturn(ctx context.Context, req *pb.Get
 	var pbForward []*pb.TrainRoute
 	for _, route := range forward {
 		pbForward = append(pbForward, &pb.TrainRoute{
-			Route0:    route.Route0,
-			Route1:    route.Route1,
-			Date0:     route.DepartureDate,
-			Time0:     route.DepartureTime,
-			Number:    route.Number,
+			Route0:    route.FromShort,
+			Route1:    route.WhereShort,
+			Date0:     route.FromDate,
+			Time0:     route.FromTime,
+			Number:    route.TrainNumber,
 			From:      route.From,
 			Where:     route.Where,
-			Date:      route.ArrivalDate,
+			Date:      route.WhereDate,
 			FromCode:  route.FromCode,
 			WhereCode: route.WhereCode,
-			Time1:     route.ArrivalTime,
+			Time1:     route.WhereTime,
 			TimeInWay: route.TimeInWay,
-			Brand:     route.Brand,
+			Brand:     route.TrainBrand,
 			Carrier:   route.Carrier,
 		})
 	}
@@ -104,19 +104,19 @@ func (s *RZDServiceServer) GetTrainRoutesReturn(ctx context.Context, req *pb.Get
 	var pbBack []*pb.TrainRoute
 	for _, route := range back {
 		pbBack = append(pbBack, &pb.TrainRoute{
-			Route0:    route.Route0,
-			Route1:    route.Route1,
-			Date0:     route.DepartureDate,
-			Time0:     route.DepartureTime,
-			Number:    route.Number,
+			Route0:    route.FromShort,
+			Route1:    route.WhereShort,
+			Date0:     route.FromDate,
+			Time0:     route.FromTime,
+			Number:    route.TrainNumber,
 			From:      route.From,
 			Where:     route.Where,
-			Date:      route.ArrivalDate,
+			Date:      route.WhereDate,
 			FromCode:  route.FromCode,
 			WhereCode: route.WhereCode,
-			Time1:     route.ArrivalTime,
+			Time1:     route.WhereTime,
 			TimeInWay: route.TimeInWay,
-			Brand:     route.Brand,
+			Brand:     route.TrainBrand,
 			Carrier:   route.Carrier,
 		})
 	}
@@ -129,12 +129,12 @@ func (s *RZDServiceServer) GetTrainRoutesReturn(ctx context.Context, req *pb.Get
 
 func (s *RZDServiceServer) GetTrainCarriages(ctx context.Context, req *pb.GetTrainCarriagesRequest) (*pb.GetTrainCarriagesResponse, error) {
 	params := domain.GetTrainCarriagesParams{
-		Code0: req.GetCode0(),
-		Code1: req.GetCode1(),
-		Tnum0: req.GetTnum0(),
-		Time0: req.GetTime0(),
-		Dt0:   req.GetDt0(),
-		Dir:   req.GetDir(),
+		FromCode:    req.GetCode0(),
+		WhereCode:   req.GetCode1(),
+		TrainNumber: req.GetTnum0(),
+		FromTime:    req.GetTime0(),
+		FromDate:    req.GetDt0(),
+		Direction:   req.GetDir(),
 	}
 
 	carriages, err := s.CarriageUseCase.GetTrainCarriages(ctx, params)
@@ -159,7 +159,7 @@ func (s *RZDServiceServer) GetTrainCarriages(ctx context.Context, req *pb.GetTra
 			Cnumber: car.CNumber,
 			Type:    car.Type,
 			TypeLoc: car.TypeLoc,
-			ClsType: car.ClsType,
+			ClsType: car.ClassType,
 			Tariff:  car.Tariff,
 			Seats:   pbSeats,
 		})
@@ -178,7 +178,7 @@ func (s *RZDServiceServer) GetTrainCarriages(ctx context.Context, req *pb.GetTra
 func (s *RZDServiceServer) GetTrainStationList(ctx context.Context, req *pb.GetTrainStationListRequest) (*pb.GetTrainStationListResponse, error) {
 	params := domain.GetTrainStationListParams{
 		TrainNumber: req.GetTrainNumber(),
-		DepDate:     req.GetDepDate(),
+		FromDate:    req.GetDepDate(),
 	}
 
 	stations, err := s.StationUseCase.GetTrainStationList(ctx, params)
@@ -190,8 +190,8 @@ func (s *RZDServiceServer) GetTrainStationList(ctx context.Context, req *pb.GetT
 	for _, route := range stations.Routes {
 		pbRoutes = append(pbRoutes, &pb.Route{
 			Station:       route.Station,
-			ArrivalTime:   route.ArrivalTime,
-			DepartureTime: route.DepartureTime,
+			ArrivalTime:   route.WhereTime,
+			DepartureTime: route.FromTime,
 			// Добавьте другие поля по необходимости
 		})
 	}

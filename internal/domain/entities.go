@@ -3,105 +3,110 @@ package domain
 
 // TrainRoute доменная модель маршрута поезда
 type TrainRoute struct {
-	Route0        string     // Название станции отправления
-	Route1        string     // Название станции назначения
-	DepartureDate string     // Дата отправления
-	DepartureTime string     // Время отправления
-	Number        string     // Номер поезда
-	From          string     // Название станции отправления
-	Where         string     // Название станции назначения
-	ArrivalDate   string     // Дата прибытия
-	FromCode      string     // Код станции отправления
-	WhereCode     string     // Код станции назначения
-	ArrivalTime   string     // Время прибытия
-	TimeInWay     string     // Время в пути
-	Brand         string     // Бренд поезда
-	Carrier       string     // Перевозчик
-	Cars          []Carriage // Cписок вагонов поезда
+	TrainNumber string // Номер поезда
+	TimeInWay   string // Время в пути
+	TrainBrand  string // Бренд поезда
+	Carrier     string // Перевозчик
+
+	From      string // Название станции отправления (САНКТ-ПЕТЕРБУРГ)
+	FromShort string // Кодовое название станции отправления (С-ПЕТ-ЛАД)
+	FromCode  string // Код станции отправления (2004000)
+	FromDate  string // Дата отправления
+	FromTime  string // Время отправления
+
+	Where      string // Название станции прибытия (КИРОВ ПАСС)
+	WhereShort string // Кодовое название станции назначения (ТЮМЕНЬ)
+	WhereCode  string // Код станции прибытия (2060600)
+	WhereDate  string // Дата прибытия
+	WhereTime  string // Время прибытия
+
+	Cars []Carriage // Список вагонов поезда
 }
 
 // Carriage доменная модель вагона поезда
 type Carriage struct {
-	CNumber string // Номер вагона
-	Type    string // Тип вагона
-	TypeLoc string
-	ClsType string  // Класс вагона
-	Tariff  float32 // Тариф
-	Seats   []Seat  // Список мест в вагоне
+	CNumber   string  // Номер вагона
+	Type      string  // Тип вагона
+	TypeLoc   string  // Полное наименование (Плацкартный, СВ, Купе, Люкс)
+	ClassType string  // Класс вагона (2Л, 2Э)
+	Tariff    float32 // Стоимость билета
+	Seats     []Seat  // Список мест в вагоне
 }
 
 type Seat struct {
-	Places []string // Список мест
-	Tariff float32  // Тариф
-	Type   string   // Тип
+	Places []string // Список свободных мест
+	Tariff float32  // Тариф за место
+	Type   string   // Сокращенное наименование места (up)
 	Free   int32    // Количество свободных мест
-	Label  string
+	Label  string   // Полное наименование места (Верхние)
 }
 
 type TrainCarriagesResponse struct {
-	Cars           []Carriage
-	FunctionBlocks []string
-	Schemes        []string
-	Companies      []string
+	Cars           []Carriage // Список вагонов
+	FunctionBlocks []string   // Функциональные блоки
+	Schemes        []string   // Схемы вагонов
+	Companies      []string   // Компании перевозчики
 }
 
 type TrainInfo struct {
-	Number string
+	Number string // Номер поезда
 	// Добавить другие поля по необходимости
 }
 
 type RouteInfo struct {
-	Station       string
-	ArrivalTime   string
-	DepartureTime string
+	Station   string // Название станции
+	WhereTime string // Время прибытия
+	FromTime  string // Время отправления
 	// Добавить другие поля по необходимости
 }
 
 type TrainStationListResponse struct {
-	Train  TrainInfo
-	Routes []RouteInfo
+	Train  TrainInfo   // Информация о поезде
+	Routes []RouteInfo // Список станций
 }
 
 type StationCode struct {
-	Station string
-	Code    string
+	Station string // Название станции
+	Code    string // Код станции
 }
 
 type GetTrainRoutesParams struct {
-	Code0      string
-	Code1      string
-	Dir        int32
-	Tfl        int32
-	CheckSeats int32
-	Dt0        string
-	Md         int32
+	FromCode   string // Код станции отправления
+	WhereCode  string // Код станции прибытия
+	Direction  int32  // Направление (0 - в одну сторону, 1 - туда и обратно)
+	TrainType  int32  // Тип поезда (3 - поезда и электрички, 1 - только поезда, 2 - только электрички)
+	CheckSeats int32  // Наличие свободных мест (0 - все, 1 - только с местами)
+	FromDate   string // Дата отправления
+	WithChange int32  // С пересадками (0 - без пересадок, 1 - с пересадками)
 }
 
 type GetTrainRoutesReturnParams struct {
-	Code0      string
-	Code1      string
-	Dir        int32
-	Tfl        int32
-	CheckSeats int32
-	Dt0        string
-	Dt1        string
+	Direction  int32 // Направление (0 - в одну сторону, 1 - туда и обратно)
+	TrainType  int32 // Тип поезда (3 - поезда и электрички, 1 - только поезда, 2 - только электрички)
+	CheckSeats int32 // Наличие свободных мест (0 - все, 1 - только с местами)
+
+	FromCode string // Код станции отправления
+	FromDate string // Дата отправления
+
+	WhereCode string // Код станции прибытия
+	WhereDate string // Дата прибытия
 }
 
 type GetTrainCarriagesParams struct {
-	Code0 string
-	Code1 string
-	Tnum0 string
-	Time0 string
-	Dt0   string
-	Dir   int32
+	TrainNumber string // Номер поезда (072Е)
+	Direction   int32  // Направление (0 - в одну сторону, 1 - туда и обратно)
+	FromCode    string // Код станции отправления (2004000)
+	FromTime    string // Время отправления (00:00)
+	FromDate    string // Дата отправления (28.12.2020)
+	WhereCode   string // Код станции прибытия (2060600)
 }
 
 type GetTrainStationListParams struct {
-	TrainNumber string
-	DepDate     string
+	TrainNumber string // Номер поезда (072Е)
+	FromDate    string // Дата отправления (28.12.2020)
 }
 
 type GetStationCodeParams struct {
-	StationNamePart string
-	CompactMode     string
+	StationNamePart string // Часть названия станции, минимум 2 символа
+	CompactMode     string // Компактный режим (по умолчанию 'y')
 }
