@@ -65,11 +65,16 @@ func NewRzdClient(cfg *config.ConfigRZD) (*Client, error) {
 		Jar:       jar,
 	}
 
+	endpoints, err := NewEndpoints(cfg.BasePath, cfg.Language)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create endpoints: %v", err)
+	}
+
 	// Инициализация клиента
 	client := &Client{
 		config:     cfg,
 		HTTPClient: httpClient,
-		Endpoints:  NewEndpoints(cfg.BasePath, cfg.Language),
+		Endpoints:  endpoints,
 	}
 
 	return client, nil
