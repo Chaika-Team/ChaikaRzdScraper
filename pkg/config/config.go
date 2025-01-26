@@ -13,12 +13,13 @@ type Config struct {
 }
 
 type ConfigRZD struct {
-	Language  string  `env:"RZD_LANGUAGE,default=ru"`
-	Timeout   float64 `env:"RZD_TIMEOUT,default=5"`
-	Proxy     string  `env:"RZD_PROXY"`
-	UserAgent string  `env:"RZD_USER_AGENT,default=Mozilla/5.0 (compatible; RzdClient/1.0)"`
-	BasePath  string  `env:"RZD_BASE_PATH,default=https://pass.rzd.ru/"`
-	DebugMode bool    `env:"RZD_DEBUG_MODE,default=false"`
+	Language   string `env:"RZD_LANGUAGE,default=ru"`
+	Timeout    int    `env:"RZD_TIMEOUT,default=5"`
+	MaxRetries int    `env:"RZD_MAX_RETRIES,default=10"`
+	Proxy      string `env:"RZD_PROXY"`
+	UserAgent  string `env:"RZD_USER_AGENT,default=Mozilla/5.0 (compatible; RzdClient/1.0)"`
+	BasePath   string `env:"RZD_BASE_PATH,default=https://pass.rzd.ru/"`
+	DebugMode  bool   `env:"RZD_DEBUG_MODE,default=false"`
 }
 
 type ConfigGRPC struct {

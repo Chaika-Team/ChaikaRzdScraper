@@ -14,6 +14,7 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/Chaika-Team/rzd-api/internal/domain"
@@ -24,10 +25,11 @@ import (
 
 // Client структура клиента
 type Client struct {
-	BasePath   string
+	config     *config.ConfigRZD
 	HTTPClient *http.Client
-	Language   string
 	Endpoints  Endpoints
+	RIDCache   *RIDCache
+	mutex      sync.Mutex
 }
 
 // NewRzdClient инициализирует новый экземпляр клиента RzdClient с конфигурацией
@@ -63,9 +65,8 @@ func NewRzdClient(cfg *config.ConfigRZD) (*Client, error) {
 
 	// Инициализация клиента
 	client := &Client{
-		BasePath:   cfg.BasePath,
+		config:     cfg,
 		HTTPClient: httpClient,
-		Language:   cfg.Language,
 		Endpoints:  NewEndpoints(cfg.BasePath, cfg.Language),
 	}
 
@@ -74,10 +75,9 @@ func NewRzdClient(cfg *config.ConfigRZD) (*Client, error) {
 
 // executeRequest выполняет HTTP-запрос и обрабатывает ответ, включая обработку RID
 func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
-	maxRetries := 10
 	var lastError error
 
-	for attempt := 1; attempt <= maxRetries; attempt++ {
+	for attempt := 1; attempt <= c.config.MaxRetries; attempt++ {
 		log.Printf("Executing request: %s %s (Attempt %d)", req.Method, req.URL.String(), attempt)
 
 		// Сохранение тела запроса для повторных попыток
@@ -88,17 +88,17 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 		}
 
 		// Логирование запроса
-		reqDump, err := httputil.DumpRequestOut(req, true)
-		if err != nil {
-			log.Printf("Failed to dump request: %v", err)
-		} else {
-			log.Printf("Request dump:\n%s", string(reqDump))
-		}
+		// reqDump, err := httputil.DumpRequestOut(req, true)
+		// if err != nil {
+		//	log.Printf("Failed to dump request: %v", err)
+		// } else {
+		//	log.Printf("Request dump:\n%s", string(reqDump))
+		// }
 
 		// Восстановление тела запроса после дампа
-		if reqBodyBytes != nil {
-			req.Body = io.NopCloser(bytes.NewBuffer(reqBodyBytes))
-		}
+		// if reqBodyBytes != nil {
+		//	req.Body = io.NopCloser(bytes.NewBuffer(reqBodyBytes))
+		// }
 
 		resp, err := c.HTTPClient.Do(req)
 		if err != nil {
@@ -163,8 +163,8 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 
 			log.Printf("Retrying request with RID: %s", rid)
 
-			// Небольшая задержка перед повторным запросом
-			time.Sleep(1 * time.Second)
+			// Небольшая задержка перед повторным запросом, из c.config.Timeout (int секунд) в time.Duration
+			time.Sleep(time.Duration(c.config.Timeout) * time.Second)
 			lastError = nil
 			continue
 		}
@@ -184,7 +184,7 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 		lastError = fmt.Errorf("unexpected result field: %s", result)
 	}
 
-	return nil, fmt.Errorf("failed after %d attempts: %v", maxRetries, lastError)
+	return nil, fmt.Errorf("failed after %d attempts: %v", c.config.MaxRetries, lastError)
 }
 
 // extractRID извлекает RID из ответа API, поддерживая как строковые, так и числовые значения
@@ -239,9 +239,9 @@ func (c *Client) GetTrainRoutes(params domain.GetTrainRoutesParams) ([]domain.Tr
 	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
 	data.Set("dir", fmt.Sprintf("%d", params.Direction))
 	data.Set("tfl", fmt.Sprintf("%d", params.TrainType))
-	data.Set("checkSeats", fmt.Sprintf("%d", params.CheckSeats))
+	data.Set("checkSeats", utils.BoolToString(params.CheckSeats))
 	data.Set("dt0", params.FromDate.Format("02.01.2006"))
-	data.Set("md", fmt.Sprintf("%d", params.WithChange))
+	data.Set("md", utils.BoolToString(params.WithChange))
 
 	req, err := http.NewRequest("POST", c.Endpoints.TrainRoutes, strings.NewReader(data.Encode()))
 	if err != nil {
@@ -443,7 +443,7 @@ func (c *Client) GetStationCode(params domain.GetStationCodeParams) ([]domain.St
 func setHeaders(req *http.Request, client *Client) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("User-Agent", client.UserAgent())
-	req.Header.Set("Referer", client.BasePath)
+	req.Header.Set("Referer", client.config.BasePath)
 }
 
 // UserAgent возвращает User-Agent клиента

@@ -30,6 +30,7 @@ func main() {
 	cfg.RZD.Language = "ru"
 	cfg.RZD.Proxy = ""
 	cfg.RZD.Timeout = 10
+	cfg.RZD.MaxRetries = 10
 	cfg.RZD.DebugMode = false
 
 	// Тест клиента RZD
