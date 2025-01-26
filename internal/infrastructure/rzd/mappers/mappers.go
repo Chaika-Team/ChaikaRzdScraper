@@ -96,12 +96,12 @@ func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.Carriage {
 
 		tariff, err := strconv.Atoi(car.Tariff)
 		if err != nil {
-			log.Printf("failed to parse tariff: %v", err)
+			log.Printf("failed to parse tariff for car type %s (defaulting to 0): %v", car.Type, err)
 			tariff = 0
 		}
 		tariff2, err := strconv.Atoi(car.Tariff2)
 		if err != nil {
-			log.Printf("failed to parse tariff2: %v", err)
+			log.Printf("failed to parse tariff2 for car type %s (defaulting to 0): %v", car.Type, err)
 			tariff2 = 0
 		}
 
@@ -141,8 +141,16 @@ func mapTrainStationList(response schemas.TrainStationListResponse) domain.Train
 	var routes []domain.RouteInfo
 
 	for _, route := range response.Data.Routes {
-		arrivalTime, _ := parseTime(route.ArvTime)
-		departureTime, _ := parseTime(route.DepTime)
+		arrivalTime, err := parseTime(route.ArvTime)
+		if err != nil {
+			log.Printf("failed to parse arrival time %s: %v", route.ArvTime, err)
+			continue
+		}
+		departureTime, err := parseTime(route.DepTime)
+		if err != nil {
+			log.Printf("failed to parse departure time %s: %v", route.DepTime, err)
+			continue
+		}
 
 		routes = append(routes, domain.RouteInfo{
 			Station: domain.Station{

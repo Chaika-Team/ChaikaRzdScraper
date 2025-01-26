@@ -2,8 +2,7 @@
 package config
 
 import (
-	"log"
-
+	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
@@ -28,11 +27,10 @@ type ConfigGRPC struct {
 }
 
 // LoadConfig загружает конфигурацию из переменных окружения с использованием cleanenv
-func LoadConfig() *Config {
+func LoadConfig() (*Config, error) {
 	cfg := &Config{}
 	if err := cleanenv.ReadEnv(cfg); err != nil {
-		log.Fatalf("Failed to read environment variables: %v", err)
+		return nil, fmt.Errorf("failed to read environment variables: %w", err)
 	}
-
-	return cfg
+	return cfg, nil
 }

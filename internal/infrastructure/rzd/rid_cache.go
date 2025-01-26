@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// RIDCache кэш RID для запросов к API РЖД
 type RIDCache struct {
 	RID       string
 	ExpiresAt time.Time
@@ -24,6 +25,7 @@ func extractRID(apiResponse map[string]interface{}) (string, error) {
 	return "", errors.New("rid not found in response")
 }
 
+// getCachedRID возвращает RID из кэша
 func (c *Client) getCachedRID() (string, bool) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()
@@ -34,6 +36,7 @@ func (c *Client) getCachedRID() (string, bool) {
 	return "", false
 }
 
+// updateRID обновляет RID в кэше c TTL
 func (c *Client) updateRID(rid string, ttl time.Duration) {
 	c.mutex.Lock()
 	defer c.mutex.Unlock()

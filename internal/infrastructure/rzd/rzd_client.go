@@ -3,6 +3,7 @@ package rzd
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -194,7 +195,7 @@ func getErrorMessage(apiResponse map[string]interface{}) (string, bool) {
 }
 
 // GetTrainRoutes получает маршруты поездов в одну точку
-func (c *Client) GetTrainRoutes(params domain.GetTrainRoutesParams) ([]domain.TrainRoute, error) {
+func (c *Client) GetTrainRoutes(_ context.Context, params domain.GetTrainRoutesParams) ([]domain.TrainRoute, error) {
 	data := url.Values{}
 	data.Set("code0", fmt.Sprintf("%d", params.FromCode))
 	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
@@ -236,7 +237,7 @@ func (c *Client) GetTrainRoutes(params domain.GetTrainRoutesParams) ([]domain.Tr
 }
 
 // GetTrainRoutesReturn получает маршруты поездов туда-обратно
-func (c *Client) GetTrainRoutesReturn(params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error) {
+func (c *Client) GetTrainRoutesReturn(_ context.Context, params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error) {
 	data := url.Values{}
 	data.Set("code0", fmt.Sprintf("%d", params.FromCode))
 	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
@@ -294,10 +295,10 @@ func (c *Client) GetTrainRoutesReturn(params domain.GetTrainRoutesReturnParams) 
 }
 
 // GetTrainCarriages получает список вагонов выбранного поезда
-func (c *Client) GetTrainCarriages(params domain.GetTrainCarriagesParams) (domain.TrainCarriagesResponse, error) {
+func (c *Client) GetTrainCarriages(_ context.Context, params domain.GetTrainCarriagesParams) (domain.TrainCarriagesResponse, error) {
 	data := url.Values{}
 	data.Set("code0", fmt.Sprintf("%d", params.FromCode))
-	data.Set("code1", fmt.Sprintf("%d", params.FromCode))
+	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
 	data.Set("tnum0", params.TrainNumber)
 	data.Set("time0", params.FromTime.Format("15:04"))
 	data.Set("dt0", params.FromDate.Format("02.01.2006"))
@@ -331,7 +332,7 @@ func (c *Client) GetTrainCarriages(params domain.GetTrainCarriagesParams) (domai
 }
 
 // GetTrainStationList получает список станций в маршруте поезда
-func (c *Client) GetTrainStationList(params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error) {
+func (c *Client) GetTrainStationList(_ context.Context, params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error) {
 	data := url.Values{}
 	data.Set("trainNumber", params.TrainNumber)
 	data.Set("depDate", params.FromDate.Format("02.01.2006"))
@@ -367,7 +368,7 @@ func (c *Client) GetTrainStationList(params domain.GetTrainStationListParams) (d
 }
 
 // GetStationCode получает список кодов станций по части названия
-func (c *Client) GetStationCode(params domain.GetStationCodeParams) ([]domain.StationCode, error) {
+func (c *Client) GetStationCode(_ context.Context, params domain.GetStationCodeParams) ([]domain.StationCode, error) {
 	data := url.Values{}
 	data.Set("stationNamePart", params.StationNamePart)
 	data.Set("compactMode", utils.BoolToString(params.CompactMode))
@@ -403,11 +404,6 @@ func (c *Client) GetStationCode(params domain.GetStationCodeParams) ([]domain.St
 // setHeaders устанавливает заголовки для запросов
 func setHeaders(req *http.Request, client *Client) {
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("User-Agent", client.UserAgent())
+	req.Header.Set("User-Agent", client.config.UserAgent)
 	req.Header.Set("Referer", client.config.BasePath)
-}
-
-// UserAgent возвращает User-Agent клиента
-func (c *Client) UserAgent() string {
-	return "Mozilla/5.0 (compatible; RzdClient/1.0)"
 }

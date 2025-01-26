@@ -20,25 +20,25 @@ func New(rzdClient *rzd.Client) Service {
 
 // GetTrainRoutes реализует метод получения маршрутов поездов
 func (s *mainService) GetTrainRoutes(ctx context.Context, params domain.GetTrainRoutesParams) ([]domain.TrainRoute, error) {
-	return s.rzdClient.GetTrainRoutes(params)
+	return s.rzdClient.GetTrainRoutes(ctx, params)
 }
 
 // GetTrainRoutesReturn реализует метод получения маршрутов туда и обратно
 func (s *mainService) GetTrainRoutesReturn(ctx context.Context, params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error) {
-	return s.rzdClient.GetTrainRoutesReturn(params)
+	return s.rzdClient.GetTrainRoutesReturn(ctx, params)
 }
 
 // GetTrainCarriages реализует метод получения информации о вагонах
 func (s *mainService) GetTrainCarriages(ctx context.Context, params domain.GetTrainCarriagesParams) (domain.TrainCarriagesResponse, error) {
-	return s.rzdClient.GetTrainCarriages(params)
+	return s.rzdClient.GetTrainCarriages(ctx, params)
 }
 
 // GetTrainStationList реализует метод получения списка станций поезда
 func (s *mainService) GetTrainStationList(ctx context.Context, params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error) {
-	return s.rzdClient.GetTrainStationList(params)
+	return s.rzdClient.GetTrainStationList(ctx, params)
 }
 
 // GetStationCode реализует метод получения кодов станций
 func (s *mainService) GetStationCode(ctx context.Context, params domain.GetStationCodeParams) ([]domain.StationCode, error) {
-	return s.rzdClient.GetStationCode(params)
+	return s.rzdClient.GetStationCode(ctx, params)
 }

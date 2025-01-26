@@ -23,10 +23,10 @@ type Endpoints struct {
 }
 
 // NewEndpoints создает все эндпоинты на основе базового пути и языка, используя url.URL
-func NewEndpoints(basePath, language string) Endpoints {
+func NewEndpoints(basePath, language string) (Endpoints, error) {
 	baseURL, err := url.Parse(basePath)
 	if err != nil {
-		panic(fmt.Sprintf("invalid base path: %v", err))
+		return Endpoints{}, fmt.Errorf("failed to parse base URL: %w", err)
 	}
 
 	return Endpoints{
@@ -35,7 +35,7 @@ func NewEndpoints(basePath, language string) Endpoints {
 		TrainCarriages:    buildEndpointURL(baseURL, fmt.Sprintf("timetable/public/%s", language), CarriagesLayer),
 		TrainStationList:  buildStaticEndpoint(baseURL, "ticket/services/route/basicRoute"),
 		StationCode:       buildStaticEndpoint(baseURL, "suggester"),
-	}
+	}, nil
 }
 
 // buildEndpointURL конструирует URL эндпоинта с параметром layer_id

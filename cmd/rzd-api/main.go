@@ -2,9 +2,13 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
@@ -17,9 +21,22 @@ func main() {
 	var (
 		port string
 	)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Setup signal handling
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-sigChan
+		cancel()
+	}()
 
 	// Load configuration
-	cfg := config.LoadConfig()
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		log.Fatalf("failed to load configuration: %v", err)
+	}
 
 	// Parse command-line flags
 	flag.StringVar(&port, "port", cfg.GRPC.Port, "The gRPC server port")
@@ -50,7 +67,7 @@ func main() {
 		WithChange: false, // Без пересадок
 	}
 
-	routes, err := client.GetTrainRoutes(params)
+	routes, err := client.GetTrainRoutes(ctx, params)
 	if err != nil {
 		log.Fatalf("failed to get train routes: %v", err)
 	}

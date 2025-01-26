@@ -1,11 +1,13 @@
 // pkg/rzd/schemas/train_route.go
 package schemas
 
+// TrainRouteResponse represents the response from the RZD API
 type TrainRouteResponse struct {
 	Result string `json:"result"`
 	TP     []TP   `json:"tp"`
 }
 
+// TP represents a train route from the RZD API
 type TP struct {
 	From        string      `json:"from"`
 	FromCode    int         `json:"fromCode"`
@@ -19,6 +21,7 @@ type TP struct {
 	Cur         []int       `json:"cur"`
 }
 
+// TrainList represents a train list from the RZD API
 type TrainList struct {
 	Number            string         `json:"number"`
 	Number2           string         `json:"number2"`
@@ -58,6 +61,7 @@ type TrainList struct {
 	AddHandLuggage    bool           `json:"addHandLuggage"`
 }
 
+// Carriage represents a carriage from the RZD API
 type Carriage struct {
 	CarDataType    int    `json:"carDataType"`
 	Itype          int    `json:"itype"`
@@ -70,6 +74,7 @@ type Carriage struct {
 	DisabledPerson bool   `json:"disabledPerson,omitempty"`
 }
 
+// SeatCarriage represents a seat carriage from the RZD API, whatever that means
 type SeatCarriage struct { // Да, они разные
 	CarDataType int    `json:"carDataType"`
 	Itype       int    `json:"itype"`
