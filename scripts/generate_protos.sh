@@ -11,7 +11,7 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 # Переходим в корневую директорию проекта
 PROJECT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 # Указываем относительный путь до proto-файла
-PROTO_DIR="$PROJECT_DIR/proto"
+PROTO_DIR="$PROJECT_DIR/proto/rzd"
 OUT_DIR="$PROJECT_DIR/internal/transports/grpc/pb"
 # Validate directories exist
 for dir in "$PROTO_DIR" "$OUT_DIR"; do
