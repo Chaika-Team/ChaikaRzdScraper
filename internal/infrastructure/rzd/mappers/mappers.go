@@ -2,12 +2,13 @@ package mappers
 
 import (
 	"fmt"
-	"github.com/Chaika-Team/rzd-api/internal/domain"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/schemas"
 	"log"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/Chaika-Team/rzd-api/internal/domain"
+	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/schemas"
 )
 
 // MapTrainRouteResponse маппит ответ API маршрутов в доменную модель
@@ -99,6 +100,10 @@ func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.Carriage {
 			tariff = 0
 		}
 		tariff2, err := strconv.Atoi(car.Tariff2)
+		if err != nil {
+			log.Printf("failed to parse tariff2: %v", err)
+			tariff2 = 0
+		}
 
 		carriage := domain.Carriage{
 			Number:    strconv.Itoa(car.Itype),

@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/Chaika-Team/rzd-api/internal/utils"
 	"io"
 	"log"
 	"net/http"
@@ -16,6 +15,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/Chaika-Team/rzd-api/internal/utils"
 
 	"github.com/Chaika-Team/rzd-api/internal/domain"
 	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/mappers"
@@ -241,7 +242,7 @@ func (c *Client) GetTrainRoutesReturn(params domain.GetTrainRoutesReturnParams) 
 	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
 	data.Set("dir", fmt.Sprintf("%d", params.Direction))
 	data.Set("tfl", fmt.Sprintf("%d", params.TrainType))
-	data.Set("checkSeats", fmt.Sprintf("%d", params.CheckSeats))
+	data.Set("checkSeats", utils.BoolToString(params.CheckSeats))
 	data.Set("dt0", params.FromDate.Format("02.01.2006"))
 	data.Set("dt1", params.ToDate.Format("02.01.2006"))
 
