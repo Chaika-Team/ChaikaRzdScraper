@@ -1,4 +1,3 @@
-/vendor
 ### GoLand+all template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -71,13 +70,14 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
+
 # Editor-based Rest Client
 .idea/httpRequests
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-.idea### Go template
+### Go template
 # If you prefer the allow list template instead of the deny list, see community template:
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #
@@ -107,3 +107,4 @@ go.work.sum
 # Custom
 *.sh
 *.txt
+.idea
