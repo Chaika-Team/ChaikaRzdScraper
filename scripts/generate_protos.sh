@@ -7,7 +7,7 @@ PROJECT_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 
 # Указываем относительный путь до proto-файла
 PROTO_DIR="$PROJECT_DIR/proto"
-OUT_DIR="$PROJECT_DIR/internal/infrastructure/grpc/pb"
+OUT_DIR="$PROJECT_DIR/internal/transports/grpc/pb"
 
 # Генерация Protobuf файлов
 protoc -I="$PROTO_DIR" \

@@ -1,19 +1,16 @@
-// cmd/rzd-grpc-service/main.go
+// cmd/rzd-api/main.go
 package main
 
 import (
 	"flag"
 	"fmt"
 	"log"
-	"net"
+	"time"
 
-	pb "github.com/Chaika-Team/rzd-api/internal/infrastructure/grpc/pb"
 	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
-	"github.com/Chaika-Team/rzd-api/internal/interfaces"
-	"github.com/Chaika-Team/rzd-api/internal/usecase"
+
+	"github.com/Chaika-Team/rzd-api/internal/domain"
 	"github.com/Chaika-Team/rzd-api/pkg/config"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -21,40 +18,44 @@ func main() {
 		port string
 	)
 
-	flag.StringVar(&port, "port", "50051", "The server port")
-	flag.Parse()
-
-	// Загрузка конфигурации
+	// Load configuration
 	cfg := config.LoadConfig()
 
-	// Инициализация RzdClient
-	rzdClient := rzd.NewRzdClient(cfg)
+	// Parse command-line flags
+	flag.StringVar(&port, "port", cfg.GRPC.Port, "The gRPC server port")
+	flag.Parse()
 
-	// Инициализация UseCase
-	routeUseCase := usecase.NewRouteUseCase(rzdClient)
-	carriageUseCase := usecase.NewCarriageUseCase(rzdClient)
-	stationUseCase := usecase.NewStationUseCase(rzdClient)
+	cfg.RZD.BasePath = "https://pass.rzd.ru/"
+	cfg.RZD.UserAgent = "Mozilla/5.0 (compatible; RzdClient/1.0)"
+	cfg.RZD.Language = "ru"
+	cfg.RZD.Proxy = ""
+	cfg.RZD.Timeout = 10
+	cfg.RZD.DebugMode = false
 
-	// Создание экземпляра gRPC-сервиса
-	rzdServiceServer := interfaces.NewRZDServiceServer(routeUseCase, carriageUseCase, stationUseCase)
-
-	// Создание слушателя
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%s", port))
+	// Тест клиента RZD
+	client, err := rzd.NewRzdClient(&cfg.RZD)
 	if err != nil {
-		log.Fatalf("Failed to listen on port %s: %v", port, err)
+		log.Fatalf("failed to create RZD client: %v", err)
 	}
 
-	// Создание gRPC-сервера
-	grpcServer := grpc.NewServer()
+	params := domain.GetTrainRoutesParams{
+		FromCode:   2004000,          // Санкт-Петербург
+		ToCode:     2000000,          // Москва
+		Direction:  domain.OneWay,    // Только туда
+		TrainType:  domain.AllTrains, // Поезда и электрички
+		CheckSeats: false,            // Не проверять наличие мест
+		FromDate:   time.Now().Add(24 * time.Hour),
+		WithChange: false, // Без пересадок
+	}
 
-	// Регистрация сервиса
-	pb.RegisterRZDServiceServer(grpcServer, rzdServiceServer)
+	routes, err := client.GetTrainRoutes(params)
+	if err != nil {
+		log.Fatalf("failed to get train routes: %v", err)
+	}
 
-	// Включение reflection для удобства тестирования
-	reflection.Register(grpcServer)
-
-	log.Printf("RZD gRPC service is running on port %s...", port)
-	if err := grpcServer.Serve(lis); err != nil {
-		log.Fatalf("Failed to serve gRPC server: %v", err)
+	for _, route := range routes {
+		fmt.Printf("Train %s from %s to %s departs at %s and arrives at %s\n",
+			route.TrainNumber, route.From.Name, route.To.Name,
+			route.Departure.Format("15:04"), route.Arrival.Format("15:04"))
 	}
 }

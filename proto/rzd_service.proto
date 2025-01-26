@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package rzd;
 
-option go_package = "github.com/Chaika-Team/rzd-api/internal/infrastructure/grpc/pb;rzd";
+option go_package = "github.com/Chaika-Team/rzd-api/internal/transports/grpc/pb;rzd";
 
 service RZDService {
   rpc GetTrainRoutes (GetTrainRoutesRequest) returns (GetTrainRoutesResponse);
