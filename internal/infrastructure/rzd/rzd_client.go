@@ -87,18 +87,13 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 			req.Body = io.NopCloser(bytes.NewBuffer(reqBodyBytes))
 		}
 
-		// Логирование запроса
-		// reqDump, err := httputil.DumpRequestOut(req, true)
-		// if err != nil {
-		//	log.Printf("Failed to dump request: %v", err)
-		// } else {
-		//	log.Printf("Request dump:\n%s", string(reqDump))
-		// }
-
-		// Восстановление тела запроса после дампа
-		// if reqBodyBytes != nil {
-		//	req.Body = io.NopCloser(bytes.NewBuffer(reqBodyBytes))
-		// }
+		// Попытка использовать закэшированный RID
+		if rid, valid := c.getCachedRID(); valid {
+			q := req.URL.Query()
+			q.Set("rid", rid)
+			req.URL.RawQuery = q.Encode()
+			log.Printf("Using cached RID: %s", rid)
+		}
 
 		resp, err := c.HTTPClient.Do(req)
 		if err != nil {
@@ -153,18 +148,12 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 				lastError = err
 				continue
 			}
+			c.updateRID(rid, time.Duration(c.config.RIDLifetime)*time.Millisecond) // Обновление RID в кэше
 
 			log.Printf("Received RID: %s", rid)
 
-			// Добавляем rid к параметрам запроса
-			q := req.URL.Query()
-			q.Set("rid", rid)
-			req.URL.RawQuery = q.Encode()
-
-			log.Printf("Retrying request with RID: %s", rid)
-
 			// Небольшая задержка перед повторным запросом, из c.config.Timeout (int секунд) в time.Duration
-			time.Sleep(time.Duration(c.config.Timeout) * time.Second)
+			time.Sleep(time.Duration(c.config.Timeout) * time.Millisecond)
 			lastError = nil
 			continue
 		}
@@ -185,35 +174,6 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 	}
 
 	return nil, fmt.Errorf("failed after %d attempts: %v", c.config.MaxRetries, lastError)
-}
-
-// extractRID извлекает RID из ответа API, поддерживая как строковые, так и числовые значения
-func extractRID(apiResponse map[string]interface{}) (string, error) {
-	// Проверка на "rid" в нижнем регистре
-	if rid, ok := apiResponse["rid"]; ok {
-		switch v := rid.(type) {
-		case string:
-			return v, nil
-		case float64:
-			return fmt.Sprintf("%.0f", v), nil
-		default:
-			return "", errors.New("rid has unsupported type")
-		}
-	}
-
-	// Проверка на "RID" в верхнем регистре
-	if rid, ok := apiResponse["RID"]; ok {
-		switch v := rid.(type) {
-		case string:
-			return v, nil
-		case float64:
-			return fmt.Sprintf("%.0f", v), nil
-		default:
-			return "", errors.New("RID has unsupported type")
-		}
-	}
-
-	return "", errors.New("rid not found in response")
 }
 
 // getErrorMessage извлекает сообщение об ошибке из ответа API, если оно присутствует

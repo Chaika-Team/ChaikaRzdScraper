@@ -29,8 +29,9 @@ func main() {
 	cfg.RZD.UserAgent = "Mozilla/5.0 (compatible; RzdClient/1.0)"
 	cfg.RZD.Language = "ru"
 	cfg.RZD.Proxy = ""
-	cfg.RZD.Timeout = 10
-	cfg.RZD.MaxRetries = 10
+	cfg.RZD.Timeout = 1700
+	cfg.RZD.RIDLifetime = 300000
+	cfg.RZD.MaxRetries = 5
 	cfg.RZD.DebugMode = false
 
 	// Тест клиента RZD
@@ -59,4 +60,5 @@ func main() {
 			route.TrainNumber, route.From.Name, route.To.Name,
 			route.Departure.Format("15:04"), route.Arrival.Format("15:04"))
 	}
+
 }

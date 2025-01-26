@@ -28,20 +28,22 @@ type Station struct {
 
 // Carriage представляет вагон поезда
 type Carriage struct {
-	Number   string  // Номер вагона
-	Type     string  // Тип вагона (купе, плацкарт и т.д.)
-	Class    string  // Класс вагона (2Л, 2Э и т.д.)
-	Tariff   float64 // Стоимость билета
-	Seats    []Seat  // Список мест в вагоне
-	Disabled bool    // Места для инвалидов
+	Number    string // Номер вагона
+	Type      string // Тип вагона (купе, плацкарт и т.д.)
+	TypeLabel string // Полное наименование типа вагона
+	Class     string // Класс вагона (2Л, 2Э и т.д.)
+	Tariff    int    // Стоимость билета
+	TariffEx  int    // Тариф за место 2 TODO: что это
+	FreeSeats int    // Количество свободных мест
+	Seats     []Seat // Список мест в вагоне
+	Disabled  bool   // Места для инвалидов
 }
 
-// Seat представляет место в вагоне
+// Seat представляет место в вагоне //TODO не готово
 type Seat struct {
 	Places []string // Список свободных мест
-	Tariff float64  // Тариф за место
+	Tariff int      // Тариф за место
 	Type   string   // Тип места (верхние, нижние и т.д.)
-	Free   int32    // Количество свободных мест
 	Label  string   // Полное наименование места
 }
 

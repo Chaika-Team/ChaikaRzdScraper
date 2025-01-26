@@ -1,10 +1,27 @@
 package rzd
 
-import "time"
+import (
+	"errors"
+	"fmt"
+	"time"
+)
 
 type RIDCache struct {
 	RID       string
 	ExpiresAt time.Time
+}
+
+// extractRID извлекает RID из ответа API
+func extractRID(apiResponse map[string]interface{}) (string, error) {
+	if rid, ok := apiResponse["RID"]; ok {
+		return fmt.Sprintf("%.0f", rid), nil
+
+	}
+	if rid, ok := apiResponse["rid"]; ok {
+		return fmt.Sprintf("%.0f", rid), nil
+
+	}
+	return "", errors.New("rid not found in response")
 }
 
 func (c *Client) getCachedRID() (string, bool) {

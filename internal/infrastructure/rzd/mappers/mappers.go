@@ -1,9 +1,12 @@
 package mappers
 
 import (
+	"fmt"
 	"github.com/Chaika-Team/rzd-api/internal/domain"
 	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/schemas"
+	"log"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -11,35 +14,53 @@ import (
 func MapTrainRouteResponse(response schemas.TrainRouteResponse) ([]domain.TrainRoute, error) {
 	var routes []domain.TrainRoute
 
+	// Перебор всех TP в ответе
 	for _, tp := range response.TP {
-		for _, trainList := range tp.List {
-			for _, cases := range trainList.Cases {
-				for _, trainCase := range cases {
-					duration, _ := time.ParseDuration(trainCase.TimeInWay + "m") // "12:30" -> 12h30m -> 12h30m0s Duration
-					departure, _ := parseDateTime(trainCase.Date0, trainCase.Time0)
-					arrival, _ := parseDateTime(trainCase.Date1, trainCase.Time1)
-
-					route := domain.TrainRoute{
-						TrainNumber: trainCase.Number,
-						Duration:    duration,
-						Brand:       trainCase.Brand,
-						Carrier:     trainCase.Carrier,
-						From: domain.Station{
-							Name: trainCase.Station0,
-							Code: trainCase.Code0,
-						},
-						To: domain.Station{
-							Name: trainCase.Station1,
-							Code: trainCase.Code1,
-						},
-						Departure: departure,
-						Arrival:   arrival,
-						Cars:      mapTrainCarriages(trainCase.Cars),
-					}
-
-					routes = append(routes, route)
-				}
+		// Перебор всех поездов в списке
+		for _, train := range tp.List {
+			// Парсинг времени в пути
+			duration, err := parseDuration(train.TimeInWay)
+			if err != nil {
+				return nil, fmt.Errorf("failed to parse timeInWay: %v", err)
 			}
+
+			// Парсинг времени отправления и прибытия
+			departure, err := parseDateTime(train.Date0, train.Time0)
+			if err != nil {
+				return nil, fmt.Errorf("failed to parse departure time: %v", err)
+			}
+
+			arrival, err := parseDateTime(train.Date1, train.Time1)
+			if err != nil {
+				return nil, fmt.Errorf("failed to parse arrival time: %v", err)
+			}
+
+			// Маппинг маршрута
+			route := domain.TrainRoute{
+				TrainNumber: train.Number,
+				Duration:    duration,
+				Brand:       train.Brand,
+				Carrier:     train.Carrier,
+				From: domain.Station{
+					Name: train.Station0,
+					Code: train.Code0,
+				},
+				To: domain.Station{
+					Name: train.Station1,
+					Code: train.Code1,
+				},
+				Departure: departure,
+				Arrival:   arrival,
+				Cars:      mapTrainCarriages(train.Cars),
+			}
+
+			// Обработка seatCars (если они есть)
+			if len(train.SeatCars) > 0 {
+				seatCarriages := mapTrainSeatCarriages(train.SeatCars)
+				route.Cars = append(route.Cars, seatCarriages...)
+			}
+
+			routes = append(routes, route)
 		}
 	}
 
@@ -52,12 +73,13 @@ func mapTrainCarriages(carriages []schemas.Carriage) []domain.Carriage {
 
 	for _, car := range carriages {
 		carriage := domain.Carriage{
-			Number:   strconv.Itoa(car.Itype),
-			Type:     car.TypeLoc,
-			Class:    car.ServCls,
-			Tariff:   float64(car.Tariff),
-			Disabled: car.DisabledPerson,
-			Seats:    mapSeats(car),
+			Number:    strconv.Itoa(car.Itype),
+			Type:      car.Type,
+			TypeLabel: car.TypeLoc,
+			Class:     car.ServCls,
+			Tariff:    car.Tariff,
+			Disabled:  car.DisabledPerson,
+			Seats:     []domain.Seat{},
 		}
 
 		result = append(result, carriage)
@@ -66,20 +88,50 @@ func mapTrainCarriages(carriages []schemas.Carriage) []domain.Carriage {
 	return result
 }
 
-// mapSeats маппит места вагона
+func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.Carriage {
+	var result []domain.Carriage
+
+	for _, car := range carriages {
+
+		tariff, err := strconv.Atoi(car.Tariff)
+		if err != nil {
+			log.Printf("failed to parse tariff: %v", err)
+			tariff = 0
+		}
+		tariff2, err := strconv.Atoi(car.Tariff2)
+
+		carriage := domain.Carriage{
+			Number:    strconv.Itoa(car.Itype),
+			Type:      car.Type,
+			TypeLabel: car.TypeLoc,
+			Class:     car.ServCls,
+			Tariff:    tariff,
+			TariffEx:  tariff2,
+			Disabled:  false, // Как понимаю SeatCarriage сделано для бизнес-класса, где нет мест для инвалидов
+			FreeSeats: car.FreeSeats,
+			Seats:     []domain.Seat{},
+		}
+
+		result = append(result, carriage)
+	}
+
+	return result
+}
+
+// mapSeats маппит места вагона // TODO не готово
 func mapSeats(car schemas.Carriage) []domain.Seat {
+
 	return []domain.Seat{
 		{
 			Places: []string{}, // API может не возвращать конкретные места, это можно уточнить.
-			Tariff: float64(car.Tariff),
+			Tariff: car.Tariff,
 			Type:   car.TypeLoc,
-			Free:   int32(car.FreeSeats),
 			Label:  car.Type,
 		},
 	}
 }
 
-// mapTrainStationList маппит ответ списка станций
+// mapTrainStationList маппит ответ списка станций  // TODO не готово
 func mapTrainStationList(response schemas.TrainStationListResponse) domain.TrainStationListResponse {
 	var routes []domain.RouteInfo
 
@@ -109,6 +161,23 @@ func mapTrainStationList(response schemas.TrainStationListResponse) domain.Train
 func parseDateTime(dateStr, timeStr string) (time.Time, error) {
 	layout := "02.01.2006 15:04"
 	return time.Parse(layout, dateStr+" "+timeStr)
+}
+
+// parseDuration преобразует строку времени в пути формата HH:mm в time.Duration
+func parseDuration(durationStr string) (time.Duration, error) {
+	parts := strings.Split(durationStr, ":")
+	if len(parts) != 2 {
+		return 0, fmt.Errorf("invalid duration format: %s", durationStr)
+	}
+	hours, err := strconv.Atoi(parts[0])
+	if err != nil {
+		return 0, fmt.Errorf("invalid hours in duration: %s", parts[0])
+	}
+	minutes, err := strconv.Atoi(parts[1])
+	if err != nil {
+		return 0, fmt.Errorf("invalid minutes in duration: %s", parts[1])
+	}
+	return time.Duration(hours)*time.Hour + time.Duration(minutes)*time.Minute, nil
 }
 
 // parseTime парсит только время
