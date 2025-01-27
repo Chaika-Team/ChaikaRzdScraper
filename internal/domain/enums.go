@@ -18,17 +18,19 @@ const (
 	Electrics                            // Только электрички
 )
 
+// SeatType представляет тип места в вагоне поезда
 type SeatType int32
 
 const (
 	Platz   SeatType = iota + 1 // Плац
-	General                     // Общий
+	General                     // Общий TODO удостовериться
 	Side                        // Cид
 	Coupe                       // Купе
 	Soft                        // Мягкий
 	Lux                         // Люкс
 )
 
+// TrainType представляет тип поезда (поезд или электричка)
 type TrainType int32
 
 const (

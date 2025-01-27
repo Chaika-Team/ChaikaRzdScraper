@@ -5,15 +5,14 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"github.com/Chaika-Team/rzd-api/internal/domain"
+	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
-
-	"github.com/Chaika-Team/rzd-api/internal/domain"
 	"github.com/Chaika-Team/rzd-api/pkg/config"
 )
 
@@ -57,6 +56,7 @@ func main() {
 		log.Fatalf("failed to create RZD client: %v", err)
 	}
 
+	// Тест 1: Получение списка станций
 	params := domain.GetTrainRoutesParams{
 		FromCode:   2004000,          // Санкт-Петербург
 		ToCode:     2000000,          // Москва
@@ -81,5 +81,10 @@ func main() {
 				car.TypeShortLabel, car.Class, car.FreeSeats, car.Tariff)
 		}
 	}
+
+	// Тест 2: Получение списка вагонов
+	//params := domain.GetTrainCarriagesParams{
+	//
+	//}
 
 }

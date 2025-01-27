@@ -90,7 +90,7 @@ func mapTrainCarriages(carriages []schemas.CarriageType) []domain.CarriageType {
 	return result
 }
 
-func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.CarriageType {
+func mapTrainSeatCarriages(carriages []schemas.SeatCarriageType) []domain.CarriageType {
 	var result []domain.CarriageType
 
 	for _, car := range carriages {
@@ -115,7 +115,7 @@ func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.CarriageTy
 			Class:     car.ServCls,
 			Tariff:    tariff,
 			TariffEx:  tariff2,
-			Disabled:  false, // Как понимаю SeatCarriage сделано для бизнес-класса, где нет мест для инвалидов
+			Disabled:  false, // Как понимаю SeatCarriageType сделано для бизнес-класса, где нет мест для инвалидов
 			FreeSeats: car.FreeSeats,
 		}
 
