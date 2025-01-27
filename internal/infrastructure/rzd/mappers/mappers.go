@@ -43,22 +43,24 @@ func MapTrainRouteResponse(response schemas.TrainRouteResponse) ([]domain.TrainR
 				Brand:       train.Brand,
 				Carrier:     train.Carrier,
 				From: domain.Station{
-					Name: train.Station0,
-					Code: train.Code0,
+					Name:      train.Station0,
+					RouteName: train.Route0,
+					Code:      train.Code0,
 				},
 				To: domain.Station{
-					Name: train.Station1,
-					Code: train.Code1,
+					Name:      train.Station1,
+					RouteName: train.Route1,
+					Code:      train.Code1,
 				},
 				Departure: departure,
 				Arrival:   arrival,
-				Cars:      mapTrainCarriages(train.Cars),
+				CarTypes:  mapTrainCarriages(train.Cars),
 			}
 
 			// Обработка seatCars (если они есть)
 			if len(train.SeatCars) > 0 {
 				seatCarriages := mapTrainSeatCarriages(train.SeatCars)
-				route.Cars = append(route.Cars, seatCarriages...)
+				route.CarTypes = append(route.CarTypes, seatCarriages...)
 			}
 
 			routes = append(routes, route)
@@ -69,18 +71,17 @@ func MapTrainRouteResponse(response schemas.TrainRouteResponse) ([]domain.TrainR
 }
 
 // mapTrainCarriages маппит список вагонов
-func mapTrainCarriages(carriages []schemas.Carriage) []domain.Carriage {
-	var result []domain.Carriage
+func mapTrainCarriages(carriages []schemas.CarriageType) []domain.CarriageType {
+	var result []domain.CarriageType
 
 	for _, car := range carriages {
-		carriage := domain.Carriage{
-			Number:    strconv.Itoa(car.Itype),
-			Type:      car.Type,
-			TypeLabel: car.TypeLoc,
-			Class:     car.ServCls,
-			Tariff:    car.Tariff,
-			Disabled:  car.DisabledPerson,
-			Seats:     []domain.Seat{},
+		carriage := domain.CarriageType{
+			Type:           domain.SeatType(car.Itype),
+			TypeShortLabel: car.Type,
+			TypeLabel:      car.TypeLoc,
+			Class:          car.ServCls,
+			Tariff:         car.Tariff,
+			Disabled:       car.DisabledPerson,
 		}
 
 		result = append(result, carriage)
@@ -89,8 +90,8 @@ func mapTrainCarriages(carriages []schemas.Carriage) []domain.Carriage {
 	return result
 }
 
-func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.Carriage {
-	var result []domain.Carriage
+func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.CarriageType {
+	var result []domain.CarriageType
 
 	for _, car := range carriages {
 
@@ -99,22 +100,23 @@ func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.Carriage {
 			log.Printf("failed to parse tariff for car type %s (defaulting to 0): %v", car.Type, err)
 			tariff = 0
 		}
-		tariff2, err := strconv.Atoi(car.Tariff2)
-		if err != nil {
-			log.Printf("failed to parse tariff2 for car type %s (defaulting to 0): %v", car.Type, err)
-			tariff2 = 0
+		tariff2 := 0
+		if car.Tariff2 != "" {
+			tariff2, err = strconv.Atoi(car.Tariff2)
+			if err != nil {
+				log.Printf("failed to parse tariff2 for car type %s (defaulting to 0): %v", car.Type, err)
+				tariff2 = 0
+			}
 		}
 
-		carriage := domain.Carriage{
-			Number:    strconv.Itoa(car.Itype),
-			Type:      car.Type,
+		carriage := domain.CarriageType{
+			Type:      domain.SeatType(car.Itype),
 			TypeLabel: car.TypeLoc,
 			Class:     car.ServCls,
 			Tariff:    tariff,
 			TariffEx:  tariff2,
 			Disabled:  false, // Как понимаю SeatCarriage сделано для бизнес-класса, где нет мест для инвалидов
 			FreeSeats: car.FreeSeats,
-			Seats:     []domain.Seat{},
 		}
 
 		result = append(result, carriage)
@@ -124,7 +126,7 @@ func mapTrainSeatCarriages(carriages []schemas.SeatCarriage) []domain.Carriage {
 }
 
 // mapSeats маппит места вагона // TODO не готово
-func mapSeats(car schemas.Carriage) []domain.Seat {
+func mapSeats(car schemas.CarriageType) []domain.Seat {
 
 	return []domain.Seat{
 		{

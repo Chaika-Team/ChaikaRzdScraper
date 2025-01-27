@@ -52,7 +52,7 @@ type TrainList struct {
 	TimeInWay         string         `json:"timeInWay"`
 	FlMsk             int            `json:"flMsk"`
 	TrainID           int            `json:"train_id"`
-	Cars              []Carriage     `json:"cars"`
+	Cars              []CarriageType `json:"cars"`
 	SeatCars          []SeatCarriage `json:"seatCars,omitempty"`
 	CarNumeration     string         `json:"carNumeration"`
 	DisabledType      bool           `json:"disabledType"`
@@ -61,8 +61,8 @@ type TrainList struct {
 	AddHandLuggage    bool           `json:"addHandLuggage"`
 }
 
-// Carriage represents a carriage from the RZD API
-type Carriage struct {
+// CarriageType represents a carriage from the RZD API
+type CarriageType struct {
 	CarDataType    int    `json:"carDataType"`
 	Itype          int    `json:"itype"`
 	Type           string `json:"type"`

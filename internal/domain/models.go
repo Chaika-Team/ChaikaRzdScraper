@@ -8,6 +8,7 @@ import (
 // TrainRoute представляет маршрут поезда
 type TrainRoute struct {
 	TrainNumber string        // Номер поезда
+	TrainType   TrainType     // Тип поезда
 	Duration    time.Duration // Время в пути
 	Brand       string        // Бренд поезда
 	Carrier     string        // Перевозчик
@@ -17,26 +18,26 @@ type TrainRoute struct {
 	Departure time.Time
 	Arrival   time.Time
 
-	Cars []Carriage // Список вагонов поезда
+	CarTypes []CarriageType // Список вагонов поезда
 }
 
 // Station представляет железнодорожную станцию
 type Station struct {
-	Name string // Название станции
-	Code int    // Код станции
+	Name      string // Название станции (САНКТ-ПЕТЕРБУРГ-ГЛАВН. (МОСКОВСКИЙ ВОКЗАЛ))
+	RouteName string // Название станции на маршруте ("С-ПЕТЕР-ГЛ", "БЕЛГОРОД")
+	Code      int    // Код станции (2000000, 2004000)
 }
 
-// Carriage представляет вагон поезда
-type Carriage struct {
-	Number    string // Номер вагона
-	Type      string // Тип вагона (купе, плацкарт и т.д.)
-	TypeLabel string // Полное наименование типа вагона
-	Class     string // Класс вагона (2Л, 2Э и т.д.)
-	Tariff    int    // Стоимость билета
-	TariffEx  int    // Тариф за место 2 TODO: что это
-	FreeSeats int    // Количество свободных мест
-	Seats     []Seat // Список мест в вагоне
-	Disabled  bool   // Места для инвалидов
+// CarriageType представляет типы вагонов поезда
+type CarriageType struct {
+	Type           SeatType // Тип посадочных мест в вагоне (плацкарт, купе и т.д.)
+	TypeShortLabel string   // Краткое наименование типа вагона
+	TypeLabel      string   // Полное наименование типа вагона
+	Class          string   // Класс вагона (2Л, 2Э и т.д.)
+	Tariff         int      // Стоимость билета
+	TariffEx       int      // Тариф за место 2 TODO: что это
+	FreeSeats      int      // Количество свободных мест
+	Disabled       bool     // Места для инвалидов
 }
 
 // Seat представляет место в вагоне //TODO не готово
@@ -49,10 +50,10 @@ type Seat struct {
 
 // TrainCarriagesResponse представляет ответ на запрос вагонов
 type TrainCarriagesResponse struct {
-	Cars           []Carriage // Список вагонов
-	FunctionBlocks []string   // Функциональные блоки
-	Schemes        []string   // Схемы вагонов
-	Companies      []string   // Компании перевозчики
+	Cars           []CarriageType // Список вагонов
+	FunctionBlocks []string       // Функциональные блоки
+	Schemes        []string       // Схемы вагонов
+	Companies      []string       // Компании перевозчики
 }
 
 // TrainInfo представляет информацию о поезде
@@ -83,13 +84,13 @@ type StationCode struct {
 
 // GetTrainRoutesParams представляет параметры для запроса маршрутов
 type GetTrainRoutesParams struct {
-	FromCode   int       // Код станции отправления
-	ToCode     int       // Код станции прибытия
-	Direction  Direction // Направление
-	TrainType  TrainType // Тип поезда
-	CheckSeats bool      // Проверка наличия мест
-	FromDate   time.Time // Дата отправления
-	WithChange bool      // С пересадками
+	FromCode   int             // Код станции отправления
+	ToCode     int             // Код станции прибытия
+	Direction  Direction       // Направление
+	TrainType  TrainSearchType // Тип поезда
+	CheckSeats bool            // Проверка наличия мест
+	FromDate   time.Time       // Дата отправления
+	WithChange bool            // С пересадками
 }
 
 // GetTrainRoutesReturnParams представляет параметры для запроса маршрутов туда-обратно

@@ -47,11 +47,7 @@ func NewRzdClient(cfg *config.ConfigRZD) (*Client, error) {
 	}
 
 	// Установка уровня логирования
-	if cfg.DebugMode {
-		log.SetFlags(log.LstdFlags | log.Lshortfile)
-	} else {
-		log.SetFlags(log.LstdFlags)
-	}
+	// TODO добавить уровень логирования к запросам
 
 	// Создание CookieJar
 	jar, err := cookiejar.New(nil)

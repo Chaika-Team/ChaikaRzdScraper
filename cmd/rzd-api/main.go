@@ -73,9 +73,13 @@ func main() {
 	}
 
 	for _, route := range routes {
-		fmt.Printf("Train %s from %s to %s departs at %s and arrives at %s\n",
-			route.TrainNumber, route.From.Name, route.To.Name,
+		fmt.Printf("Поезд %s типа %d из %s в %s отправляется в %s и прибывает в %s\n",
+			route.TrainNumber, route.TrainType, route.From.Name, route.To.Name,
 			route.Departure.Format("15:04"), route.Arrival.Format("15:04"))
+		for _, car := range route.CarTypes {
+			fmt.Printf("\tВагон %s %s класса, свободных мест: %d, стоимость: %d руб.\n",
+				car.TypeShortLabel, car.Class, car.FreeSeats, car.Tariff)
+		}
 	}
 
 }

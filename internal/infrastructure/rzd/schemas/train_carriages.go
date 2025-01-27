@@ -10,6 +10,6 @@ type TrainCarriagesResponse struct {
 
 // TrainCarriage represents a train carriage from the RZD API
 type TrainCarriage struct {
-	Cars           []Carriage `json:"cars"`
-	FunctionBlocks []string   `json:"functionBlocks"`
+	Cars           []CarriageType `json:"cars"`
+	FunctionBlocks []string       `json:"functionBlocks"`
 }

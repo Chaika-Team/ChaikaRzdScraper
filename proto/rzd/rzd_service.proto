@@ -14,7 +14,7 @@ service RZDService {
 
 // Запросы и ответы
 
-message GetTrainRoutesRequest {
+message GetTrainRoutesRequest { 
   string code0 = 1;
   string code1 = 2;
   int32 dir = 3;        // 0 - только в одну сторону, 1 - туда-обратно
