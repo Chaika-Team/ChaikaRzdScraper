@@ -56,8 +56,7 @@ func MapTrainCarriagesResponse(resp schemas.TrainCarriagesResponse) ([]domain.Ca
 			// Маппинг нумерации вагона: поле CarNumeration может быть nil, если отсутствует.
 			var carNumeration = mapCarNumeration(carSchema.CarNumeration)
 
-			// Маппинг списка мест в вагоне, просто посчитаем их количество
-			var freeSeats = len(carSchema.Seats)
+			// Маппинг списка мест в вагоне не происходит!
 
 			// Собираем данные о конкретном вагоне в доменную модель.
 			// Поля, которые не используются в доменной модели (например, AddSigns, IntServiceClass и др.) игнорируются.
@@ -76,7 +75,6 @@ func MapTrainCarriagesResponse(resp schemas.TrainCarriagesResponse) ([]domain.Ca
 				Tariff2:            tariff2,
 				Carrier:            carrier,
 				CarNumeration:      carNumeration,
-				FreeSeats:          freeSeats,
 			}
 
 			cars = append(cars, car)

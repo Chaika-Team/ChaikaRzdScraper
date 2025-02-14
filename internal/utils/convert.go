@@ -7,3 +7,10 @@ func BoolToString(b bool) string {
 	}
 	return "0"
 }
+
+func BoolToYesNoLowerCase(b bool) string {
+	if b {
+		return "y"
+	}
+	return "n"
+}

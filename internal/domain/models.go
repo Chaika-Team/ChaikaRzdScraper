@@ -60,7 +60,6 @@ type Car struct {
 	Tariff2            int           // Дополнительный тариф (если имеется)
 	Carrier            Carrier       // Перевозчик
 	CarNumeration      CarNumeration // Нумерация вагона // TODO почему это в вагоне а не в поезде?
-	FreeSeats          int           // Количество свободных мест в вагоне
 
 }
 
@@ -94,4 +93,10 @@ type GetTrainCarriagesParams struct {
 	FromTime    time.Time // Время отправления
 	FromDate    time.Time // Дата отправления
 	ToCode      int       // Код станции прибытия
+}
+
+// SearchStationParams представляет параметры для поиска станций по части названия.
+type SearchStationParams struct {
+	Query       string // Поисковый запрос, например "ЧЕБ"
+	CompactMode bool   // Флаг компактного режима
 }
