@@ -3,16 +3,19 @@ package config
 
 import (
 	"fmt"
+
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
+// Config содержит полное конфигурацию приложения
 type Config struct {
 	RZD  ConfigRZD  `env:"RZD"`
 	GRPC ConfigGRPC `env:"GRPC"`
 }
 
+// ConfigRZD содержит конфигурацию для клиента RZD
 type ConfigRZD struct {
-	Language    string `env:"RZD_LANGUAGE,default=ru"`
+	Language    string `env:"RZD_LANGUAGE,default=ru, description=Language of the response"`
 	Timeout     int    `env:"RZD_TIMEOUT,default=2000, description=Timeout of retries in milliseconds"`
 	MaxRetries  int    `env:"RZD_MAX_RETRIES,default=10, description=Maximum number of retries"`
 	RIDLifetime int    `env:"RZD_RID_LIFETIME,default=300000, description=The lifetime of RID in milliseconds"`
@@ -22,6 +25,7 @@ type ConfigRZD struct {
 	DebugMode   bool   `env:"RZD_DEBUG_MODE,default=false"`
 }
 
+// ConfigGRPC содержит конфигурацию для gRPC сервера
 type ConfigGRPC struct {
 	Port string `env:"GRPC_PORT,default=50051"`
 }

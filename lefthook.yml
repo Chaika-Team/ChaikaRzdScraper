@@ -9,8 +9,8 @@ pre-commit:
       run: goimports -l -w .
     lint:
       run: golangci-lint run --config .golangci.yml
-#
-#pre-push:
-#  commands:
-#    docs:
-#      run: swag init --generalInfo ./cmd/main.go --output ./docs --parseDependency --parseInternal && git add ./docs
+
+pre-push:
+  commands:
+    docs:
+      run: swag init --generalInfo ./cmd/main.go --output ./docs --parseDependency --parseInternal && git add ./docs

@@ -1,0 +1,1571 @@
+{
+  "result": "OK",
+  "lst": [
+    {
+      "result": "OK",
+      "number": "119А",
+      "number2": "119А",
+      "defShowTime": "local",
+      "date0": "13.02.2025",
+      "time0": "00:12",
+      "date1": "13.02.2025",
+      "time1": "09:47",
+      "type": "СК",
+      "virtual": false,
+      "bus": false,
+      "boat": false,
+      "station0": "САНКТ-ПЕТЕРБУРГ-ГЛАВН. (МОСКОВСКИЙ ВОКЗАЛ)",
+      "code0": "2004001",
+      "station1": "МОСКВА ВК ВОСТОЧНЫЙ (ТПУ ЧЕРКИЗОВО)",
+      "code1": "2001025",
+      "timeSt0": "",
+      "timeSt1": "00:21",
+      "route0": "С-ПЕТЕР-ГЛ",
+      "route1": "БЕЛГОРОД",
+      "cars": [
+        {
+          "cnumber": "01",
+          "type": "Купе",
+          "catLabelLoc": "Купе",
+          "typeLoc": "Купе",
+          "catCode": "Купе",
+          "ctypei": 4,
+          "ctype": 4,
+          "letter": "А",
+          "clsType": "2Ш",
+          "subType": "66К",
+          "clsName": "4-местные купе.<p><strong>Кондиционер, биотуалет в вагоне.</strong></p> <p><strong> Белье входит в стоимость проезда.</strong></p><p>Провоз животных запрещен.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 14,
+              "name": "[иконка сайта] Провоз животных запрещен",
+              "description": "Провоз животных запрещен",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2533",
+          "tariff2": "3463",
+          "tariffServ": null,
+          "addSigns": "",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": null,
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 2,
+              "placesNonRef": null,
+              "freeRef": 2,
+              "placesRef": "002,010,012,014,019,020,022,024,028,030-032",
+              "places": "002,010,012,014,019,020,022,024,028,030-032"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 11,
+              "placesNonRef": null,
+              "freeRef": 11,
+              "placesRef": "002,010,012,014,019,020,022,024,028,030-032,036",
+              "places": "002,010,012,014,019,020,022,024,028,030-032,036"
+            }
+          ],
+          "places": "002,010,012,014,019,020,022,024,028,030-032,036",
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/14",
+            "dirVert": "/dbmm/images/61/28216/14",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "02",
+          "type": "Купе",
+          "catLabelLoc": "Купе",
+          "typeLoc": "Купе",
+          "catCode": "Купе",
+          "ctypei": 4,
+          "ctype": 4,
+          "letter": "А",
+          "clsType": "2К",
+          "subType": "66К",
+          "clsName": "4-местные купе.<p><strong>Кондиционер, биотуалет в вагоне.</strong></p> <p><strong> Белье входит в стоимость проезда.</strong></p><p>Вагон с услугой перевозки животных.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 252,
+              "name": "[иконка сайта] Животные ФПК вариант Г",
+              "description": "Без выкупа всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, на одно место. При этом взимается отдельная плата за перевозку Тары* с мелкими животными, включая собак, а на провоз каждой Тары* должен быть оформлен перевозочный документ с оплатой перевозки. Провоз собак без Тары** (например, крупных) без выкупа всего купе не предусмотрен.<br/>С выкупом всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, или одну собаку без Тары** (например, крупную) на одно место. При этом дополнительная плата не взимается, но на провоз каждой Тары* или собаки без Тары** оформляется безденежный перевозочный документ. При совместной перевозке количество Тар* с мелкими животными, включая собак, и собак без Тары** не должно превышать количество мест в купе.<br/>(*) Перевозка мелких животных осуществляется в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см и которые должны быть устроены таким образом, чтобы была исключена возможность нанесения вреда пассажирам и перевозчику. В одной Таре возможна перевозка не более двух мелких животных.<br/>(**) Перевозка собак без тары (например, крупных) производится в отдельном купе (выкупленном пассажиром или группой пассажиров) под наблюдением их владельцев (сопровождающих) с оплатой полной стоимости всех незанятых мест без дополнительной оплаты за провоз животного. Собаки без Тары должны быть в намордниках и с поводком и находиться на полу купе, в котором они перевозятся.",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2533",
+          "tariff2": "3463",
+          "tariffServ": null,
+          "addSigns": "МЖ Ж",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": null,
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 2,
+              "placesNonRef": null,
+              "freeRef": 2,
+              "placesRef": "014С,016С,022М,023М,025С,032М",
+              "places": "014С,016С,022М,023М,025С,032М"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 4,
+              "placesNonRef": null,
+              "freeRef": 4,
+              "placesRef": "014С,016С,022М,023М,025С,032М",
+              "places": "014С,016С,022М,023М,025С,032М"
+            }
+          ],
+          "places": "014С,016С,022М,023М,025С,032М",
+          "schemeId": 24,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/14",
+            "dirVert": "/dbmm/images/61/28216/14",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "03",
+          "type": "Плац",
+          "catLabelLoc": "Плацкартный",
+          "typeLoc": "Плацкартный",
+          "catCode": "Плацкартный",
+          "ctypei": 1,
+          "ctype": 3,
+          "letter": "А",
+          "clsType": "3Б",
+          "subType": "41П",
+          "clsName": "Вагон открытого типа(плацкартный).<p><strong>Кондиционер и биотуалет в вагоне.</strong></p><p>Вагон с услугой перевозки животных.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 253,
+              "name": "[иконка сайта] Животные ФПК вариант Д",
+              "description": "Разрешается перевезти одну Тару* с мелкими животными, включая собак, на одно место. При этом взимается отдельная плата за перевозку Тары* с мелкими животными, включая собак, а на провоз каждой Тары* оформляется перевозочный документ с оплатой перевозки. Провоз собак без Тары** (например, крупных) не предусмотрен.<br/>(*) Перевозка мелких животных осуществляется в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см и которые должны быть устроены таким образом, чтобы была исключена возможность нанесения вреда пассажирам и перевозчику. В одной Таре возможна перевозка не более двух мелких животных.<br/>(**) Собаки без Тары (например, крупных пород) – собаки, не находящиеся в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см.",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2100",
+          "tariff2": null,
+          "tariffServ": null,
+          "addSigns": "Ж",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": true,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": null,
+          "addHandLuggage": true,
+          "youth": true,
+          "unior": false,
+          "seats": [
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2100",
+              "tariff2": null,
+              "tariffServ": "233",
+              "free": 3,
+              "placesNonRef": null,
+              "freeRef": 3,
+              "placesRef": "032,034,036,038,040,049",
+              "places": "032,034,036,038,040,049"
+            }
+          ],
+          "places": "032,034,036,038,040,049",
+          "schemeId": 326,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/82",
+            "dirVert": "/dbmm/images/61/28216/82",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "04",
+          "type": "Плац",
+          "catLabelLoc": "Плацкартный",
+          "typeLoc": "Плацкартный",
+          "catCode": "Плацкартный",
+          "ctypei": 1,
+          "ctype": 3,
+          "letter": "А",
+          "clsType": "3Э",
+          "subType": "41П",
+          "clsName": "Вагон открытого типа (плацкартный). <p><strong>Кондиционер, биотуалет в вагоне.</strong></p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 14,
+              "name": "[иконка сайта] Провоз животных запрещен",
+              "description": "Провоз животных запрещен",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2100",
+          "tariff2": null,
+          "tariffServ": null,
+          "addSigns": "",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": true,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": null,
+          "addHandLuggage": true,
+          "youth": true,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "2100",
+              "tariff2": null,
+              "tariffServ": "233",
+              "free": 1,
+              "placesNonRef": null,
+              "freeRef": 1,
+              "placesRef": "002,008,012,016,020,022,026,028,030,032,034-040,042,046,048,052-054",
+              "places": "002,008,012,016,020,022,026,028,030,032,034-040,042,046,048,052-054"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2100",
+              "tariff2": null,
+              "tariffServ": "233",
+              "free": 12,
+              "placesNonRef": null,
+              "freeRef": 12,
+              "placesRef": "002,008,012,016,020,022,026,028,030,032,034-040,042,046,048,052-054",
+              "places": "002,008,012,016,020,022,026,028,030,032,034-040,042,046,048,052-054"
+            }
+          ],
+          "places": "002,008,012,016,020,022,026,028,030,032,034-040,042,046,048,052-054",
+          "schemeId": 326,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/82",
+            "dirVert": "/dbmm/images/61/28216/82",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "05",
+          "type": "Купе",
+          "catLabelLoc": "Купе",
+          "typeLoc": "Купе",
+          "catCode": "Купе",
+          "ctypei": 4,
+          "ctype": 4,
+          "letter": "А",
+          "clsType": "2Ш",
+          "subType": "66К",
+          "clsName": "4-местные купе.<p><strong>Кондиционер, биотуалет в вагоне.</strong></p> <p><strong> Белье входит в стоимость проезда.</strong></p><p>Провоз животных запрещен.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 14,
+              "name": "[иконка сайта] Провоз животных запрещен",
+              "description": "Провоз животных запрещен",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2533",
+          "tariff2": "3463",
+          "tariffServ": null,
+          "addSigns": "",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 4,
+              "placesNonRef": null,
+              "freeRef": 4,
+              "placesRef": "006,008,010,012,014-016,023,028,030-032,034-036",
+              "places": "006,008,010,012,014-016,023,028,030-032,034-036"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 11,
+              "placesNonRef": null,
+              "freeRef": 11,
+              "placesRef": "006,008,010,012,014-016,023,028,030-032,034-036",
+              "places": "006,008,010,012,014-016,023,028,030-032,034-036"
+            }
+          ],
+          "places": "006,008,010,012,014-016,023,028,030-032,034-036",
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/14",
+            "dirVert": "/dbmm/images/61/28216/14",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "06",
+          "type": "Купе",
+          "catLabelLoc": "Купе",
+          "typeLoc": "Купе",
+          "catCode": "Купе",
+          "ctypei": 4,
+          "ctype": 4,
+          "letter": "А",
+          "clsType": "2К",
+          "subType": "66К",
+          "clsName": "4-местные купе.<p><strong>Кондиционер, биотуалет в вагоне.</strong></p> <p><strong> Белье входит в стоимость проезда.</strong></p><p>Вагон с услугой перевозки животных.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 252,
+              "name": "[иконка сайта] Животные ФПК вариант Г",
+              "description": "Без выкупа всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, на одно место. При этом взимается отдельная плата за перевозку Тары* с мелкими животными, включая собак, а на провоз каждой Тары* должен быть оформлен перевозочный документ с оплатой перевозки. Провоз собак без Тары** (например, крупных) без выкупа всего купе не предусмотрен.<br/>С выкупом всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, или одну собаку без Тары** (например, крупную) на одно место. При этом дополнительная плата не взимается, но на провоз каждой Тары* или собаки без Тары** оформляется безденежный перевозочный документ. При совместной перевозке количество Тар* с мелкими животными, включая собак, и собак без Тары** не должно превышать количество мест в купе.<br/>(*) Перевозка мелких животных осуществляется в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см и которые должны быть устроены таким образом, чтобы была исключена возможность нанесения вреда пассажирам и перевозчику. В одной Таре возможна перевозка не более двух мелких животных.<br/>(**) Перевозка собак без тары (например, крупных) производится в отдельном купе (выкупленном пассажиром или группой пассажиров) под наблюдением их владельцев (сопровождающих) с оплатой полной стоимости всех незанятых мест без дополнительной оплаты за провоз животного. Собаки без Тары должны быть в намордниках и с поводком и находиться на полу купе, в котором они перевозятся.",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2533",
+          "tariff2": "3463",
+          "tariffServ": null,
+          "addSigns": "МЖ Ж",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 12,
+              "placesNonRef": null,
+              "freeRef": 12,
+              "placesRef": "001-004Ц,006-010Ж,012Ж,014-016М,018-020М,022С,024С,025-036Ц",
+              "places": "001-004Ц,006-010Ж,012Ж,014-016М,018-020М,022С,024С,025-036Ц"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 18,
+              "placesNonRef": null,
+              "freeRef": 18,
+              "placesRef": "001-004Ц,006-010Ж,012Ж,014-016М,018-020М,022С,024С,025-036Ц",
+              "places": "001-004Ц,006-010Ж,012Ж,014-016М,018-020М,022С,024С,025-036Ц"
+            }
+          ],
+          "places": "001-004Ц,006-010Ж,012Ж,014-016М,018-020М,022С,024С,025-036Ц",
+          "schemeId": 24,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/14",
+            "dirVert": "/dbmm/images/61/28216/14",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "07",
+          "type": "Люкс",
+          "catLabelLoc": "СВ",
+          "typeLoc": "СВ",
+          "catCode": "СВ",
+          "ctypei": 6,
+          "ctype": 6,
+          "letter": "А",
+          "clsType": "1Ф",
+          "subType": "01Л",
+          "clsName": "Вагон повышенной комфортности, двухместные купе. Кондиционер и биотуалет в вагоне.",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 4,
+              "name": "[иконка сайта] Гигиена СТД",
+              "description": "Гигиенический набор",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 6,
+              "name": "[иконка сайта] Пресса СТД",
+              "description": "Пресса",
+              "hasImage": true
+            },
+            {
+              "id": 251,
+              "name": "[иконка сайта] Животные ФПК вариант В",
+              "description": "Для провоза животных необходим выкуп всего купе. При этом допускается провоз одной Тары* с мелкими животными, включая собак, или одной собаки без Тары** (например, крупной) на одно место. За провоз Тар* с мелкими животными, включая собак, и собак без Тары** дополнительная плата не взимается, но на провоз каждой Тары* или собаки без Тары** оформляется безденежный перевозочный документ. При совместной перевозке количество Тар* с мелкими животными, включая собак, и собак без Тары** не должно превышать количество мест в купе.<br/>(*) Перевозка мелких животных осуществляется в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см и которые должны быть устроены таким образом, чтобы была исключена возможность нанесения вреда пассажирам и перевозчику. В одной Таре возможна перевозка не более двух мелких животных.<br/>(**) Перевозка собак без Тары (например, крупных) производится в отдельном купе (выкупленном пассажиром или группой пассажиров) под наблюдением их владельцев (сопровождающих) с оплатой полной стоимости всех незанятых мест без дополнительной оплаты за провоз животного. Собаки без Тары должны быть в намордниках и с поводком и находиться на полу купе, в котором они перевозятся.",
+              "hasImage": true
+            }
+          ],
+          "tariff": "7032",
+          "tariff2": null,
+          "tariffServ": null,
+          "addSigns": "У0",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "7032",
+              "tariff2": null,
+              "tariffServ": "1535",
+              "free": 7,
+              "placesNonRef": null,
+              "freeRef": 7,
+              "placesRef": "002,005,006,014,015,017,018",
+              "places": "002,005,006,014,015,017,018"
+            }
+          ],
+          "places": "002,005,006,014,015,017,018",
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/28",
+            "dirVert": "/dbmm/images/61/28216/28",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "medic": true
+        },
+        {
+          "cnumber": "11",
+          "type": "Купе",
+          "catLabelLoc": "Купе",
+          "typeLoc": "Купе",
+          "catCode": "Купе",
+          "ctypei": 4,
+          "ctype": 4,
+          "letter": "А",
+          "clsType": "2К",
+          "subType": "66К",
+          "clsName": "4-местные купе.<p><strong>Кондиционер, биотуалет в вагоне.</strong></p> <p><strong> Белье входит в стоимость проезда.</strong></p><p>Вагон с услугой перевозки животных.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 252,
+              "name": "[иконка сайта] Животные ФПК вариант Г",
+              "description": "Без выкупа всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, на одно место. При этом взимается отдельная плата за перевозку Тары* с мелкими животными, включая собак, а на провоз каждой Тары* должен быть оформлен перевозочный документ с оплатой перевозки. Провоз собак без Тары** (например, крупных) без выкупа всего купе не предусмотрен.<br/>С выкупом всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, или одну собаку без Тары** (например, крупную) на одно место. При этом дополнительная плата не взимается, но на провоз каждой Тары* или собаки без Тары** оформляется безденежный перевозочный документ. При совместной перевозке количество Тар* с мелкими животными, включая собак, и собак без Тары** не должно превышать количество мест в купе.<br/>(*) Перевозка мелких животных осуществляется в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см и которые должны быть устроены таким образом, чтобы была исключена возможность нанесения вреда пассажирам и перевозчику. В одной Таре возможна перевозка не более двух мелких животных.<br/>(**) Перевозка собак без тары (например, крупных) производится в отдельном купе (выкупленном пассажиром или группой пассажиров) под наблюдением их владельцев (сопровождающих) с оплатой полной стоимости всех незанятых мест без дополнительной оплаты за провоз животного. Собаки без Тары должны быть в намордниках и с поводком и находиться на полу купе, в котором они перевозятся.",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2533",
+          "tariff2": "3463",
+          "tariffServ": null,
+          "addSigns": "Ж",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 9,
+              "placesNonRef": null,
+              "freeRef": 9,
+              "placesRef": "002-004,006,008-010,012,014,016,018,021-024,026-036",
+              "places": "002-004,006,008-010,012,014,016,018,021-024,026-036"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 17,
+              "placesNonRef": null,
+              "freeRef": 17,
+              "placesRef": "002-004,006,008-010,012,014,016,018,021-024,026-036",
+              "places": "002-004,006,008-010,012,014,016,018,021-024,026-036"
+            }
+          ],
+          "places": "002-004,006,008-010,012,014,016,018,021-024,026-036",
+          "schemeId": 24,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/14",
+            "dirVert": "/dbmm/images/61/28216/14",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "12",
+          "type": "Плац",
+          "catLabelLoc": "Плацкартный",
+          "typeLoc": "Плацкартный",
+          "catCode": "Плацкартный",
+          "ctypei": 1,
+          "ctype": 3,
+          "letter": "А",
+          "clsType": "3Э",
+          "subType": "41П",
+          "clsName": "Вагон открытого типа (плацкартный). <p><strong>Кондиционер, биотуалет в вагоне.</strong></p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 14,
+              "name": "[иконка сайта] Провоз животных запрещен",
+              "description": "Провоз животных запрещен",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2100",
+          "tariff2": null,
+          "tariffServ": null,
+          "addSigns": "",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": true,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": true,
+          "unior": false,
+          "seats": [
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2100",
+              "tariff2": null,
+              "tariffServ": "233",
+              "free": 12,
+              "placesNonRef": null,
+              "freeRef": 12,
+              "placesRef": "002,004,006,012,014,024,026,028,030,032,034,036,039,040,042,044,046,048,050-053",
+              "places": "002,004,006,012,014,024,026,028,030,032,034,036,039,040,042,044,046,048,050-053"
+            }
+          ],
+          "places": "002,004,006,012,014,024,026,028,030,032,034,036,039,040,042,044,046,048,050-053",
+          "schemeId": 326,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/82",
+            "dirVert": "/dbmm/images/61/28216/82",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "13",
+          "type": "Плац",
+          "catLabelLoc": "Плацкартный",
+          "typeLoc": "Плацкартный",
+          "catCode": "Плацкартный",
+          "ctypei": 1,
+          "ctype": 3,
+          "letter": "А",
+          "clsType": "3Б",
+          "subType": "41П",
+          "clsName": "Вагон открытого типа(плацкартный).<p><strong>Кондиционер и биотуалет в вагоне.</strong></p><p>Вагон с услугой перевозки животных.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 253,
+              "name": "[иконка сайта] Животные ФПК вариант Д",
+              "description": "Разрешается перевезти одну Тару* с мелкими животными, включая собак, на одно место. При этом взимается отдельная плата за перевозку Тары* с мелкими животными, включая собак, а на провоз каждой Тары* оформляется перевозочный документ с оплатой перевозки. Провоз собак без Тары** (например, крупных) не предусмотрен.<br/>(*) Перевозка мелких животных осуществляется в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см и которые должны быть устроены таким образом, чтобы была исключена возможность нанесения вреда пассажирам и перевозчику. В одной Таре возможна перевозка не более двух мелких животных.<br/>(**) Собаки без Тары (например, крупных пород) – собаки, не находящиеся в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см.",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2100",
+          "tariff2": null,
+          "tariffServ": null,
+          "addSigns": "Ж",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": true,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": true,
+          "unior": false,
+          "seats": [
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2100",
+              "tariff2": null,
+              "tariffServ": "233",
+              "free": 15,
+              "placesNonRef": null,
+              "freeRef": 15,
+              "placesRef": "002,004,006,008,010,012,014,022,024,026,028,030,032,034,036,039-042,044,047,048,050-054",
+              "places": "002,004,006,008,010,012,014,022,024,026,028,030,032,034,036,039-042,044,047,048,050-054"
+            }
+          ],
+          "places": "002,004,006,008,010,012,014,022,024,026,028,030,032,034,036,039-042,044,047,048,050-054",
+          "schemeId": 326,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/82",
+            "dirVert": "/dbmm/images/61/28216/82",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "14",
+          "type": "Плац",
+          "catLabelLoc": "Плацкартный",
+          "typeLoc": "Плацкартный",
+          "catCode": "Плацкартный",
+          "ctypei": 1,
+          "ctype": 3,
+          "letter": "А",
+          "clsType": "3Э",
+          "subType": "41П",
+          "clsName": "Вагон открытого типа (плацкартный). <p><strong>Кондиционер, биотуалет в вагоне.</strong></p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 14,
+              "name": "[иконка сайта] Провоз животных запрещен",
+              "description": "Провоз животных запрещен",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2100",
+          "tariff2": null,
+          "tariffServ": null,
+          "addSigns": "",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": true,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": true,
+          "unior": false,
+          "seats": [
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2100",
+              "tariff2": null,
+              "tariffServ": "233",
+              "free": 13,
+              "placesNonRef": null,
+              "freeRef": 13,
+              "placesRef": "002,010,012,014,018,020,024,026,028,030,032,034,036,042,044,047,048,050",
+              "places": "002,010,012,014,018,020,024,026,028,030,032,034,036,042,044,047,048,050"
+            }
+          ],
+          "places": "002,010,012,014,018,020,024,026,028,030,032,034,036,042,044,047,048,050",
+          "schemeId": 326,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/82",
+            "dirVert": "/dbmm/images/61/28216/82",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "15",
+          "type": "Купе",
+          "catLabelLoc": "Купе",
+          "typeLoc": "Купе",
+          "catCode": "Купе",
+          "ctypei": 4,
+          "ctype": 4,
+          "letter": "А",
+          "clsType": "2Ш",
+          "subType": "66К",
+          "clsName": "4-местные купе.<p><strong>Кондиционер, биотуалет в вагоне.</strong></p> <p><strong> Белье входит в стоимость проезда.</strong></p><p>Провоз животных запрещен.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 14,
+              "name": "[иконка сайта] Провоз животных запрещен",
+              "description": "Провоз животных запрещен",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2533",
+          "tariff2": "3463",
+          "tariffServ": null,
+          "addSigns": "",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "3463",
+              "tariff2": null,
+              "tariffServ": "363",
+              "free": 7,
+              "placesNonRef": null,
+              "freeRef": 7,
+              "placesRef": "033,035,006,007,012,014,016,025-029,031",
+              "places": "033,035,006,007,012,014,016,025-029,031"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 6,
+              "placesNonRef": null,
+              "freeRef": 6,
+              "placesRef": "006,007,012,014,016,025-029,031",
+              "places": "006,007,012,014,016,025-029,031"
+            }
+          ],
+          "places": "006,007,012,014,016,025-029,031,033,035",
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/14",
+            "dirVert": "/dbmm/images/61/28216/14",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        },
+        {
+          "cnumber": "16",
+          "type": "Купе",
+          "catLabelLoc": "Купе",
+          "typeLoc": "Купе",
+          "catCode": "Купе",
+          "ctypei": 4,
+          "ctype": 4,
+          "letter": "А",
+          "clsType": "2К",
+          "subType": "66К",
+          "clsName": "4-местные купе.<p><strong>Кондиционер, биотуалет в вагоне.</strong></p> <p><strong> Белье входит в стоимость проезда.</strong></p><p>Вагон с услугой перевозки животных.</p>",
+          "services": [
+            {
+              "id": 2,
+              "name": "[иконка сайта] Биотуалет СТД",
+              "description": "Биотуалет",
+              "hasImage": true
+            },
+            {
+              "id": 3,
+              "name": "[иконка сайта] Кондиционер СТД",
+              "description": "Кондиционер работает в летний период",
+              "hasImage": true
+            },
+            {
+              "id": 30,
+              "name": "[иконка сайта] Постель СТД",
+              "description": "Постельное белье",
+              "hasImage": true
+            },
+            {
+              "id": 252,
+              "name": "[иконка сайта] Животные ФПК вариант Г",
+              "description": "Без выкупа всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, на одно место. При этом взимается отдельная плата за перевозку Тары* с мелкими животными, включая собак, а на провоз каждой Тары* должен быть оформлен перевозочный документ с оплатой перевозки. Провоз собак без Тары** (например, крупных) без выкупа всего купе не предусмотрен.<br/>С выкупом всех мест в купе разрешается перевезти одну Тару* с мелкими животными, включая собак, или одну собаку без Тары** (например, крупную) на одно место. При этом дополнительная плата не взимается, но на провоз каждой Тары* или собаки без Тары** оформляется безденежный перевозочный документ. При совместной перевозке количество Тар* с мелкими животными, включая собак, и собак без Тары** не должно превышать количество мест в купе.<br/>(*) Перевозка мелких животных осуществляется в Тарах (переносках, коробках, ящиках, аквариумах, клетках и т.п.), которые должны помещаться на местах, предназначенных для размещения ручной клади, размер которых по сумме трех измерений не должен превышать 180 см и которые должны быть устроены таким образом, чтобы была исключена возможность нанесения вреда пассажирам и перевозчику. В одной Таре возможна перевозка не более двух мелких животных.<br/>(**) Перевозка собак без тары (например, крупных) производится в отдельном купе (выкупленном пассажиром или группой пассажиров) под наблюдением их владельцев (сопровождающих) с оплатой полной стоимости всех незанятых мест без дополнительной оплаты за провоз животного. Собаки без Тары должны быть в намордниках и с поводком и находиться на полу купе, в котором они перевозятся.",
+              "hasImage": true
+            }
+          ],
+          "tariff": "2533",
+          "tariff2": "3463",
+          "tariffServ": null,
+          "addSigns": "Ж",
+          "carrier": "ФПК",
+          "carrierId": 1,
+          "insuranceFlag": true,
+          "insuranceTypeId": 1,
+          "owner": "РЖД/МСК",
+          "elReg": true,
+          "food": false,
+          "selFood": false,
+          "equippedSIOP": true,
+          "regularFoodService": false,
+          "noSmok": false,
+          "inetSaleOff": false,
+          "bVip": false,
+          "conferenceRoomFlag": false,
+          "bDeck2": false,
+          "intServiceClass": null,
+          "specialSeatTypes": null,
+          "deferredPayment": false,
+          "varPrice": false,
+          "ferry": false,
+          "seniorTariff": 0,
+          "bedding": false,
+          "nonRefundable": false,
+          "addTour": false,
+          "carNumeration": "FromHead",
+          "addHandLuggage": true,
+          "youth": false,
+          "unior": false,
+          "seats": [
+            {
+              "type": "dn",
+              "code": "Н",
+              "label": "Нижнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 12,
+              "placesNonRef": null,
+              "freeRef": 12,
+              "placesRef": "002-008,010,012-016,018-020,022-025,027,028,030-036",
+              "places": "002-008,010,012-016,018-020,022-025,027,028,030-036"
+            },
+            {
+              "type": "up",
+              "code": "В",
+              "label": "Верхнее",
+              "tariff": "2533",
+              "tariff2": "3463",
+              "tariffServ": "363",
+              "free": 17,
+              "placesNonRef": null,
+              "freeRef": 17,
+              "placesRef": "002-008,010,012-016,018-020,022-025,027,028,030-036",
+              "places": "002-008,010,012-016,018-020,022-025,027,028,030-036"
+            }
+          ],
+          "places": "002-008,010,012-016,018-020,022-025,027,028,030-036",
+          "schemeId": 24,
+          "schemeInfo": {
+            "dir": "/dbmm/images/61/28209/14",
+            "dirVert": "/dbmm/images/61/28216/14",
+            "legend": ""
+          },
+          "forcedBedding": true,
+          "policyEnabled": false,
+          "msr": true,
+          "medic": true
+        }
+      ],
+      "addCompLuggage": false,
+      "functionBlocks": [
+        {
+          "className": "s-type-lo",
+          "name": "Нижнее место"
+        },
+        {
+          "className": "s-type-mid",
+          "name": "Среднее место"
+        },
+        {
+          "className": "s-type-up",
+          "name": "Верхнее место"
+        },
+        {
+          "className": "s-type-jumpseat",
+          "name": "Откидное место"
+        },
+        {
+          "className": "s-type-seatrot",
+          "name": "Место с изменением направления по ходу движения"
+        },
+        {
+          "className": "s-type-seat",
+          "name": "Сидячее место"
+        },
+        {
+          "className": "s-prop-undef",
+          "name": "Мужское / Женское / Смешанное - признак не определен"
+        },
+        {
+          "className": "s-prop-man",
+          "name": "Мужское купе"
+        },
+        {
+          "className": "s-prop-woman",
+          "name": "Женское купе"
+        },
+        {
+          "className": "s-prop-mixed",
+          "name": "Смешанное купе"
+        },
+        {
+          "className": "s-type-bicycle",
+          "name": "Место для пассажира с велосипедом"
+        },
+        {
+          "className": "s-type-pet",
+          "name": "Место для проезда с мелким домашним животным"
+        },
+        {
+          "className": "s-type-infant",
+          "name": "Место матери и ребенка"
+        },
+        {
+          "className": "s-type-kid",
+          "name": "Место пассажира с детьми"
+        },
+        {
+          "className": "s-type-cripple",
+          "name": "Место для пассажиров с ограниченными физическими возможностями"
+        },
+        {
+          "className": "s-type-table",
+          "name": "Стол"
+        },
+        {
+          "className": "s-type-luggage",
+          "name": "Тумба/багаж"
+        },
+        {
+          "className": "s-type-wardrobe",
+          "name": "Шкаф/гардероб"
+        },
+        {
+          "className": "s-type-buffet",
+          "name": "Буфет"
+        },
+        {
+          "className": "s-type-toilet",
+          "name": "Туалет"
+        },
+        {
+          "className": "s-type-shower",
+          "name": "Душевая кабина"
+        },
+        {
+          "className": "s-type-conf",
+          "name": "Переговорная"
+        },
+        {
+          "className": "s-type-playroom",
+          "name": "Детская площадка"
+        },
+        {
+          "className": "s-type-ac",
+          "name": "Электрическая розетка"
+        },
+        {
+          "className": "s-type-stairs",
+          "name": "Лестничный пролет"
+        },
+        {
+          "className": "s-type-exit",
+          "name": "Выход"
+        },
+        {
+          "className": "s-type-cashbox",
+          "name": "Касса"
+        },
+        {
+          "className": "s-type-water",
+          "name": "Вода"
+        },
+        {
+          "className": "s-prop-kid",
+          "name": "Купе для пассажиров с детьми"
+        },
+        {
+          "className": "s-type-kofe-bar",
+          "name": "Кафе-бар"
+        },
+        {
+          "className": "s-type-babycarriage",
+          "name": "Детские коляски"
+        }
+      ],
+      "timestamp": "12.02.2025 16:03:33.515"
+    }
+  ],
+  "schemes": [
+    {
+      "id": 326,
+      "html": "{\"len\":29,\"cells\":[{\"type\":\"wc\",\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":2},{\"type\":\"st\"},{\"type\":\"up\",\"number\":4,\"style\":\"border-right-color:#000;border-right-color:#000;border-right-color:#000\"},{\"type\":\"up\",\"number\":6,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":8,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":10,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":12,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":14,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":16,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":18,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":20,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":22,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":24,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":26,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":28,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":30,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":32,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":34,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":36,\"style\":\"border-right-color:#000\"},{\"type\":\"wc\"},{\"type\":\"wc\",\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":1},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":3,\"style\":\"border-right-color:#000;border-right-color:#000;border-right-color:#000\"},{\"type\":\"dn\",\"number\":5,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":7,\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":9,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":11,\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":13,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":15,\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":17,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":19,\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":21,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":23,\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":25,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":27,\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":29,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":31,\"style\":\"border-right-color:#000\"},{\"type\":\"dn\",\"number\":33,\"style\":\"border-left-color:#000\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":35,\"style\":\"border-right-color:#000\"},{\"type\":\"wc\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"up\",\"number\":54,\"style\":\"border-left-color:#000;border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":53,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":52,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":51,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":50,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":49,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":48,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":47,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":46,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":45,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":44,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":43,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":42,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":41,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":40,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":39,\"style\":\"border-right-color:#000\"},{\"type\":\"up\",\"number\":38,\"style\":\"border-left-color:#000\"},{\"type\":\"st\"},{\"type\":\"dn\",\"number\":37,\"style\":\"border-right-color:#000\"},{\"type\":\"XX\"}]}",
+      "image": null
+    },
+    {
+      "id": 24,
+      "html": "{\"len\":31,\"cells\":[{\"type\":\"wc\",\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"st\",\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":38,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":2,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":4,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":6,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":8,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":10,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":12,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":14,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":16,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":18,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":20,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":22,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":24,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":26,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":28,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":30,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":32,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"up\",\"number\":34,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"st\"},{\"type\":\"up\",\"number\":36,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"wc\",\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"wc\",\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"XX\",\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":37,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":1,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":3,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":5,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":7,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":9,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":11,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":13,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":15,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":17,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":19,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":21,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":23,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":25,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":27,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":29,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":31,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"dn\",\"number\":33,\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"dn\",\"number\":35,\"style\":\"border-right-color: rgb(0, 0, 0);\"},{\"type\":\"wc\",\"style\":\"border-left-color: rgb(0, 0, 0);\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"},{\"type\":\"XX\"}]}",
+      "image": null
+    }
+  ],
+  "insuranceCompany": [
+    {
+      "id": 11,
+      "shortName": "АО «СОГАЗ»",
+      "offerUrl": "https://shop.sogaz.ru/prw/ITC2.pdf",
+      "insuranceCost": 100,
+      "insuranceBenefit": 1000000,
+      "sortOrder": 1
+    },
+    {
+      "id": 1,
+      "shortName": "АО «СОГАЗ»",
+      "offerUrl": "https://shop.sogaz.ru/prw/ITC2.pdf",
+      "insuranceCost": 150,
+      "insuranceBenefit": 1500000,
+      "sortOrder": 2
+    }
+  ],
+  "insuranceCompanyTypes": [
+    {
+      "typeId": 1,
+      "insuranceTariffs": [
+        {
+          "id": 1,
+          "name": "Базовый",
+          "insuranceCost": 150,
+          "insuranceBenefit": 1500000,
+          "default": false,
+          "InsurancePrograms": [
+            {
+              "id": 1,
+              "offerUrl": "https://shop.sogaz.ru/prw/ITC2.pdf",
+              "sortOrder": 2,
+              "shortName": "АО «СОГАЗ»"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "name": "Расширенный",
+          "insuranceCost": 300,
+          "insuranceBenefit": 3500000,
+          "default": false,
+          "InsurancePrograms": [
+            {
+              "id": 5,
+              "offerUrl": "https://shop.sogaz.ru/prw/ITC2.pdf",
+              "sortOrder": 1,
+              "shortName": "АО «СОГАЗ»"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "psaction": null,
+  "childrenAge": 10,
+  "motherAndChildAge": 1,
+  "partialPayment": false,
+  "timestamp": "12.02.2025 16:03:33.516"
+}

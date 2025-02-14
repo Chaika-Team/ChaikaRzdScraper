@@ -1,24 +1,24 @@
 // pkg/rzd/schemas/train_station_list.go
 package schemas
 
-// TrainStationListResponse represents the response from the RZD API
+// TrainStationListResponse // TODO не готово
 type TrainStationListResponse struct {
 	Data TrainStationListData `json:"data"`
 }
 
-// TrainStationListData represents the data from the RZD API
+// TrainStationListData // TODO не готово
 type TrainStationListData struct {
 	TrainInfo TrainInfo   `json:"trainInfo"`
 	Routes    []RouteInfo `json:"routes"`
 }
 
-// TrainInfo represents a train info from the RZD API
+// TrainInfo // TODO не готово
 type TrainInfo struct {
 	Number string `json:"number"`
 	// Добавьте другие необходимые поля
 }
 
-// RouteInfo represents a route info from the RZD API
+// RouteInfo // TODO не готово
 type RouteInfo struct {
 	Station     string `json:"station"`
 	ArvTime     string `json:"ArvTime"`

@@ -47,11 +47,7 @@ func NewRzdClient(cfg *config.ConfigRZD) (*Client, error) {
 	}
 
 	// Установка уровня логирования
-	if cfg.DebugMode {
-		log.SetFlags(log.LstdFlags | log.Lshortfile)
-	} else {
-		log.SetFlags(log.LstdFlags)
-	}
+	// TODO добавить уровень логирования к запросам
 
 	// Создание CookieJar
 	jar, err := cookiejar.New(nil)
@@ -172,12 +168,14 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 				log.Printf("API returned error: %s", msg)
 				return nil, errors.New(msg)
 			}
+			c.expireRID() // Сброс RID после успешного запроса
 			return body, nil
 		}
 
 		// Обработка других результатов
 		log.Printf("Unexpected result field: %s", result)
 		lastError = fmt.Errorf("unexpected result field: %s", result)
+		time.Sleep(time.Duration(c.config.Timeout) * time.Millisecond)
 	}
 
 	return nil, fmt.Errorf("failed after %d attempts: %v", c.config.MaxRetries, lastError)
@@ -217,7 +215,7 @@ func (c *Client) GetTrainRoutes(_ context.Context, params domain.GetTrainRoutesP
 	}
 
 	// Установка заголовков
-	setHeaders(req, c)
+	SetHeaders(req, c)
 
 	responseBody, err := c.executeRequest(req)
 	if err != nil {
@@ -242,173 +240,170 @@ func (c *Client) GetTrainRoutes(_ context.Context, params domain.GetTrainRoutesP
 }
 
 // GetTrainRoutesReturn получает маршруты поездов туда-обратно
-func (c *Client) GetTrainRoutesReturn(_ context.Context, params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error) {
-	data := url.Values{}
-	data.Set("code0", fmt.Sprintf("%d", params.FromCode))
-	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
-	data.Set("dir", fmt.Sprintf("%d", params.Direction))
-	data.Set("tfl", fmt.Sprintf("%d", params.TrainType))
-	data.Set("checkSeats", utils.BoolToString(params.CheckSeats))
-	data.Set("dt0", params.FromDate.Format("02.01.2006"))
-	data.Set("dt1", params.ToDate.Format("02.01.2006"))
-
-	req, err := http.NewRequest("POST", c.Endpoints.TrainRoutesReturn, strings.NewReader(data.Encode()))
-	if err != nil {
-		log.Printf("Failed to create request: %v", err)
-		return nil, nil, err
-	}
-
-	// Установка заголовков
-	setHeaders(req, c)
-
-	responseBody, err := c.executeRequest(req)
-	if err != nil {
-		log.Printf("Failed to get train routes return: %v", err)
-		return nil, nil, err
-	}
-
-	var schemaResp schemas.TrainRouteResponse
-	if err := json.Unmarshal(responseBody, &schemaResp); err != nil {
-		log.Printf("Failed to unmarshal train routes return: %v", err)
-		return nil, nil, err
-	}
-
-	if len(schemaResp.TP) < 2 {
-		log.Printf("Insufficient train routes found for return")
-		return nil, nil, errors.New("insufficient train routes found for return")
-	}
-
-	// Маппинг для прямого направления
-	forwardRoutes, err := mappers.MapTrainRouteResponse(schemas.TrainRouteResponse{
-		Result: schemaResp.Result,
-		TP:     []schemas.TP{schemaResp.TP[0]},
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-
-	// Маппинг для обратного направления
-	backRoutes, err := mappers.MapTrainRouteResponse(schemas.TrainRouteResponse{
-		Result: schemaResp.Result,
-		TP:     []schemas.TP{schemaResp.TP[1]},
-	})
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return forwardRoutes, backRoutes, nil
-}
+//func (c *Client) GetTrainRoutesReturn(_ context.Context, params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error) {
+//	data := url.Values{}
+//	data.Set("code0", fmt.Sprintf("%d", params.FromCode))
+//	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
+//	data.Set("dir", fmt.Sprintf("%d", params.Direction))
+//	data.Set("tfl", fmt.Sprintf("%d", params.TrainType))
+//	data.Set("checkSeats", utils.BoolToString(params.CheckSeats))
+//	data.Set("dt0", params.FromDate.Format("02.01.2006"))
+//	data.Set("dt1", params.ToDate.Format("02.01.2006"))
+//
+//	req, err := http.NewRequest("POST", c.Endpoints.TrainRoutesReturn, strings.NewReader(data.Encode()))
+//	if err != nil {
+//		log.Printf("Failed to create request: %v", err)
+//		return nil, nil, err
+//	}
+//
+//	// Установка заголовков
+//	setHeaders(req, c)
+//
+//	responseBody, err := c.executeRequest(req)
+//	if err != nil {
+//		log.Printf("Failed to get train routes return: %v", err)
+//		return nil, nil, err
+//	}
+//
+//	var schemaResp schemas.TrainRouteResponse
+//	if err := json.Unmarshal(responseBody, &schemaResp); err != nil {
+//		log.Printf("Failed to unmarshal train routes return: %v", err)
+//		return nil, nil, err
+//	}
+//
+//	if len(schemaResp.TP) < 2 {
+//		log.Printf("Insufficient train routes found for return")
+//		return nil, nil, errors.New("insufficient train routes found for return")
+//	}
+//
+//	// Маппинг для прямого направления
+//	forwardRoutes, err := mappers.MapTrainRouteResponse(schemas.TrainRouteResponse{
+//		Result: schemaResp.Result,
+//		TP:     []schemas.TP{schemaResp.TP[0]},
+//	})
+//	if err != nil {
+//		return nil, nil, err
+//	}
+//
+//	// Маппинг для обратного направления
+//	backRoutes, err := mappers.MapTrainRouteResponse(schemas.TrainRouteResponse{
+//		Result: schemaResp.Result,
+//		TP:     []schemas.TP{schemaResp.TP[1]},
+//	})
+//	if err != nil {
+//		return nil, nil, err
+//	}
+//
+//	return forwardRoutes, backRoutes, nil
+//}
 
 // GetTrainCarriages получает список вагонов выбранного поезда
-func (c *Client) GetTrainCarriages(_ context.Context, params domain.GetTrainCarriagesParams) (domain.TrainCarriagesResponse, error) {
+func (c *Client) GetTrainCarriages(_ context.Context, params domain.GetTrainCarriagesParams) ([]domain.Car, error) {
 	data := url.Values{}
 	data.Set("code0", fmt.Sprintf("%d", params.FromCode))
 	data.Set("code1", fmt.Sprintf("%d", params.ToCode))
 	data.Set("tnum0", params.TrainNumber)
 	data.Set("time0", params.FromTime.Format("15:04"))
-	data.Set("dt0", params.FromDate.Format("02.01.2006"))
+	data.Set("dt0", params.FromTime.Format("02.01.2006"))
 	data.Set("dir", fmt.Sprintf("%d", params.Direction))
 
 	req, err := http.NewRequest("POST", c.Endpoints.TrainCarriages, strings.NewReader(data.Encode()))
 	if err != nil {
 		log.Printf("Failed to create request: %v", err)
-		return domain.TrainCarriagesResponse{}, err
+		return nil, err
 	}
 
 	// Установка заголовков
-	setHeaders(req, c)
+	SetHeaders(req, c)
 
 	responseBody, err := c.executeRequest(req)
 	if err != nil {
 		log.Printf("Failed to get train carriages: %v", err)
-		return domain.TrainCarriagesResponse{}, err
+		return nil, err
 	}
 
 	var schemaResp schemas.TrainCarriagesResponse
 	if err := json.Unmarshal(responseBody, &schemaResp); err != nil {
 		log.Printf("Failed to unmarshal train carriages: %v", err)
-		return domain.TrainCarriagesResponse{}, err
+		return nil, err
 	}
 
 	// Используем маппер для преобразования схемы в доменные модели
-	// domainResp := mappers.MapTrainCarriagesResponse(schemaResp)
+	domainResp, err := mappers.MapTrainCarriagesResponse(schemaResp)
+	if err != nil {
+		log.Printf("Failed to map train carriages: %v", err)
+		return nil, err
+	}
 
-	return domain.TrainCarriagesResponse{}, nil
+	return domainResp, nil
 }
 
 // GetTrainStationList получает список станций в маршруте поезда
-func (c *Client) GetTrainStationList(_ context.Context, params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error) {
-	data := url.Values{}
-	data.Set("trainNumber", params.TrainNumber)
-	data.Set("depDate", params.FromDate.Format("02.01.2006"))
-	data.Set("STRUCTURE_ID", fmt.Sprintf("%d", StationsStructureID))
-
-	req, err := http.NewRequest("GET", c.Endpoints.TrainStationList, nil)
-	if err != nil {
-		log.Printf("Failed to create request: %v", err)
-		return domain.TrainStationListResponse{}, err
-	}
-
-	req.URL.RawQuery = data.Encode()
-
-	// Установка заголовков
-	setHeaders(req, c)
-
-	responseBody, err := c.executeRequest(req)
-	if err != nil {
-		log.Printf("Failed to get train station list: %v", err)
-		return domain.TrainStationListResponse{}, err
-	}
-
-	var schemaResp schemas.TrainStationListResponse
-	if err := json.Unmarshal(responseBody, &schemaResp); err != nil {
-		log.Printf("Failed to unmarshal train station list: %v", err)
-		return domain.TrainStationListResponse{}, err
-	}
-
-	// Используем маппер для преобразования схемы в доменные модели
-	//domainResp := mappers.MapTrainStationListResponse(schemaResp)
-
-	return domain.TrainStationListResponse{}, nil
-}
-
-// GetStationCode получает список кодов станций по части названия
-func (c *Client) GetStationCode(_ context.Context, params domain.GetStationCodeParams) ([]domain.StationCode, error) {
-	data := url.Values{}
-	data.Set("stationNamePart", params.StationNamePart)
-	data.Set("compactMode", utils.BoolToString(params.CompactMode))
-	req, err := http.NewRequest("GET", c.Endpoints.StationCode, nil)
-	if err != nil {
-		log.Printf("Failed to create request: %v", err)
-		return nil, err
-	}
-
-	req.URL.RawQuery = data.Encode()
-
-	// Установка заголовков
-	setHeaders(req, c)
-
-	responseBody, err := c.executeRequest(req)
-	if err != nil {
-		log.Printf("Failed to get station codes: %v", err)
-		return nil, err
-	}
-
-	var schemaResp schemas.StationCodeResponse
-	if err := json.Unmarshal(responseBody, &schemaResp); err != nil {
-		log.Printf("Failed to unmarshal station codes: %v", err)
-		return nil, err
-	}
-
-	// Используем маппер для преобразования схемы в доменные модели
-	// domainStations := mappers.MapStationCodeResponse(schemaResp)
-
-	return []domain.StationCode{}, nil
-}
-
-// setHeaders устанавливает заголовки для запросов
-func setHeaders(req *http.Request, client *Client) {
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("User-Agent", client.config.UserAgent)
-	req.Header.Set("Referer", client.config.BasePath)
-}
+//func (c *Client) GetTrainStationList(_ context.Context, params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error) {
+//	data := url.Values{}
+//	data.Set("trainNumber", params.TrainNumber)
+//	data.Set("depDate", params.FromDate.Format("02.01.2006"))
+//	data.Set("STRUCTURE_ID", fmt.Sprintf("%d", StationsStructureID))
+//
+//	req, err := http.NewRequest("GET", c.Endpoints.TrainStationList, nil)
+//	if err != nil {
+//		log.Printf("Failed to create request: %v", err)
+//		return domain.TrainStationListResponse{}, err
+//	}
+//
+//	req.URL.RawQuery = data.Encode()
+//
+//	// Установка заголовков
+//	setHeaders(req, c)
+//
+//	responseBody, err := c.executeRequest(req)
+//	if err != nil {
+//		log.Printf("Failed to get train station list: %v", err)
+//		return domain.TrainStationListResponse{}, err
+//	}
+//
+//	var schemaResp schemas.TrainStationListResponse
+//	if err := json.Unmarshal(responseBody, &schemaResp); err != nil {
+//		log.Printf("Failed to unmarshal train station list: %v", err)
+//		return domain.TrainStationListResponse{}, err
+//	}
+//
+//	// Используем маппер для преобразования схемы в доменные модели
+//	//domainResp := mappers.MapTrainStationListResponse(schemaResp)
+//
+//	return domain.TrainStationListResponse{}, nil
+//}
+//
+//// GetStationCode получает список кодов станций по части названия
+//func (c *Client) GetStationCode(_ context.Context, params domain.GetStationCodeParams) ([]domain.StationCode, error) {
+//	data := url.Values{}
+//	data.Set("stationNamePart", params.StationNamePart)
+//	data.Set("compactMode", utils.BoolToString(params.CompactMode))
+//	req, err := http.NewRequest("GET", c.Endpoints.StationCode, nil)
+//	if err != nil {
+//		log.Printf("Failed to create request: %v", err)
+//		return nil, err
+//	}
+//
+//	req.URL.RawQuery = data.Encode()
+//
+//	// Установка заголовков
+//	setHeaders(req, c)
+//
+//	responseBody, err := c.executeRequest(req)
+//	if err != nil {
+//		log.Printf("Failed to get station codes: %v", err)
+//		return nil, err
+//	}
+//
+//	var schemaResp schemas.StationCodeResponse
+//	if err := json.Unmarshal(responseBody, &schemaResp); err != nil {
+//		log.Printf("Failed to unmarshal station codes: %v", err)
+//		return nil, err
+//	}
+//
+//	// Используем маппер для преобразования схемы в доменные модели
+//	// domainStations := mappers.MapStationCodeResponse(schemaResp)
+//
+//	return []domain.StationCode{}, nil
+//}
