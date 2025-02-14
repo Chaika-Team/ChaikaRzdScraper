@@ -41,7 +41,9 @@ func MapTrainRouteResponse(response schemas.TrainRouteResponse) ([]domain.TrainR
 				TrainNumber: train.Number,
 				Duration:    duration,
 				Brand:       train.Brand,
-				Carrier:     train.Carrier,
+				Carrier: domain.Carrier{
+					Name: train.Carrier,
+				},
 				From: domain.Station{
 					Name:      train.Station0,
 					RouteName: train.Route0,
@@ -76,7 +78,7 @@ func mapTrainCarriages(carriages []schemas.CarriageType) []domain.CarriageType {
 
 	for _, car := range carriages {
 		carriage := domain.CarriageType{
-			Type:           domain.SeatType(car.Itype),
+			Type:           domain.CarSeatType(car.Itype),
 			TypeShortLabel: car.Type,
 			TypeLabel:      car.TypeLoc,
 			Class:          car.ServCls,
@@ -110,66 +112,19 @@ func mapTrainSeatCarriages(carriages []schemas.SeatCarriageType) []domain.Carria
 		}
 
 		carriage := domain.CarriageType{
-			Type:      domain.SeatType(car.Itype),
-			TypeLabel: car.TypeLoc,
-			Class:     car.ServCls,
-			Tariff:    tariff,
-			TariffEx:  tariff2,
-			Disabled:  false, // Как понимаю SeatCarriageType сделано для бизнес-класса, где нет мест для инвалидов
-			FreeSeats: car.FreeSeats,
+			Type:        domain.CarSeatType(car.Itype),
+			TypeLabel:   car.TypeLoc,
+			Class:       car.ServCls,
+			Tariff:      tariff,
+			TariffExtra: tariff2,
+			Disabled:    false, // Как понимаю SeatCarriageType сделано для бизнес-класса, где нет мест для инвалидов
+			FreeSeats:   car.FreeSeats,
 		}
 
 		result = append(result, carriage)
 	}
 
 	return result
-}
-
-// mapSeats маппит места вагона // TODO не готово
-func mapSeats(car schemas.CarriageType) []domain.Seat {
-
-	return []domain.Seat{
-		{
-			Places: []string{}, // API может не возвращать конкретные места, это можно уточнить.
-			Tariff: car.Tariff,
-			Type:   car.TypeLoc,
-			Label:  car.Type,
-		},
-	}
-}
-
-// mapTrainStationList маппит ответ списка станций  // TODO не готово
-func mapTrainStationList(response schemas.TrainStationListResponse) domain.TrainStationListResponse {
-	var routes []domain.RouteInfo
-
-	for _, route := range response.Data.Routes {
-		arrivalTime, err := parseTime(route.ArvTime)
-		if err != nil {
-			log.Printf("failed to parse arrival time %s: %v", route.ArvTime, err)
-			continue
-		}
-		departureTime, err := parseTime(route.DepTime)
-		if err != nil {
-			log.Printf("failed to parse departure time %s: %v", route.DepTime, err)
-			continue
-		}
-
-		routes = append(routes, domain.RouteInfo{
-			Station: domain.Station{
-				Name: route.Station,
-			},
-			ArrivalTime:   arrivalTime,
-			DepartureTime: departureTime,
-			Distance:      route.Distance,
-		})
-	}
-
-	return domain.TrainStationListResponse{
-		Train: domain.TrainInfo{
-			Number: response.Data.TrainInfo.Number,
-		},
-		Routes: routes,
-	}
 }
 
 // parseDateTime парсит дату и время из строки
@@ -193,10 +148,4 @@ func parseDuration(durationStr string) (time.Duration, error) {
 		return 0, fmt.Errorf("invalid minutes in duration: %s", parts[1])
 	}
 	return time.Duration(hours)*time.Hour + time.Duration(minutes)*time.Minute, nil
-}
-
-// parseTime парсит только время
-func parseTime(timeStr string) (time.Time, error) {
-	layout := "15:04"
-	return time.Parse(layout, timeStr)
 }

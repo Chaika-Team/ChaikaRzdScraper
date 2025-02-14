@@ -5,81 +5,74 @@ import (
 	"time"
 )
 
-// TrainRoute представляет маршрут поезда
+// TrainRoute представляет маршрут поезда, полученный при запросе рейсов.
+// Содержит общую информацию о поезде и список типов вагонов (агрегированные данные).
 type TrainRoute struct {
 	TrainNumber string        // Номер поезда
-	TrainType   TrainType     // Тип поезда
+	TrainType   TrainType     // Тип поезда (например, поезд или электричка)
 	Duration    time.Duration // Время в пути
 	Brand       string        // Бренд поезда
-	Carrier     string        // Перевозчик
+	Carrier     Carrier       // Перевозчик
 
-	From      Station // Станция отправления
-	To        Station // Станция прибытия
-	Departure time.Time
-	Arrival   time.Time
+	From      Station   // Станция отправления
+	To        Station   // Станция прибытия
+	Departure time.Time // Время отправления (дата и время)
+	Arrival   time.Time // Время прибытия (дата и время)
 
-	CarTypes []CarriageType // Список вагонов поезда
+	CarTypes []CarriageType // Список типов вагонов поезда (агрегированные данные)
+
+	Cars []Car // Список конкретных вагонов поезда
 }
 
-// Station представляет железнодорожную станцию
+// Station представляет железнодорожную станцию.
 type Station struct {
-	Name      string // Название станции (САНКТ-ПЕТЕРБУРГ-ГЛАВН. (МОСКОВСКИЙ ВОКЗАЛ))
-	RouteName string // Название станции на маршруте ("С-ПЕТЕР-ГЛ", "БЕЛГОРОД")
-	Code      int    // Код станции (2000000, 2004000)
+	Name      string // Полное название станции, например "САНКТ-ПЕТЕРБУРГ-ГЛАВН. (МОСКОВСКИЙ ВОКЗАЛ)"
+	RouteName string // Краткое название станции в маршруте, например "С-ПЕТЕР-ГЛ"
+	Code      int    // Код станции (например, 2004000, 2000000)
 }
 
-// CarriageType представляет типы вагонов поезда
+// CarriageType представляет агрегированные данные о типах вагонов, полученные из запроса маршрутов.
+// Используется для отображения общего состава поезда (без привязки к конкретным вагонам).
 type CarriageType struct {
-	Type           SeatType // Тип посадочных мест в вагоне (плацкарт, купе и т.д.)
-	TypeShortLabel string   // Краткое наименование типа вагона
-	TypeLabel      string   // Полное наименование типа вагона
-	Class          string   // Класс вагона (2Л, 2Э и т.д.)
-	Tariff         int      // Стоимость билета
-	TariffEx       int      // Тариф за место 2 TODO: что это
-	FreeSeats      int      // Количество свободных мест
-	Disabled       bool     // Места для инвалидов
+	Type           CarSeatType // Тип посадочных мест в вагоне (например, плацкарт, купе, люкс)
+	TypeShortLabel string      // Краткое наименование типа вагона
+	TypeLabel      string      // Полное наименование типа вагона
+	Class          string      // Класс вагона (например, "2Л", "2Э")
+	Tariff         int         // Стоимость билета для данного типа вагона
+	TariffExtra    int         // Дополнительный тариф (если имеется)
+	FreeSeats      int         // Общее количество свободных мест в вагонах этого типа
+	Disabled       bool        // Флаг: есть ли специальные места для инвалидов
 }
 
-// Seat представляет место в вагоне //TODO не готово
-type Seat struct {
-	Places []string // Список свободных мест
-	Tariff int      // Тариф за место
-	Type   string   // Тип места (верхние, нижние и т.д.)
-	Label  string   // Полное наименование места
+// Car представляет один конкретный вагон поезда с детальной информацией.
+type Car struct {
+	CarNumber          string        // Номер вагона
+	Type               string        // Тип вагона (например, "Купе", "Плац", "Люкс")
+	CategoryLabelLocal string        // Категория вагона (например, "Купе")
+	TypeLabel          string        // Полное наименование типа вагона, например "Купе"
+	CategoryCode       string        // Код категории вагона
+	CarTypeID          int           // Идентификатор категории вагона
+	CarType            int           // Тип вагона, обычно также код
+	Letter             string        // Буква вагона
+	ClassType          string        // Тип класса вагона (например, "2Ш")
+	Services           []Service     // Список услуг, предоставляемых в вагоне
+	Tariff             int           // Стоимость билета в вагоне
+	Tariff2            int           // Дополнительный тариф (если имеется)
+	Carrier            Carrier       // Перевозчик
+	CarNumeration      CarNumeration // Нумерация вагона // TODO почему это в вагоне а не в поезде?
+	FreeSeats          int           // Количество свободных мест в вагоне
+
 }
 
-// TrainCarriagesResponse представляет ответ на запрос вагонов
-type TrainCarriagesResponse struct {
-	Cars           []CarriageType // Список вагонов
-	FunctionBlocks []string       // Функциональные блоки
-	Schemes        []string       // Схемы вагонов
-	Companies      []string       // Компании перевозчики
+type Service struct {
+	ID          string // Идентификатор услуги
+	Name        string // Название услуги (с иконкой)
+	Description string // Описание услуги
 }
 
-// TrainInfo представляет информацию о поезде
-type TrainInfo struct {
-	Number string // Номер поезда
-	// Добавить другие поля по необходимости
-}
-
-// RouteInfo представляет информацию о маршруте
-type RouteInfo struct {
-	Station       Station   // Станция
-	ArrivalTime   time.Time // Время прибытия
-	DepartureTime time.Time // Время отправления
-	Distance      int       // Пройденная дистанция
-}
-
-// TrainStationListResponse представляет ответ на запрос списка станций
-type TrainStationListResponse struct {
-	Train  TrainInfo   // Информация о поезде
-	Routes []RouteInfo // Список станций
-}
-
-// StationCode представляет код станции
-type StationCode struct {
-	Station string // Название станции
-	Code    int    // Код станции
+type Carrier struct {
+	ID   string // Идентификатор перевозчика
+	Name string // Название перевозчика
 }
 
 // GetTrainRoutesParams представляет параметры для запроса маршрутов
@@ -93,12 +86,6 @@ type GetTrainRoutesParams struct {
 	WithChange bool            // С пересадками
 }
 
-// GetTrainRoutesReturnParams представляет параметры для запроса маршрутов туда-обратно
-type GetTrainRoutesReturnParams struct {
-	GetTrainRoutesParams
-	ToDate time.Time // Дата возвращения
-}
-
 // GetTrainCarriagesParams представляет параметры для запроса вагонов
 type GetTrainCarriagesParams struct {
 	TrainNumber string    // Номер поезда
@@ -107,16 +94,4 @@ type GetTrainCarriagesParams struct {
 	FromTime    time.Time // Время отправления
 	FromDate    time.Time // Дата отправления
 	ToCode      int       // Код станции прибытия
-}
-
-// GetTrainStationListParams представляет параметры для запроса списка станций
-type GetTrainStationListParams struct {
-	TrainNumber string    // Номер поезда
-	FromDate    time.Time // Дата отправления
-}
-
-// GetStationCodeParams представляет параметры для запроса кодов станций
-type GetStationCodeParams struct {
-	StationNamePart string // Часть названия станции
-	CompactMode     bool   // Компактный режим
 }

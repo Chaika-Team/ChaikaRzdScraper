@@ -5,13 +5,14 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/Chaika-Team/rzd-api/internal/domain"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/Chaika-Team/rzd-api/internal/domain"
+	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
 
 	"github.com/Chaika-Team/rzd-api/pkg/config"
 )
@@ -57,34 +58,49 @@ func main() {
 	}
 
 	// Тест 1: Получение списка станций
-	params := domain.GetTrainRoutesParams{
-		FromCode:   2004000,          // Санкт-Петербург
-		ToCode:     2000000,          // Москва
-		Direction:  domain.OneWay,    // Только туда
-		TrainType:  domain.AllTrains, // Поезда и электрички
-		CheckSeats: false,            // Не проверять наличие мест
-		FromDate:   time.Now().Add(24 * time.Hour),
-		WithChange: false, // Без пересадок
-	}
-
-	routes, err := client.GetTrainRoutes(ctx, params)
-	if err != nil {
-		log.Fatalf("failed to get train routes: %v", err)
-	}
-
-	for _, route := range routes {
-		fmt.Printf("Поезд %s типа %d из %s в %s отправляется в %s и прибывает в %s\n",
-			route.TrainNumber, route.TrainType, route.From.Name, route.To.Name,
-			route.Departure.Format("15:04"), route.Arrival.Format("15:04"))
-		for _, car := range route.CarTypes {
-			fmt.Printf("\tВагон %s %s класса, свободных мест: %d, стоимость: %d руб.\n",
-				car.TypeShortLabel, car.Class, car.FreeSeats, car.Tariff)
-		}
-	}
-
-	// Тест 2: Получение списка вагонов
-	//params := domain.GetTrainCarriagesParams{
-	//
+	//params := domain.GetTrainRoutesParams{
+	//	FromCode:   2004000,          // Санкт-Петербург
+	//	ToCode:     2000000,          // Москва
+	//	Direction:  domain.OneWay,    // Только туда
+	//	TrainType:  domain.AllTrains, // Поезда и электрички
+	//	CheckSeats: false,            // Не проверять наличие мест
+	//	FromDate:   time.Now().Add(24 * 2 * time.Hour),
+	//	WithChange: false, // Без пересадок
 	//}
+	//
+	//routes, err := client.GetTrainRoutes(ctx, params)
+	//if err != nil {
+	//	log.Fatalf("failed to get train routes: %v", err)
+	//}
+	//
+	//for _, route := range routes {
+	//	fmt.Printf("Поезд %s типа %d из %s в %s отправляется в %s и прибывает в %s\n",
+	//		route.TrainNumber, route.TrainType, route.From.Name, route.To.Name,
+	//		route.Departure.Format("15:04"), route.Arrival.Format("15:04"))
+	//	for _, car := range route.CarTypes {
+	//		fmt.Printf("\tВагон %s %s класса, свободных мест: %d, стоимость: %d руб.\n",
+	//			car.TypeShortLabel, car.Class, car.FreeSeats, car.Tariff)
+	//	}
+	//}
+	// route := routes[1] // Выбираем первый маршрут для примера
+
+	trainTime, _ := time.Parse("2006-01-02 15:04:05", "2025-02-16 00:12:00")
+	// Тест 2: Получение списка вагонов
+	cartParams := domain.GetTrainCarriagesParams{
+		TrainNumber: "119А",
+		Direction:   domain.OneWay,
+		FromCode:    2004000,
+		FromTime:    trainTime,
+
+		ToCode: 2000000,
+	}
+	carriages, err := client.GetTrainCarriages(ctx, cartParams)
+	if err != nil {
+		log.Fatalf("failed to get train cariages: %v", err)
+	}
+	for _, car := range carriages {
+		fmt.Printf("Вагон %s %s, cтоимость: %d руб., перевозчик: %s, свободных мест: %d\n",
+			car.CategoryLabelLocal, car.CarNumber, car.Tariff, car.Carrier.Name, car.FreeSeats)
+	}
 
 }
