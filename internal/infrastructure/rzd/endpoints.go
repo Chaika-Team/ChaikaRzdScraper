@@ -7,19 +7,20 @@ import (
 )
 
 // Constants for layer IDs
+// Идентификаторы слоев для запросов к API РЖД
 const (
-	RoutesLayer         = 5827
+	RoutesLayer         = 5827 // Для запроса маршрутов
 	CarriagesLayer      = 5764
 	StationsStructureID = 704
 )
 
 // Endpoints содержит все пути эндпоинтов относительно базового пути
 type Endpoints struct {
-	TrainRoutes       string
-	TrainRoutesReturn string
-	TrainCarriages    string
-	TrainStationList  string
-	StationCode       string
+	TrainRoutes       string // Запроса маршрутов
+	TrainRoutesReturn string // Запроса обратных маршрутов
+	TrainCarriages    string // Запроса вагонов
+	TrainStationList  string // Запроса списка станций
+	StationCode       string // Запроса кода станции
 }
 
 // NewEndpoints создает все эндпоинты на основе базового пути и языка, используя url.URL

@@ -46,3 +46,10 @@ func (c *Client) updateRID(rid string, ttl time.Duration) {
 		ExpiresAt: time.Now().Add(ttl),
 	}
 }
+
+func (c *Client) expireRID() {
+	c.mutex.Lock()
+	defer c.mutex.Unlock()
+
+	c.RIDCache = nil
+}
