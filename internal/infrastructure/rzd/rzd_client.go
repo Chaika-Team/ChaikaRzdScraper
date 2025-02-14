@@ -168,6 +168,7 @@ func (c *Client) executeRequest(req *http.Request) ([]byte, error) {
 				log.Printf("API returned error: %s", msg)
 				return nil, errors.New(msg)
 			}
+			c.expireRID() // Сброс RID после успешного запроса
 			return body, nil
 		}
 
