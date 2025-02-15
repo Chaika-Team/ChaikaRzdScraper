@@ -114,4 +114,8 @@ func main() {
 	for _, station := range stations {
 		fmt.Printf("Станция %s, код %d\n", station.Name, station.Code)
 	}
+	if len(stations) == 0 {
+		log.Println("no stations found matching the query")
+		return
+	}
 }
