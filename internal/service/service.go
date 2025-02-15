@@ -38,7 +38,7 @@ func (s *mainService) GetTrainCarriages(ctx context.Context, params domain.GetTr
 //	return s.rzdClient.GetTrainStationList(ctx, params)
 //}
 
-//// GetStationCode получение кодов станций по поисковому запросу
-//func (s *mainService) GetStationCode(ctx context.Context, params domain.GetStationCodeParams) ([]domain.StationCode, error) {
-//	return s.rzdClient.GetStationCode(ctx, params)
-//}
+// SearchStation получение кодов станций по поисковому запросу
+func (s *mainService) SearchStation(ctx context.Context, params domain.SearchStationParams) ([]domain.Station, error) {
+	return s.rzdClient.SearchStation(ctx, params)
+}

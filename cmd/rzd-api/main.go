@@ -98,8 +98,24 @@ func main() {
 		log.Fatalf("failed to get train cariages: %v", err)
 	}
 	for _, car := range carriages {
-		fmt.Printf("Вагон %s %s, cтоимость: %d руб., перевозчик: %s, свободных мест: %d\n",
-			car.CategoryLabelLocal, car.CarNumber, car.Tariff, car.Carrier.Name, car.FreeSeats)
+		fmt.Printf("Вагон %s %s, cтоимость: %d руб., перевозчик: %s, класс: %s\n",
+			car.CategoryLabelLocal, car.CarNumber, car.Tariff, car.Carrier.Name, car.ClassType)
 	}
 
+	// Тест 3: Получение информации о станциях
+	stationParams := domain.SearchStationParams{
+		Query:       "ЧЕБ",
+		CompactMode: true,
+	}
+	stations, err := client.SearchStation(ctx, stationParams)
+	if err != nil {
+		log.Fatalf("failed to search stations: %v", err)
+	}
+	for _, station := range stations {
+		fmt.Printf("Станция %s, код %d\n", station.Name, station.Code)
+	}
+	if len(stations) == 0 {
+		log.Println("no stations found matching the query")
+		return
+	}
 }
