@@ -9,12 +9,12 @@ import (
 
 // Config содержит полное конфигурацию приложения
 type Config struct {
-	RZD  ConfigRZD  `env:"RZD"`
-	GRPC ConfigGRPC `env:"GRPC"`
+	RZD  RZD  `env:"RZD"`
+	GRPC GRPC `env:"GRPC"`
 }
 
-// ConfigRZD содержит конфигурацию для клиента RZD
-type ConfigRZD struct {
+// RZD содержит конфигурацию для клиента RZD
+type RZD struct {
 	Language    string `env:"RZD_LANGUAGE,default=ru, description=Language of the response"`
 	Timeout     int    `env:"RZD_TIMEOUT,default=2000, description=Timeout of retries in milliseconds"`
 	MaxRetries  int    `env:"RZD_MAX_RETRIES,default=10, description=Maximum number of retries"`
@@ -25,8 +25,8 @@ type ConfigRZD struct {
 	DebugMode   bool   `env:"RZD_DEBUG_MODE,default=false"`
 }
 
-// ConfigGRPC содержит конфигурацию для gRPC сервера
-type ConfigGRPC struct {
+// GRPC содержит конфигурацию для gRPC сервера
+type GRPC struct {
 	Port string `env:"GRPC_PORT,default=50051"`
 }
 
@@ -34,7 +34,7 @@ type ConfigGRPC struct {
 func LoadConfig() (*Config, error) {
 	cfg := &Config{}
 	if err := cleanenv.ReadEnv(cfg); err != nil {
-		return nil, fmt.Errorf("failed to read environment variables: %w", err)
+		return nil, fmt.Errorf("failed to load configuration: %v", err)
 	}
 	return cfg, nil
 }

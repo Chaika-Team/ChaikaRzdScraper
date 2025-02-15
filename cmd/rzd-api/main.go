@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"sort"
 	"syscall"
 	"time"
 
@@ -111,8 +112,17 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to search stations: %v", err)
 	}
+	sort.Slice(stations, func(i, j int) bool {
+		// Сначала сортируем по Level по возрастанию
+		if stations[i].Level != stations[j].Level {
+			return stations[i].Level > stations[j].Level
+		}
+		// Если Level одинаковый, сортируем по Score (S) по убыванию
+		return stations[i].Score < stations[j].Score
+	})
 	for _, station := range stations {
-		fmt.Printf("Станция %s, код %d\n", station.Name, station.Code)
+		fmt.Printf("Категория: %d, Станция %s, код %d, S: %d\n",
+			station.Level, station.Name, station.Code, station.Score)
 	}
 	if len(stations) == 0 {
 		log.Println("no stations found matching the query")

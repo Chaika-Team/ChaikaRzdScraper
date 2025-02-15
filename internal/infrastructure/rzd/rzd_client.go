@@ -27,7 +27,7 @@ import (
 
 // Client структура клиента
 type Client struct {
-	config     *config.ConfigRZD
+	config     *config.RZD
 	HTTPClient *http.Client
 	Endpoints  Endpoints
 	RIDCache   *RIDCache
@@ -35,7 +35,7 @@ type Client struct {
 }
 
 // NewRzdClient инициализирует новый экземпляр клиента RzdClient с конфигурацией
-func NewRzdClient(cfg *config.ConfigRZD) (*Client, error) {
+func NewRzdClient(cfg *config.RZD) (*Client, error) {
 	transport := &http.Transport{}
 
 	if cfg.Proxy != "" {
@@ -285,7 +285,7 @@ func (c *Client) GetTrainCarriages(_ context.Context, params domain.GetTrainCarr
 
 // SearchStation получает список станций, коды которых содержат подстроку запроса.
 // Остальные поля ответа игнорируются.
-func (c *Client) SearchStation(ctx context.Context, params domain.SearchStationParams) ([]domain.Station, error) {
+func (c *Client) SearchStation(_ context.Context, params domain.SearchStationParams) ([]domain.Station, error) {
 	// Формирование параметров запроса.
 	data := url.Values{}
 	data.Set("stationNamePart", params.Query)
@@ -319,7 +319,7 @@ func (c *Client) SearchStation(ctx context.Context, params domain.SearchStationP
 	}
 
 	// Используем маппер для преобразования схемы в доменную модель.
-	stations, err := mappers.MapStationCodeResponse(schemaResp, params.Query)
+	stations, err := mappers.MapStationCodeResponse(schemaResp)
 	if err != nil {
 		return nil, err
 	}
