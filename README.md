@@ -71,6 +71,26 @@ for _, car := range carriages {
 }
 ```
 
+Пример запроса поиска названий и кодов станций по части их имени:
+
+```go
+stationParams := domain.SearchStationParams{
+    Query:       "ЧЕБ",
+    CompactMode: true,
+}
+stations, err := client.SearchStation(ctx, stationParams)
+if err != nil {
+    log.Fatalf("failed to search stations: %v", err)
+}
+for _, station := range stations {
+    fmt.Printf("Станция %s, код %d\n", station.Name, station.Code)
+}
+if len(stations) == 0 {
+    log.Println("no stations found matching the query")
+    return
+}
+```
+
 ## Лицензия
 Проект распространяется под лицензией **GPLv3**.
 
