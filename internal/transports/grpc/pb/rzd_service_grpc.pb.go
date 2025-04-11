@@ -24,7 +24,7 @@ const (
 	RZDService_GetTrainRoutesReturn_FullMethodName = "/rzd.RZDService/GetTrainRoutesReturn"
 	RZDService_GetTrainCarriages_FullMethodName    = "/rzd.RZDService/GetTrainCarriages"
 	RZDService_GetTrainStationList_FullMethodName  = "/rzd.RZDService/GetTrainStationList"
-	RZDService_GetStationCode_FullMethodName       = "/rzd.RZDService/GetStationCode"
+	RZDService_GetStationCode_FullMethodName       = "/rzd.RZDService/SearchStation"
 )
 
 // RZDServiceClient is the client API for RZDService service.
@@ -128,7 +128,7 @@ func (UnimplementedRZDServiceServer) GetTrainStationList(context.Context, *GetTr
 	return nil, status.Errorf(codes.Unimplemented, "method GetTrainStationList not implemented")
 }
 func (UnimplementedRZDServiceServer) GetStationCode(context.Context, *GetStationCodeRequest) (*GetStationCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetStationCode not implemented")
+	return nil, status.Errorf(codes.Unimplemented, "method SearchStation not implemented")
 }
 func (UnimplementedRZDServiceServer) mustEmbedUnimplementedRZDServiceServer() {}
 func (UnimplementedRZDServiceServer) testEmbeddedByValue()                    {}
@@ -265,7 +265,7 @@ var RZDService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _RZDService_GetTrainStationList_Handler,
 		},
 		{
-			MethodName: "GetStationCode",
+			MethodName: "SearchStation",
 			Handler:    _RZDService_GetStationCode_Handler,
 		},
 	},

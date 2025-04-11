@@ -11,12 +11,12 @@ import (
 type Service interface {
 	// GetTrainRoutes возвращает маршруты поездов
 	GetTrainRoutes(ctx context.Context, params domain.GetTrainRoutesParams) ([]domain.TrainRoute, error)
-	// GetTrainRoutesReturn возвращает маршруты туда и обратно
-	GetTrainRoutesReturn(ctx context.Context, params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error)
 	// GetTrainCarriages возвращает информацию о вагонах поезда
-	GetTrainCarriages(ctx context.Context, params domain.GetTrainCarriagesParams) (domain.TrainCarriagesResponse, error)
+	GetTrainCarriages(ctx context.Context, params domain.GetTrainCarriagesParams) ([]domain.Car, error)
+	// SearchStation возвращает коды станций основываясь на поисковом запросе
+	SearchStation(ctx context.Context, params domain.SearchStationParams) ([]domain.Station, error)
+	// GetTrainRoutesReturn возвращает маршруты туда и обратно
+	//GetTrainRoutesReturn(ctx context.Context, params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error)
 	// GetTrainStationList возвращает список станций поезда по его номеру
-	GetTrainStationList(ctx context.Context, params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error)
-	// GetStationCode возвращает коды станций основываясь на поисковом запросе
-	GetStationCode(ctx context.Context, params domain.GetStationCodeParams) ([]domain.StationCode, error)
+	//GetTrainStationList(ctx context.Context, params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error)
 }

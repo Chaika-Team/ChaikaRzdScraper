@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Скрипт для генерации Protobuf файлов на основе proto-файлов
+
 set -euo pipefail
 # Check if protoc is installed
 if ! command -v protoc &> /dev/null; then

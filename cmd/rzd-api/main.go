@@ -11,9 +11,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/Chaika-Team/rzd-api/internal/domain"
 	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
 
-	"github.com/Chaika-Team/rzd-api/internal/domain"
 	"github.com/Chaika-Team/rzd-api/pkg/config"
 )
 
@@ -57,13 +57,14 @@ func main() {
 		log.Fatalf("failed to create RZD client: %v", err)
 	}
 
+	// Тест 1: Получение списка станций
 	params := domain.GetTrainRoutesParams{
 		FromCode:   2004000,          // Санкт-Петербург
 		ToCode:     2000000,          // Москва
 		Direction:  domain.OneWay,    // Только туда
 		TrainType:  domain.AllTrains, // Поезда и электрички
 		CheckSeats: false,            // Не проверять наличие мест
-		FromDate:   time.Now().Add(24 * time.Hour),
+		FromDate:   time.Now().Add(24 * 2 * time.Hour),
 		WithChange: false, // Без пересадок
 	}
 
@@ -81,5 +82,40 @@ func main() {
 				car.TypeShortLabel, car.Class, car.FreeSeats, car.Tariff)
 		}
 	}
+	route := routes[1] // Выбираем первый маршрут для примера
 
+	// Тест 2: Получение списка вагонов
+	cartParams := domain.GetTrainCarriagesParams{
+		TrainNumber: route.TrainNumber,
+		Direction:   domain.OneWay,
+		FromCode:    route.From.Code,
+		FromTime:    route.Departure,
+
+		ToCode: route.To.Code,
+	}
+	carriages, err := client.GetTrainCarriages(ctx, cartParams)
+	if err != nil {
+		log.Fatalf("failed to get train cariages: %v", err)
+	}
+	for _, car := range carriages {
+		fmt.Printf("Вагон %s %s, cтоимость: %d руб., перевозчик: %s, класс: %s\n",
+			car.CategoryLabelLocal, car.CarNumber, car.Tariff, car.Carrier.Name, car.ClassType)
+	}
+
+	// Тест 3: Получение информации о станциях
+	stationParams := domain.SearchStationParams{
+		Query:       "ЧЕБ",
+		CompactMode: true,
+	}
+	stations, err := client.SearchStation(ctx, stationParams)
+	if err != nil {
+		log.Fatalf("failed to search stations: %v", err)
+	}
+	for _, station := range stations {
+		fmt.Printf("Станция %s, код %d\n", station.Name, station.Code)
+	}
+	if len(stations) == 0 {
+		log.Println("no stations found matching the query")
+		return
+	}
 }

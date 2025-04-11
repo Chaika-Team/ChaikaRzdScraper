@@ -1519,12 +1519,12 @@ var file_rzd_service_proto_depIdxs = []int32{
 	4,  // 12: rzd.RZDService.GetTrainRoutesReturn:input_type -> rzd.GetTrainRoutesReturnRequest
 	6,  // 13: rzd.RZDService.GetTrainCarriages:input_type -> rzd.GetTrainCarriagesRequest
 	11, // 14: rzd.RZDService.GetTrainStationList:input_type -> rzd.GetTrainStationListRequest
-	17, // 15: rzd.RZDService.GetStationCode:input_type -> rzd.GetStationCodeRequest
+	17, // 15: rzd.RZDService.SearchStation:input_type -> rzd.GetStationCodeRequest
 	3,  // 16: rzd.RZDService.GetTrainRoutes:output_type -> rzd.GetTrainRoutesResponse
 	5,  // 17: rzd.RZDService.GetTrainRoutesReturn:output_type -> rzd.GetTrainRoutesReturnResponse
 	10, // 18: rzd.RZDService.GetTrainCarriages:output_type -> rzd.GetTrainCarriagesResponse
 	15, // 19: rzd.RZDService.GetTrainStationList:output_type -> rzd.GetTrainStationListResponse
-	18, // 20: rzd.RZDService.GetStationCode:output_type -> rzd.GetStationCodeResponse
+	18, // 20: rzd.RZDService.SearchStation:output_type -> rzd.GetStationCodeResponse
 	16, // [16:21] is the sub-list for method output_type
 	11, // [11:16] is the sub-list for method input_type
 	11, // [11:11] is the sub-list for extension type_name
