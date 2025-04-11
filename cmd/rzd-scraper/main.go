@@ -1,3 +1,4 @@
+// cmd/rzd-scraper/main.go
 package main
 
 import (
