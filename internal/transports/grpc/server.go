@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
@@ -26,7 +27,11 @@ func (s *Server) GetTrainRoutes(ctx context.Context, req *pb.GetTrainRoutesReque
 	if err != nil {
 		return nil, err
 	}
-	return response.(*pb.GetTrainRoutesResponse), nil
+	resp, ok := response.(*pb.GetTrainRoutesResponse)
+	if !ok {
+		return nil, fmt.Errorf("unexpected response type: %T", response)
+	}
+	return resp, nil
 }
 
 func (s *Server) GetTrainCarriages(ctx context.Context, req *pb.GetTrainCarriagesRequest) (*pb.GetTrainCarriagesResponse, error) {
@@ -34,7 +39,11 @@ func (s *Server) GetTrainCarriages(ctx context.Context, req *pb.GetTrainCarriage
 	if err != nil {
 		return nil, err
 	}
-	return response.(*pb.GetTrainCarriagesResponse), nil
+	resp, ok := response.(*pb.GetTrainCarriagesResponse)
+	if !ok {
+		return nil, fmt.Errorf("unexpected response type: %T", response)
+	}
+	return resp, nil
 }
 
 func (s *Server) SearchStation(ctx context.Context, req *pb.SearchStationRequest) (*pb.SearchStationResponse, error) {
@@ -42,7 +51,11 @@ func (s *Server) SearchStation(ctx context.Context, req *pb.SearchStationRequest
 	if err != nil {
 		return nil, err
 	}
-	return response.(*pb.SearchStationResponse), nil
+	resp, ok := response.(*pb.SearchStationResponse)
+	if !ok {
+		return nil, fmt.Errorf("unexpected response type: %T", response)
+	}
+	return resp, nil
 }
 
 // StartGRPCServer запускает gRPC-сервер и возвращает grpc.Server для управления его остановкой.

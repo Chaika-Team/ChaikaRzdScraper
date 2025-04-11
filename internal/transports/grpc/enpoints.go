@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-kit/kit/endpoint"
 
@@ -30,7 +31,10 @@ func MakeEndpoints(svc service.Service) Endpoints {
 
 func makeGetTrainRoutesEndpoint(svc service.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(*pb.GetTrainRoutesRequest)
+		req, ok := request.(*pb.GetTrainRoutesRequest)
+		if !ok {
+			return nil, fmt.Errorf("expected *pb.GetTrainRoutesRequest, got %T", request)
+		}
 		params := domain.GetTrainRoutesParams{
 			FromCode:   int(req.FromCode),
 			ToCode:     int(req.ToCode),
@@ -50,7 +54,10 @@ func makeGetTrainRoutesEndpoint(svc service.Service) endpoint.Endpoint {
 
 func makeGetTrainCarriagesEndpoint(svc service.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(*pb.GetTrainCarriagesRequest)
+		req, ok := request.(*pb.GetTrainCarriagesRequest)
+		if !ok {
+			return nil, fmt.Errorf("expected *pb.GetTrainCarriagesRequest, got %T", request)
+		}
 		params := domain.GetTrainCarriagesParams{
 			TrainNumber: req.TrainNumber,
 			Direction:   domain.Direction(req.Direction),
@@ -68,7 +75,10 @@ func makeGetTrainCarriagesEndpoint(svc service.Service) endpoint.Endpoint {
 
 func makeSearchStationEndpoint(svc service.Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
-		req := request.(*pb.SearchStationRequest)
+		req, ok := request.(*pb.SearchStationRequest)
+		if !ok {
+			return nil, fmt.Errorf("expected *pb.SearchStationRequest, got %T", request)
+		}
 		params := domain.SearchStationParams{
 			Query:       req.Query,
 			CompactMode: req.CompactMode,

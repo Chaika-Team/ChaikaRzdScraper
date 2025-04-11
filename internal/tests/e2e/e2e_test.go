@@ -33,14 +33,15 @@ func startTestGRPCServer(t *testing.T, svc service.Service) (*grpc.Server, net.L
 
 	lis, err := net.Listen("tcp", ":"+testGRPCPort)
 	require.NoError(t, err)
-
+	serverReady := make(chan struct{})
 	go func() {
+		serverReady <- struct{}{}
 		if err := grpcServer.Serve(lis); err != nil {
 			log.Fatalf("failed to serve gRPC: %v", err)
 		}
 	}()
-	// Даем время серверу подняться
-	time.Sleep(300 * time.Millisecond)
+	// Ждем сигнал о готовности сервера
+	<-serverReady
 	return grpcServer, lis
 }
 
