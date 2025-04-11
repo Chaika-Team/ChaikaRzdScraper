@@ -45,14 +45,14 @@ func (s *Server) SearchStation(ctx context.Context, req *pb.SearchStationRequest
 	return response.(*pb.SearchStationResponse), nil
 }
 
-// StartGRPCServer Запуск gRPC-сервера.
-func StartGRPCServer(addr string, srv *Server) error {
+// StartGRPCServer запускает gRPC-сервер и возвращает grpc.Server для управления его остановкой.
+func StartGRPCServer(addr string, srv *Server) (*grpc.Server, net.Listener, error) {
 	listener, err := net.Listen("tcp", addr)
 	if err != nil {
-		return err
+		return nil, nil, err
 	}
 	grpcServer := grpc.NewServer()
 	pb.RegisterRzdServiceServer(grpcServer, srv)
 	log.Printf("gRPC server listening on %s", addr)
-	return grpcServer.Serve(listener)
+	return grpcServer, listener, nil
 }

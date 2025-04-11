@@ -1,0 +1,12 @@
+RZD:
+  LANGUAGE: ru
+  TIMEOUT: 5
+  MAX_RETRIES: 10
+  RID_LIFETIME: 300000
+  PROXY: ""
+  USER_AGENT: "Mozilla/5.0 (compatible; RzdClient/1.0)"
+  BASE_PATH: "https://pass.rzd.ru/"
+  DEBUG_MODE: false
+
+GRPC:
+  PORT: 50051

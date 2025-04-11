@@ -7,34 +7,43 @@ import (
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
-// Config содержит полное конфигурацию приложения
+// Config содержит полное конфигурацию приложения.
 type Config struct {
-	RZD  RZD  `env:"RZD"`
-	GRPC GRPC `env:"GRPC"`
+	RZD  RZD  `yaml:"RZD" env:"RZD"`
+	GRPC GRPC `yaml:"GRPC" env:"GRPC"`
 }
 
-// RZD содержит конфигурацию для клиента RZD
+// RZD содержит конфигурацию для клиента RZD.
 type RZD struct {
-	Language    string `env:"RZD_LANGUAGE,default=ru, description=Language of the response"`
-	Timeout     int    `env:"RZD_TIMEOUT,default=2000, description=Timeout of retries in milliseconds"`
-	MaxRetries  int    `env:"RZD_MAX_RETRIES,default=10, description=Maximum number of retries"`
-	RIDLifetime int    `env:"RZD_RID_LIFETIME,default=300000, description=The lifetime of RID in milliseconds"`
-	Proxy       string `env:"RZD_PROXY"`
-	UserAgent   string `env:"RZD_USER_AGENT,default=Mozilla/5.0 (compatible; RzdClient/1.0)"`
-	BasePath    string `env:"RZD_BASE_PATH,default=https://pass.rzd.ru/"`
-	DebugMode   bool   `env:"RZD_DEBUG_MODE,default=false"`
+	Language    string `yaml:"LANGUAGE" env:"LANGUAGE,default=ru, description=Language of the response"`
+	Timeout     int    `yaml:"TIMEOUT" env:"TIMEOUT,default=2000, description=Timeout of retries in milliseconds"`
+	MaxRetries  int    `yaml:"MAX_RETRIES" env:"MAX_RETRIES,default=10, description=Maximum number of retries"`
+	RIDLifetime int    `yaml:"RID_LIFETIME" env:"RID_LIFETIME,default=300000, description=The lifetime of RID in milliseconds"`
+	Proxy       string `yaml:"PROXY" env:"PROXY"`
+	UserAgent   string `yaml:"USER_AGENT" env:"USER_AGENT,default=Mozilla/5.0 (compatible; RzdClient/1.0)"`
+	BasePath    string `yaml:"BASE_PATH" env:"BASE_PATH,default=https://pass.rzd.ru/"`
+	DebugMode   bool   `yaml:"DEBUG_MODE" env:"DEBUG_MODE,default=false"`
 }
 
-// GRPC содержит конфигурацию для gRPC сервера
+// GRPC содержит конфигурацию для gRPC сервера.
 type GRPC struct {
-	Port string `env:"GRPC_PORT,default=50051"`
+	Port string `yaml:"PORT" env:"PORT,default=50051"`
 }
 
-// LoadConfig загружает конфигурацию из переменных окружения с использованием cleanenv
-func LoadConfig() (*Config, error) {
+// LoadConfig загружает конфигурацию из файла (если передан путь) или из переменных окружения.
+// При наличии файла, его значения будут приоритетными.
+func LoadConfig(configPath string) (*Config, error) {
 	cfg := &Config{}
-	if err := cleanenv.ReadEnv(cfg); err != nil {
-		return nil, fmt.Errorf("failed to load configuration: %v", err)
+	if configPath != "" {
+		// Если указан файл, считываем конфигурацию из него.
+		if err := cleanenv.ReadConfig(configPath, cfg); err != nil {
+			return nil, fmt.Errorf("failed to load configuration from file: %v", err)
+		}
+	} else {
+		// Иначе считываем из переменных окружения.
+		if err := cleanenv.ReadEnv(cfg); err != nil {
+			return nil, fmt.Errorf("failed to load configuration from environment: %v", err)
+		}
 	}
 	return cfg, nil
 }
