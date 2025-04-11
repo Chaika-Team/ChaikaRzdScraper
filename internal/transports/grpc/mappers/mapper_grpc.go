@@ -116,16 +116,16 @@ func MapCarrierToPb(c domain.Carrier) *pb.Carrier {
 
 // MapCarNumerationToPb преобразует доменное CarNumeration в int32 для pb.
 // Используем определённые константы: Head=0, Tail=1, Unknown=2.
-func MapCarNumerationToPb(cn domain.CarNumeration) domain.CarNumeration {
+func MapCarNumerationToPb(cn domain.CarNumeration) int32 {
 	// Если типы совпадают, можно вернуть значение напрямую.
 	// В данном случае возвращаем cn, и в endpoint-е результат приведём к int32.
 	switch cn {
 	case domain.Head:
-		return domain.Head
+		return 0 // Head
 	case domain.Tail:
-		return domain.Tail
+		return 1 // Tail
 	default:
-		return domain.Unknown
+		return 2 // Unknown
 	}
 }
 
