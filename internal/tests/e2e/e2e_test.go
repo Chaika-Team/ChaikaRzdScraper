@@ -42,6 +42,13 @@ func startTestGRPCServer(t *testing.T, svc service.Service) (*grpc.Server, net.L
 	}()
 	// Ждем сигнал о готовности сервера
 	<-serverReady
+
+	t.Cleanup(func() {
+		log.Println("Gracefully stopping gRPC server...")
+		grpcServer.GracefulStop() // останавливаем сервер корректно
+		_ = lis.Close()           // закрываем listener
+	})
+
 	return grpcServer, lis
 }
 
@@ -117,12 +124,30 @@ func TestGetTrainCarriages(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	reqRoute := &pb.GetTrainRoutesRequest{
+		FromCode:   2004000,
+		ToCode:     2000000,
+		Direction:  0, // OneWay
+		TrainType:  1, // AllTrains
+		CheckSeats: false,
+		FromDate:   timestamppb.New(time.Now().Add(48 * time.Hour)),
+		WithChange: false,
+	}
+
+	respRoute, err := client.GetTrainRoutes(ctx, reqRoute)
+	if err != nil {
+		t.Fatalf("failed to get train routes: %v", err)
+	}
+	if len(respRoute.Routes) == 0 {
+		t.Fatal("no routes found")
+	}
+
 	req := &pb.GetTrainCarriagesRequest{
-		TrainNumber: "119А",
+		TrainNumber: respRoute.Routes[0].TrainNumber,
 		Direction:   0,
-		FromCode:    2004000,
-		FromTime:    timestamppb.New(time.Now().Add(48 * time.Hour)),
-		ToCode:      2000000,
+		FromCode:    respRoute.Routes[0].From.Code,
+		FromTime:    respRoute.Routes[0].Departure,
+		ToCode:      respRoute.Routes[0].To.Code,
 	}
 
 	resp, err := client.GetTrainCarriages(ctx, req)
