@@ -93,7 +93,6 @@ type GetTrainCarriagesParams struct {
 	Direction   Direction // Направление
 	FromCode    int       // Код станции отправления
 	FromTime    time.Time // Время отправления
-	FromDate    time.Time // Дата отправления
 	ToCode      int       // Код станции прибытия
 }
 

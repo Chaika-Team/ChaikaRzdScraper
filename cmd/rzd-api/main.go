@@ -12,6 +12,9 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/Chaika-Team/rzd-api/internal/service"
+	"github.com/Chaika-Team/rzd-api/internal/transports/grpc"
+
 	"github.com/Chaika-Team/rzd-api/internal/domain"
 	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
 
@@ -128,4 +131,19 @@ func main() {
 		log.Println("no stations found matching the query")
 		return
 	}
+
+	// Создаем сервисный слой
+	svc := service.New(client)
+
+	// Создаем эндпоинты для gRPC
+	eps := grpc.MakeEndpoints(svc)
+
+	// Создаем gRPC сервер
+	grpcServer := grpc.NewGRPCServer(eps)
+
+	// Запускаем gRPC сервер
+	if err := grpc.StartGRPCServer(":"+cfg.GRPC.Port, grpcServer); err != nil {
+		log.Fatalf("failed to start gRPC server: %v", err)
+	}
+
 }

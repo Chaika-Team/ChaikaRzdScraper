@@ -23,20 +23,10 @@ func (s *mainService) GetTrainRoutes(ctx context.Context, params domain.GetTrain
 	return s.rzdClient.GetTrainRoutes(ctx, params)
 }
 
-//// GetTrainRoutesReturn получение маршрутов туда и обратно
-//func (s *mainService) GetTrainRoutesReturn(ctx context.Context, params domain.GetTrainRoutesReturnParams) ([]domain.TrainRoute, []domain.TrainRoute, error) {
-//	return s.rzdClient.GetTrainRoutesReturn(ctx, params)
-//}
-
 // GetTrainCarriages получение информации о вагонах
 func (s *mainService) GetTrainCarriages(ctx context.Context, params domain.GetTrainCarriagesParams) ([]domain.Car, error) {
 	return s.rzdClient.GetTrainCarriages(ctx, params)
 }
-
-//// GetTrainStationList получение списка станций поезда
-//func (s *mainService) GetTrainStationList(ctx context.Context, params domain.GetTrainStationListParams) (domain.TrainStationListResponse, error) {
-//	return s.rzdClient.GetTrainStationList(ctx, params)
-//}
 
 // SearchStation получение кодов станций по поисковому запросу
 func (s *mainService) SearchStation(ctx context.Context, params domain.SearchStationParams) ([]domain.Station, error) {

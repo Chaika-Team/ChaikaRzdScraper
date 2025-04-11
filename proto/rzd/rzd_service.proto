@@ -2,145 +2,124 @@ syntax = "proto3";
 
 package rzd;
 
-option go_package = "github.com/Chaika-Team/rzd-api/internal/transports/grpc/pb;rzd";
+import "google/protobuf/timestamp.proto";
 
-service RZDService {
-  rpc GetTrainRoutes (GetTrainRoutesRequest) returns (GetTrainRoutesResponse);
-  rpc GetTrainRoutesReturn (GetTrainRoutesReturnRequest) returns (GetTrainRoutesReturnResponse);
-  rpc GetTrainCarriages (GetTrainCarriagesRequest) returns (GetTrainCarriagesResponse);
-  rpc GetTrainStationList (GetTrainStationListRequest) returns (GetTrainStationListResponse);
-  rpc GetStationCode (GetStationCodeRequest) returns (GetStationCodeResponse);
+option go_package = "internal/transports/grpc/pb;pb";
+
+// Сервис для работы с данными РЖД
+service RzdService {
+  // Получение маршрутов поездов
+  rpc GetTrainRoutes(GetTrainRoutesRequest) returns (GetTrainRoutesResponse);
+
+  // Получение информации о вагонах поезда
+  rpc GetTrainCarriages(GetTrainCarriagesRequest) returns (GetTrainCarriagesResponse);
+
+  // Поиск станций по части названия
+  rpc SearchStation(SearchStationRequest) returns (SearchStationResponse);
 }
 
-// Запросы и ответы
-
+// Запрос для получения маршрутов
 message GetTrainRoutesRequest {
-  string code0 = 1;
-  string code1 = 2;
-  int32 dir = 3;        // 0 - только в одну сторону, 1 - туда-обратно
-  int32 tfl = 4;        // Тип поезда (3 - поезда и электрички, 2 - электрички, 1 - поезда)
-  int32 checkSeats = 5; // 1 - только с билетами, 0 - все поезда
-  string dt0 = 6;       // Дата отправления (d.m.Y)
-  int32 md = 7;         // Маршруты с пересадками (1 - с пересадками, 0 - только прямые рейсы)
+  int32 fromCode = 1;         // Код станции отправления
+  int32 toCode = 2;           // Код станции прибытия
+  int32 direction = 3;        // 0 – OneWay, 1 – Return
+  int32 trainType = 4;        // 1 – AllTrains, 2 – Trains, 3 – Electrics
+  bool checkSeats = 5;        // Проверять наличие мест
+  google.protobuf.Timestamp fromDate = 6;        // Дата отправления в формате "DD.MM.YYYY"
+  bool withChange = 7;        // Флаг пересадок
 }
 
-message Car {
-  string carType = 1;     // Тип вагона
-  string carNumber = 2;   // Номер вагона
-  int32 freeSeats = 3;    // Количество свободных мест
-  float tariff = 4;       // Тариф
-}
-
-message TrainRoute {
-  string route0 = 1;
-  string route1 = 2;
-  string date0 = 3;
-  string time0 = 4;
-  string number = 5;
-  string from = 6;
-  string where = 7;
-  string date = 8;
-  string fromCode = 9;
-  string whereCode = 10;
-  string time1 = 11;
-  string timeInWay = 12;
-  string brand = 13;
-  string carrier = 14;
-  repeated Car cars = 15;
-}
-
+// Ответ с маршрутами
 message GetTrainRoutesResponse {
   repeated TrainRoute routes = 1;
 }
 
-message GetTrainRoutesReturnRequest {
-  string code0 = 1;
-  string code1 = 2;
-  int32 dir = 3;         // 0 - только в одну сторону, 1 - туда-обратно
-  int32 tfl = 4;         // Тип поезда
-  int32 checkSeats = 5;  // Проверка наличия свободных мест
-  string dt0 = 6;        // Дата отправления
-  string dt1 = 7;        // Дата возврата
-}
-
-message GetTrainRoutesReturnResponse {
-  repeated TrainRoute forward = 1;
-  repeated TrainRoute back = 2;
-}
-
-message GetTrainCarriagesRequest {
-  string code0 = 1;
-  string code1 = 2;
-  string tnum0 = 3;  // Номер поезда
-  string time0 = 4;  // Время отправления
-  string dt0 = 5;    // Дата отправления
-  int32 dir = 6;     // Направление
-}
-
-message Seat {
-  repeated string places = 1;
-  float tariff = 2;
-  string type = 3;
-  int32 free = 4;
-  string label = 5;
-}
-
-message Carriage {
-  string cnumber = 1;
-  string type = 2;
-  string typeLoc = 3;
-  string clsType = 4;
-  float tariff = 5;
-  repeated Seat seats = 6;
-}
-
-message TrainCarriagesResponse {
-  repeated Carriage cars = 1;
-  repeated string functionBlocks = 2;
-  repeated string schemes = 3;
-  repeated string companies = 4;
-}
-
-message GetTrainCarriagesResponse {
-  TrainCarriagesResponse response = 1;
-}
-
-message GetTrainStationListRequest {
+// Модель маршрута
+message TrainRoute {
   string trainNumber = 1;
-  string depDate = 2;
+  int32 trainType = 2;
+  google.protobuf.Timestamp departure = 3;
+  google.protobuf.Timestamp arrival = 4;
+  Station from = 5;
+  Station to = 6;
+  repeated CarriageType carTypes = 7;
 }
 
-message TrainInfo {
-  string number = 1;
-  // Добавьте другие поля по необходимости
+// Станция
+message Station {
+  string name = 1;
+  int32 code = 2;
+  string routeName = 3;
+  int32 level = 4;     // (0-5)
+  int32 score = 5;     // (0-5)
 }
 
-message Route {
-  string station = 1;
-  string arrival_time = 2;
-  string departure_time = 3;
-  // Добавьте другие поля по необходимости
+// Тип вагона (агрегированные данные)
+message CarriageType {
+  int32 type = 1;             // Тип места (например, 1 для Platz, 2 для Coupe и пр.)
+  string typeShortLabel = 2;  // Краткое наименование
+  string typeLabel = 3;       // Полное наименование
+  string class = 4;           // Класс вагона (например, "2Ш")
+  int32 tariff = 5;           // Стоимость билета
+  int32 tariffExtra = 6;      // Дополнительный тариф
+  int32 freeSeats = 7;        // Свободных мест
+  bool disabled = 8;          // Специальные места для инвалидов
 }
 
-message TrainStationListResponse {
-  TrainInfo train = 1;
-  repeated Route routes = 2;
+// Запрос для получения информации о вагонах
+message GetTrainCarriagesRequest {
+  string trainNumber = 1;
+  int32 direction = 2;
+  int32 fromCode = 3;
+  google.protobuf.Timestamp fromTime = 4;
+  int32 toCode = 6;
 }
 
-message GetTrainStationListResponse {
-  TrainStationListResponse response = 1;
+// Ответ с информацией о вагонах
+message GetTrainCarriagesResponse {
+  repeated Car carriages = 1;
 }
 
-message StationCode {
-  string station = 1;
-  string code = 2;
+// Модель вагона (детальная информация)
+message Car {
+  string carNumber = 1;
+  string type = 2;               // Тип вагона (например, "Купе", "Плац", "Люкс")
+  string categoryLabelLocal = 3; // Категория вагона (например, "Купе")
+  string typeLabel = 4;          // Полное наименование типа
+  string categoryCode = 5;       // Код категории
+  int32 carTypeId = 6;           // Идентификатор категории
+  int32 carType = 7;             // Тип вагона (код)
+  string letter = 8;             // Буква вагона
+  string classType = 9;          // Тип класса (например, "2Ш")
+  int32 tariff = 10;
+  int32 tariffExtra = 11;
+  Carrier carrier = 12;
+  int32 carNumeration = 13;      // 0 - Head, 1 - Tail, 2 - Unknown
+  repeated Service services = 14;
+  // Пропущены поля мест – они могут быть добавлены позже
 }
 
-message GetStationCodeRequest {
-  string stationNamePart = 1;
-  string compactMode = 2;
+// Модель услуги
+message Service {
+  string id = 1;
+  string name = 2;
+  string description = 3;
 }
 
-message GetStationCodeResponse {
-  repeated StationCode stations = 1;
+// Перевозчик
+message Carrier {
+  string id = 1;
+  string name = 2;
+}
+
+// Запрос для поиска станций
+message SearchStationRequest {
+  string query = 1;
+  bool compactMode = 2;
+  string lang = 3;
+}
+
+// Ответ для поиска станций
+message SearchStationResponse {
+  repeated Station stations = 1;
 }

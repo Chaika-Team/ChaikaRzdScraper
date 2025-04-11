@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v4.25.6
-// source: rzd_service.proto
+// source: proto/rzd/rzd_service.proto
 
-package rzd
+package pb
 
 import (
 	context "context"
@@ -20,255 +20,189 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	RZDService_GetTrainRoutes_FullMethodName       = "/rzd.RZDService/GetTrainRoutes"
-	RZDService_GetTrainRoutesReturn_FullMethodName = "/rzd.RZDService/GetTrainRoutesReturn"
-	RZDService_GetTrainCarriages_FullMethodName    = "/rzd.RZDService/GetTrainCarriages"
-	RZDService_GetTrainStationList_FullMethodName  = "/rzd.RZDService/GetTrainStationList"
-	RZDService_GetStationCode_FullMethodName       = "/rzd.RZDService/GetStationCode"
+	RzdService_GetTrainRoutes_FullMethodName    = "/rzd.RzdService/GetTrainRoutes"
+	RzdService_GetTrainCarriages_FullMethodName = "/rzd.RzdService/GetTrainCarriages"
+	RzdService_SearchStation_FullMethodName     = "/rzd.RzdService/SearchStation"
 )
 
-// RZDServiceClient is the client API for RZDService service.
+// RzdServiceClient is the client API for RzdService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RZDServiceClient interface {
+//
+// Сервис для работы с данными РЖД
+type RzdServiceClient interface {
+	// Получение маршрутов поездов
 	GetTrainRoutes(ctx context.Context, in *GetTrainRoutesRequest, opts ...grpc.CallOption) (*GetTrainRoutesResponse, error)
-	GetTrainRoutesReturn(ctx context.Context, in *GetTrainRoutesReturnRequest, opts ...grpc.CallOption) (*GetTrainRoutesReturnResponse, error)
+	// Получение информации о вагонах поезда
 	GetTrainCarriages(ctx context.Context, in *GetTrainCarriagesRequest, opts ...grpc.CallOption) (*GetTrainCarriagesResponse, error)
-	GetTrainStationList(ctx context.Context, in *GetTrainStationListRequest, opts ...grpc.CallOption) (*GetTrainStationListResponse, error)
-	GetStationCode(ctx context.Context, in *GetStationCodeRequest, opts ...grpc.CallOption) (*GetStationCodeResponse, error)
+	// Поиск станций по части названия
+	SearchStation(ctx context.Context, in *SearchStationRequest, opts ...grpc.CallOption) (*SearchStationResponse, error)
 }
 
-type rZDServiceClient struct {
+type rzdServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRZDServiceClient(cc grpc.ClientConnInterface) RZDServiceClient {
-	return &rZDServiceClient{cc}
+func NewRzdServiceClient(cc grpc.ClientConnInterface) RzdServiceClient {
+	return &rzdServiceClient{cc}
 }
 
-func (c *rZDServiceClient) GetTrainRoutes(ctx context.Context, in *GetTrainRoutesRequest, opts ...grpc.CallOption) (*GetTrainRoutesResponse, error) {
+func (c *rzdServiceClient) GetTrainRoutes(ctx context.Context, in *GetTrainRoutesRequest, opts ...grpc.CallOption) (*GetTrainRoutesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetTrainRoutesResponse)
-	err := c.cc.Invoke(ctx, RZDService_GetTrainRoutes_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RzdService_GetTrainRoutes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rZDServiceClient) GetTrainRoutesReturn(ctx context.Context, in *GetTrainRoutesReturnRequest, opts ...grpc.CallOption) (*GetTrainRoutesReturnResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetTrainRoutesReturnResponse)
-	err := c.cc.Invoke(ctx, RZDService_GetTrainRoutesReturn_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *rZDServiceClient) GetTrainCarriages(ctx context.Context, in *GetTrainCarriagesRequest, opts ...grpc.CallOption) (*GetTrainCarriagesResponse, error) {
+func (c *rzdServiceClient) GetTrainCarriages(ctx context.Context, in *GetTrainCarriagesRequest, opts ...grpc.CallOption) (*GetTrainCarriagesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetTrainCarriagesResponse)
-	err := c.cc.Invoke(ctx, RZDService_GetTrainCarriages_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, RzdService_GetTrainCarriages_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rZDServiceClient) GetTrainStationList(ctx context.Context, in *GetTrainStationListRequest, opts ...grpc.CallOption) (*GetTrainStationListResponse, error) {
+func (c *rzdServiceClient) SearchStation(ctx context.Context, in *SearchStationRequest, opts ...grpc.CallOption) (*SearchStationResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetTrainStationListResponse)
-	err := c.cc.Invoke(ctx, RZDService_GetTrainStationList_FullMethodName, in, out, cOpts...)
+	out := new(SearchStationResponse)
+	err := c.cc.Invoke(ctx, RzdService_SearchStation_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rZDServiceClient) GetStationCode(ctx context.Context, in *GetStationCodeRequest, opts ...grpc.CallOption) (*GetStationCodeResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetStationCodeResponse)
-	err := c.cc.Invoke(ctx, RZDService_GetStationCode_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// RZDServiceServer is the server API for RZDService service.
-// All implementations must embed UnimplementedRZDServiceServer
+// RzdServiceServer is the server API for RzdService service.
+// All implementations must embed UnimplementedRzdServiceServer
 // for forward compatibility.
-type RZDServiceServer interface {
+//
+// Сервис для работы с данными РЖД
+type RzdServiceServer interface {
+	// Получение маршрутов поездов
 	GetTrainRoutes(context.Context, *GetTrainRoutesRequest) (*GetTrainRoutesResponse, error)
-	GetTrainRoutesReturn(context.Context, *GetTrainRoutesReturnRequest) (*GetTrainRoutesReturnResponse, error)
+	// Получение информации о вагонах поезда
 	GetTrainCarriages(context.Context, *GetTrainCarriagesRequest) (*GetTrainCarriagesResponse, error)
-	GetTrainStationList(context.Context, *GetTrainStationListRequest) (*GetTrainStationListResponse, error)
-	GetStationCode(context.Context, *GetStationCodeRequest) (*GetStationCodeResponse, error)
-	mustEmbedUnimplementedRZDServiceServer()
+	// Поиск станций по части названия
+	SearchStation(context.Context, *SearchStationRequest) (*SearchStationResponse, error)
+	mustEmbedUnimplementedRzdServiceServer()
 }
 
-// UnimplementedRZDServiceServer must be embedded to have
+// UnimplementedRzdServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedRZDServiceServer struct{}
+type UnimplementedRzdServiceServer struct{}
 
-func (UnimplementedRZDServiceServer) GetTrainRoutes(context.Context, *GetTrainRoutesRequest) (*GetTrainRoutesResponse, error) {
+func (UnimplementedRzdServiceServer) GetTrainRoutes(context.Context, *GetTrainRoutesRequest) (*GetTrainRoutesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTrainRoutes not implemented")
 }
-func (UnimplementedRZDServiceServer) GetTrainRoutesReturn(context.Context, *GetTrainRoutesReturnRequest) (*GetTrainRoutesReturnResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTrainRoutesReturn not implemented")
-}
-func (UnimplementedRZDServiceServer) GetTrainCarriages(context.Context, *GetTrainCarriagesRequest) (*GetTrainCarriagesResponse, error) {
+func (UnimplementedRzdServiceServer) GetTrainCarriages(context.Context, *GetTrainCarriagesRequest) (*GetTrainCarriagesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTrainCarriages not implemented")
 }
-func (UnimplementedRZDServiceServer) GetTrainStationList(context.Context, *GetTrainStationListRequest) (*GetTrainStationListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetTrainStationList not implemented")
+func (UnimplementedRzdServiceServer) SearchStation(context.Context, *SearchStationRequest) (*SearchStationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SearchStation not implemented")
 }
-func (UnimplementedRZDServiceServer) GetStationCode(context.Context, *GetStationCodeRequest) (*GetStationCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetStationCode not implemented")
-}
-func (UnimplementedRZDServiceServer) mustEmbedUnimplementedRZDServiceServer() {}
-func (UnimplementedRZDServiceServer) testEmbeddedByValue()                    {}
+func (UnimplementedRzdServiceServer) mustEmbedUnimplementedRzdServiceServer() {}
+func (UnimplementedRzdServiceServer) testEmbeddedByValue()                    {}
 
-// UnsafeRZDServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RZDServiceServer will
+// UnsafeRzdServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RzdServiceServer will
 // result in compilation errors.
-type UnsafeRZDServiceServer interface {
-	mustEmbedUnimplementedRZDServiceServer()
+type UnsafeRzdServiceServer interface {
+	mustEmbedUnimplementedRzdServiceServer()
 }
 
-func RegisterRZDServiceServer(s grpc.ServiceRegistrar, srv RZDServiceServer) {
-	// If the following call pancis, it indicates UnimplementedRZDServiceServer was
+func RegisterRzdServiceServer(s grpc.ServiceRegistrar, srv RzdServiceServer) {
+	// If the following call pancis, it indicates UnimplementedRzdServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&RZDService_ServiceDesc, srv)
+	s.RegisterService(&RzdService_ServiceDesc, srv)
 }
 
-func _RZDService_GetTrainRoutes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RzdService_GetTrainRoutes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTrainRoutesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RZDServiceServer).GetTrainRoutes(ctx, in)
+		return srv.(RzdServiceServer).GetTrainRoutes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RZDService_GetTrainRoutes_FullMethodName,
+		FullMethod: RzdService_GetTrainRoutes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RZDServiceServer).GetTrainRoutes(ctx, req.(*GetTrainRoutesRequest))
+		return srv.(RzdServiceServer).GetTrainRoutes(ctx, req.(*GetTrainRoutesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RZDService_GetTrainRoutesReturn_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTrainRoutesReturnRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RZDServiceServer).GetTrainRoutesReturn(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RZDService_GetTrainRoutesReturn_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RZDServiceServer).GetTrainRoutesReturn(ctx, req.(*GetTrainRoutesReturnRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _RZDService_GetTrainCarriages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _RzdService_GetTrainCarriages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetTrainCarriagesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RZDServiceServer).GetTrainCarriages(ctx, in)
+		return srv.(RzdServiceServer).GetTrainCarriages(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RZDService_GetTrainCarriages_FullMethodName,
+		FullMethod: RzdService_GetTrainCarriages_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RZDServiceServer).GetTrainCarriages(ctx, req.(*GetTrainCarriagesRequest))
+		return srv.(RzdServiceServer).GetTrainCarriages(ctx, req.(*GetTrainCarriagesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RZDService_GetTrainStationList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTrainStationListRequest)
+func _RzdService_SearchStation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SearchStationRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RZDServiceServer).GetTrainStationList(ctx, in)
+		return srv.(RzdServiceServer).SearchStation(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RZDService_GetTrainStationList_FullMethodName,
+		FullMethod: RzdService_SearchStation_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RZDServiceServer).GetTrainStationList(ctx, req.(*GetTrainStationListRequest))
+		return srv.(RzdServiceServer).SearchStation(ctx, req.(*SearchStationRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RZDService_GetStationCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetStationCodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(RZDServiceServer).GetStationCode(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: RZDService_GetStationCode_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RZDServiceServer).GetStationCode(ctx, req.(*GetStationCodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// RZDService_ServiceDesc is the grpc.ServiceDesc for RZDService service.
+// RzdService_ServiceDesc is the grpc.ServiceDesc for RzdService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var RZDService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "rzd.RZDService",
-	HandlerType: (*RZDServiceServer)(nil),
+var RzdService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "rzd.RzdService",
+	HandlerType: (*RzdServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetTrainRoutes",
-			Handler:    _RZDService_GetTrainRoutes_Handler,
-		},
-		{
-			MethodName: "GetTrainRoutesReturn",
-			Handler:    _RZDService_GetTrainRoutesReturn_Handler,
+			Handler:    _RzdService_GetTrainRoutes_Handler,
 		},
 		{
 			MethodName: "GetTrainCarriages",
-			Handler:    _RZDService_GetTrainCarriages_Handler,
+			Handler:    _RzdService_GetTrainCarriages_Handler,
 		},
 		{
-			MethodName: "GetTrainStationList",
-			Handler:    _RZDService_GetTrainStationList_Handler,
-		},
-		{
-			MethodName: "GetStationCode",
-			Handler:    _RZDService_GetStationCode_Handler,
+			MethodName: "SearchStation",
+			Handler:    _RzdService_SearchStation_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "rzd_service.proto",
+	Metadata: "proto/rzd/rzd_service.proto",
 }
