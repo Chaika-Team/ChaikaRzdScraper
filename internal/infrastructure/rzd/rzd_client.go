@@ -17,12 +17,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Chaika-Team/rzd-api/internal/utils"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/utils"
 
-	"github.com/Chaika-Team/rzd-api/internal/domain"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/mappers"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/schemas"
-	"github.com/Chaika-Team/rzd-api/pkg/config"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/domain"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/infrastructure/rzd/mappers"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/infrastructure/rzd/schemas"
+	"github.com/Chaika-Team/ChaikaRzdScraper/pkg/config"
 )
 
 // Client структура клиента

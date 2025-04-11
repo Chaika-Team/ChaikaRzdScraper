@@ -108,3 +108,4 @@ go.work.sum
 *.sh
 *.txt
 .idea
+vendor

@@ -4,7 +4,7 @@ package service
 import (
 	"context"
 
-	"github.com/Chaika-Team/rzd-api/internal/domain"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/domain"
 )
 
 // Service интерфейс сервиса для работы с маршрутами поездов и вагонами поездов РЖД

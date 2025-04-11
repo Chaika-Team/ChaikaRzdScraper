@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Chaika-Team/rzd-api/internal/domain"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/schemas"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/domain"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/infrastructure/rzd/schemas"
 )
 
 // MapTrainRouteResponse маппит ответ API маршрутов в доменную модель

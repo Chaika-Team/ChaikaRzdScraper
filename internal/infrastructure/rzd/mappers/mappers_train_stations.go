@@ -1,8 +1,8 @@
 package mappers
 
 import (
-	"github.com/Chaika-Team/rzd-api/internal/domain"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd/schemas"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/domain"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/infrastructure/rzd/schemas"
 )
 
 // MapStationCodeResponse преобразует ответ API (StationCodeResponse) в срез доменных моделей []domain.Station.

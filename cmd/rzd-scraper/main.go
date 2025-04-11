@@ -3,14 +3,15 @@ package main
 import (
 	"context"
 	"flag"
-	"github.com/Chaika-Team/rzd-api/internal/infrastructure/rzd"
-	"github.com/Chaika-Team/rzd-api/internal/service"
-	"github.com/Chaika-Team/rzd-api/internal/transports/grpc"
-	"github.com/Chaika-Team/rzd-api/pkg/config"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/infrastructure/rzd"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/service"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/transports/grpc"
+	"github.com/Chaika-Team/ChaikaRzdScraper/pkg/config"
 )
 
 func main() {

@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/Chaika-Team/rzd-api/internal/transports/grpc/pb"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/transports/grpc/pb"
 
 	"google.golang.org/grpc"
 )

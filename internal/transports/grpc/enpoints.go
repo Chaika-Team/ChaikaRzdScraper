@@ -6,11 +6,11 @@ import (
 
 	"github.com/go-kit/kit/endpoint"
 
-	"github.com/Chaika-Team/rzd-api/internal/transports/grpc/mappers"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/transports/grpc/mappers"
 
-	"github.com/Chaika-Team/rzd-api/internal/domain"
-	"github.com/Chaika-Team/rzd-api/internal/service"
-	"github.com/Chaika-Team/rzd-api/internal/transports/grpc/pb"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/domain"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/service"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/transports/grpc/pb"
 )
 
 // Endpoints собраны для gRPC сервиса.

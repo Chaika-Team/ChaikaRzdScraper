@@ -4,8 +4,8 @@ package mappers
 import (
 	"time"
 
-	"github.com/Chaika-Team/rzd-api/internal/domain"
-	"github.com/Chaika-Team/rzd-api/internal/transports/grpc/pb"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/domain"
+	"github.com/Chaika-Team/ChaikaRzdScraper/internal/transports/grpc/pb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

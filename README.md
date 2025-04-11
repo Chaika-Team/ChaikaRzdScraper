@@ -1,99 +1,119 @@
-# RZD API Client (Разработка)
+# Chaika RZD Scraper (В разработке)
 
-Этот проект представляет собой клиент для API РЖД, написанный на Go.
-Запросы были вдохновлены репозиторием [visavi/rzd-api](https://github.com/visavi/rzd-api).
+## Описание проекта
 
-## Возможности
+Chaika RZD Scraper — это инструмент для получения информации о железнодорожных маршрутах, составах поездов и станциях на
+основе данных, предоставляемых РЖД через их API.
 
-- Получение списка маршрутов поездов
-- Получение информации о вагонах
-- Поддержка фильтрации по типу поезда и наличию мест
+Проект использует gRPC для обмена данными и предоставляет API для следующих функций:
 
-## Установка
+- Получение маршрутов поездов.
+- Получение информации о вагонах поезда.
+- Поиск станций по части названия.
 
-```sh
-go get github.com/yourusername/rzd-api-client
+## Установка и настройка
+
+### Требования
+
+- Go 1.18 или выше.
+
+### Установка
+
+1. Склонируйте репозиторий:
+
+    ```bash
+    git clone https://github.com/Chaika-Team/ChaikaRzdScraper.git
+    cd rzd-scraper
+    ```
+
+2. Установите зависимости:
+
+    ```bash
+    go mod tidy
+    ```
+
+3. Настройте конфигурационный файл `config.yml` для подключения к API РЖД. Пример конфигурации:
+
+    ```yaml
+    RZD:
+      LANGUAGE: "ru"
+      BASE_PATH: "https://pass.rzd.ru/"
+      USER_AGENT: "Mozilla/5.0 (compatible; RzdClient/1.0)"
+      TIMEOUT: 2000
+      MAX_RETRIES: 10
+      RID_LIFETIME: 300000
+      PROXY: ""
+    GRPC:
+      PORT: "50051"
+    ```
+
+4. Запустите сервер gRPC:
+
+    ```bash
+    go run cmd/rzd-scraper/main.go
+    ```
+
+## Примеры использования
+
+После запуска сервера можно делать запросы к его gRPC API.
+
+### Пример запроса маршрутов
+
+Запрос для получения маршрутов поездов между станциями с кодами `2004000` и `2000000`:
+
+```protobuf
+// Пример запроса для получения маршрутов поездов
+    service.RzdService.GetTrainRoutes({
+FromCode: 2004000,
+    ToCode: 2000000,
+    Direction: 0, // OneWay
+    TrainType: 1, // AllTrains
+    CheckSeats: false,
+FromDate: "2025-04-14",
+    WithChange: false
+    });
 ```
 
-## Использование
+### Пример запроса информации о вагонах
 
-Пример запроса списка маршрутов:
+Запрос для получения информации о вагонах для поезда с номером `119А`:
 
-```go
-ctx := context.Background()
-client := rzd.NewClient()
-
-params := domain.GetTrainRoutesParams{
-    FromCode:   2004000,          // Санкт-Петербург
-    ToCode:     2000000,          // Москва
-    Direction:  domain.OneWay,    // Только туда
-    TrainType:  domain.AllTrains, // Поезда и электрички
-    CheckSeats: false,            // Не проверять наличие мест
-    FromDate:   time.Now().Add(24 * 2 * time.Hour),
-    WithChange: false, // Без пересадок
-}
-
-routes, err := client.GetTrainRoutes(ctx, params)
-if err != nil {
-    log.Fatalf("failed to get train routes: %v", err)
-}
-
-for _, route := range routes {
-    fmt.Printf("Поезд %s типа %d из %s в %s отправляется в %s и прибывает в %s\n",
-        route.TrainNumber, route.TrainType, route.From.Name, route.To.Name,
-        route.Departure.Format("15:04"), route.Arrival.Format("15:04"))
-    for _, car := range route.CarTypes {
-        fmt.Printf("\tВагон %s %s класса, свободных мест: %d, стоимость: %d руб.\n",
-            car.TypeShortLabel, car.Class, car.FreeSeats, car.Tariff)
-    }
-}
+```protobuf
+// Пример запроса для получения информации о вагонах
+    service.RzdService.GetTrainCarriages({
+TrainNumber: "119А",
+    Direction: 0, // OneWay
+    FromCode: 2004000,
+    FromTime: "2025-04-14T10:00:00",
+    ToCode: 2000000
+    });
 ```
 
-Пример запроса списка вагонов для выбранного маршрута:
+### Пример поиска станции
 
-```go
-route := routes[1] // Выбираем первый маршрут для примера
+Запрос для поиска станций, содержащих строку "ЧЕБ":
 
-cartParams := domain.GetTrainCarriagesParams{
-    TrainNumber: route.TrainNumber,
-    Direction:   domain.OneWay,
-    FromCode:    route.From.Code,
-    FromTime:    route.Departure,
-    ToCode:      route.To.Code,
-}
-
-carriages, err := client.GetTrainCarriages(ctx, cartParams)
-if err != nil {
-    log.Fatalf("failed to get train carriages: %v", err)
-}
-
-for _, car := range carriages {
-    fmt.Printf("Вагон %s %s, стоимость: %d руб., перевозчик: %s, свободных мест: %d\n",
-        car.CategoryLabelLocal, car.CarNumber, car.Tariff, car.Carrier.Name, car.FreeSeats)
-}
-```
-
-Пример запроса поиска названий и кодов станций по части их имени:
-
-```go
-stationParams := domain.SearchStationParams{
-    Query:       "ЧЕБ",
+```protobuf
+// Пример запроса для поиска станций
+    service.RzdService.SearchStation({
+Query: "ЧЕБ",
     CompactMode: true,
-}
-stations, err := client.SearchStation(ctx, stationParams)
-if err != nil {
-    log.Fatalf("failed to search stations: %v", err)
-}
-for _, station := range stations {
-    fmt.Printf("Станция %s, код %d\n", station.Name, station.Code)
-}
-if len(stations) == 0 {
-    log.Println("no stations found matching the query")
-    return
-}
+    Lang: "ru"
+    });
+```
+
+## Тестирование
+
+В проекте предусмотрены e2e тесты для проверки функциональности API. Для запуска тестов выполните следующую команду:
+
+```bash
+go test ./...
 ```
 
 ## Лицензия
 
-Проект распространяется под лицензией **GPLv3**.
+Этот проект распространяется под лицензией [GPL-3.0](LICENSE).
 
+## Контакты
+
+- Email: chaika.contact@yandex.ru
