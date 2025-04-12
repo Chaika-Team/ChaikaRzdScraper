@@ -39,14 +39,16 @@ func main() {
 		log.Fatalf("failed to load configuration: %v", err)
 	}
 
+	log.Printf("RabbitMQ URL: %s", cfg.RabbitMQ.URL)
+
 	// Инициализация клиента RZD
 	client, err := rzd.NewRzdClient(&cfg.RZD)
 	if err != nil {
 		log.Fatalf("failed to create RZD client: %v", err)
 	}
 
-	// Создаем сервисный слой и эндпоинты для gRPC
-	svc := service.New(client)
+	// Создаем и запускаем сервис
+	svc := service.New(client, cfg)
 	eps := grpc.MakeEndpoints(svc)
 	grpcServer := grpc.NewGRPCServer(eps)
 

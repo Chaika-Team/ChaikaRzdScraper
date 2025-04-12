@@ -1,6 +1,6 @@
 RZD:
-  LANGUAGE: ru
-  TIMEOUT: 5
+  LANGUAGE: "ru"
+  TIMEOUT: 2000
   MAX_RETRIES: 10
   RID_LIFETIME: 300000
   PROXY: ""
@@ -9,4 +9,7 @@ RZD:
   DEBUG_MODE: false
 
 GRPC:
-  PORT: 50051
+  PORT: "50051"
+
+RabbitMQ:
+  URL: "amqp://guest:guest@localhost:5672/"
