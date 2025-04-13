@@ -16,6 +16,7 @@ import (
 	"github.com/Chaika-Team/ChaikaRzdScraper/pkg/config"
 )
 
+// main initializes and runs the RZD integration service. It parses command-line flags for an optional YAML configuration file, sets up context cancellation and signal handling for graceful shutdown, loads the configuration, and initializes the RZD client and service. The function starts the gRPC server and RabbitMQ handler in separate goroutines and waits for a termination signal to gracefully shut down the service.
 func main() {
 	var (
 		configPath string

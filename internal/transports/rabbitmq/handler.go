@@ -12,6 +12,7 @@ import (
 	"github.com/Chaika-Team/ChaikaRzdScraper/internal/service"
 )
 
+// StartRabbitMQHandler initializes a RabbitMQ consumer using the provided URL, subscribes to the "rzd_queue", and spawns a pool of worker goroutines (twice the number of CPU cores) to concurrently process incoming messages. Each worker decodes JSON payloads and dispatches requests to the appropriate service method (GetTrainRoutes, GetTrainCarriages, or SearchStation) based on the "requestType" field, logging any errors encountered during processing. The function blocks execution to keep the application running and processing messages.
 func StartRabbitMQHandler(svc service.Service, rabbitMQURL string) {
 	consumer, err := rabbitmq.NewConsumer(rabbitMQURL)
 	if err != nil {
@@ -141,6 +142,8 @@ func StartRabbitMQHandler(svc service.Service, rabbitMQURL string) {
 	<-stopChan
 }
 
+// sendResponse logs the provided response map and serves as a placeholder for future implementation 
+// of a response delivery mechanism, such as sending the response back to a message queue or another service.
 func sendResponse(response map[string]interface{}) {
 	// Здесь вы можете реализовать отправку ответа обратно в очередь или другой механизм доставки
 	log.Printf("Sending response: %v", response)

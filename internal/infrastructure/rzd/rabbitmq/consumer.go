@@ -11,6 +11,8 @@ type Consumer struct {
 	ch   *amqp.Channel
 }
 
+// NewConsumer establishes a connection to the RabbitMQ server using the provided URL, opens a channel, and returns a Consumer that encapsulates both.
+// It returns an error if connecting to the server or opening the channel fails.
 func NewConsumer(rabbitMQURL string) (*Consumer, error) {
 	log.Println("Connecting to RabbitMQ...")
 	conn, err := amqp.Dial(rabbitMQURL)
