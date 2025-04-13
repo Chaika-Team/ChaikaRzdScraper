@@ -37,7 +37,10 @@ type RabbitMQ struct {
 }
 
 // LoadConfig загружает конфигурацию из файла (если передан путь) или из переменных окружения.
-// При наличии файла, его значения будут приоритетными.
+// LoadConfig loads the application configuration.
+// When a non-empty configuration file path is provided via configPath, it loads settings from that file,
+// giving them precedence over environment variables. Otherwise, it reads configuration solely from the environment.
+// It returns a pointer to the Config struct and an error if the loading fails.
 func LoadConfig(configPath string) (*Config, error) {
 	cfg := &Config{}
 	if configPath != "" {

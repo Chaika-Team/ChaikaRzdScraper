@@ -14,7 +14,8 @@ type mainService struct {
 	rzdClient *rzd.Client
 }
 
-// New возвращает новый экземпляр сервиса
+// New creates and returns a new service instance that wraps the provided RZD client.
+// The configuration object is retained for future use, such as for setting service endpoint URLs.
 func New(rzdClient *rzd.Client, cfg *config.Config) Service {
 	svc := &mainService{rzdClient: rzdClient}
 	// Передаем URL из конфигурации
