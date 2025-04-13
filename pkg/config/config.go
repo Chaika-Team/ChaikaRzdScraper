@@ -9,8 +9,9 @@ import (
 
 // Config содержит полное конфигурацию приложения.
 type Config struct {
-	RZD  RZD  `yaml:"RZD" env:"RZD"`
-	GRPC GRPC `yaml:"GRPC" env:"GRPC"`
+	RZD      RZD      `yaml:"RZD" env:"RZD"`
+	GRPC     GRPC     `yaml:"GRPC" env:"GRPC"`
+	RabbitMQ RabbitMQ `yaml:"RabbitMQ" env:"RABBITMQ"`
 }
 
 // RZD содержит конфигурацию для клиента RZD.
@@ -28,6 +29,11 @@ type RZD struct {
 // GRPC содержит конфигурацию для gRPC сервера.
 type GRPC struct {
 	Port string `yaml:"PORT" env:"PORT,default=50051"`
+}
+
+// RabbitMQ содержит конфигурацию для подключения к RabbitMQ.
+type RabbitMQ struct {
+	URL string `yaml:"URL" env:"RABBITMQ_URL,default=amqp://guest:guest@localhost:5672/"`
 }
 
 // LoadConfig загружает конфигурацию из файла (если передан путь) или из переменных окружения.

@@ -6,6 +6,7 @@ import (
 
 	"github.com/Chaika-Team/ChaikaRzdScraper/internal/domain"
 	"github.com/Chaika-Team/ChaikaRzdScraper/internal/infrastructure/rzd"
+	"github.com/Chaika-Team/ChaikaRzdScraper/pkg/config"
 )
 
 // mainService реализует интерфейс Service
@@ -14,8 +15,10 @@ type mainService struct {
 }
 
 // New возвращает новый экземпляр сервиса
-func New(rzdClient *rzd.Client) Service {
-	return &mainService{rzdClient: rzdClient}
+func New(rzdClient *rzd.Client, cfg *config.Config) Service {
+	svc := &mainService{rzdClient: rzdClient}
+	// Передаем URL из конфигурации
+	return svc
 }
 
 // GetTrainRoutes получение маршрутов поездов

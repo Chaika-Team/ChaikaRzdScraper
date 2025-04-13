@@ -50,7 +50,7 @@ Chaika RZD Scraper — это инструмент для получения и�
 4. Запустите сервер gRPC:
 
     ```bash
-    go run cmd/rzd-scraper/main.go
+    go run cmd/rzd-scraper/main.go -config=config.yml
     ```
 
 ## Примеры использования

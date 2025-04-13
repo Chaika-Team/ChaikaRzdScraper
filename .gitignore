@@ -109,3 +109,5 @@ go.work.sum
 *.txt
 .idea
 vendor
+
+.DS_Store
